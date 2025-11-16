@@ -1,4 +1,4 @@
-package backend.java.models;
+package backend.models;
 
 public class Reservation {
 	

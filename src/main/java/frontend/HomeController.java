@@ -1,4 +1,4 @@
-package org.example.resturant;
+package frontend.java;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

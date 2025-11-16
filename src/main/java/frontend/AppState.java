@@ -1,4 +1,4 @@
-package org.example.resturant;
+package frontend.java;
 
 public class AppState
 {
