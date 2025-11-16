@@ -22,4 +22,18 @@ public class RestaurantController {
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
         SceneNavigator.switchScene(stage, "make-reservation.fxml", "Make Reservation");
     }
+
+    @FXML
+    protected void onBackClick(javafx.event.ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "home-view.fxml", "Home");
+    }
+
+    @FXML
+    protected void onHomeClick(javafx.event.ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "home-view.fxml", "Home");
+    }
+
+
 }

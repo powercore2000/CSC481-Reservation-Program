@@ -11,9 +11,9 @@ Corvalis Cohen: Backend
 Eric Cordova: Fullstack (Backend)
 
 
-## How To Run
+## How To Setup Project
 
-If working in eclipse or intelliJ, you need to  import the project as an existing maven ptoject to ensure your IDE of choice can properly read the file structure and dependencies.
+If working in eclipse or intelliJ, you need to  import the project as an existing ***maven*** project to ensure your IDE of choice can properly read the file structure and dependencies.
 
 
 run the following command to install all dependencies
@@ -33,3 +33,10 @@ Locate the <dependencies> block
 add the desired <dependency> block.
 Save the file.
 In IntelliJ, right-click the project and select Maven > Reload Project/Sync Project to update dependencies.
+
+
+## How To Run Project
+
+Run ReservationClient.java to start the frontend of the application.
+
+Run ReservationServer.java to start the backend of the application.

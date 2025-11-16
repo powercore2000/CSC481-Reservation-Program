@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.resturant.MyReservationsController"
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.java.frontend.MyReservationsController"
             style="-fx-background-color: #f5f5f5;">
     <top>
         <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
             <Label text="WEB Name" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
         </HBox>
     </top>
+
     <center>
-        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 30;">
-            <Label text="My Reservation" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-            <Button text="Restaurant 1\nDate: Nov 16, 2024  Time: 7 PM  Party: 4"
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 30;">
+            <Label text="My Reservations" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <VBox style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 20; -fx-pref-width: 400;">
+                <Label text="No reservations yet" />
+            </VBox>
+            <Button text="View Reservation"
+                    fx:id="viewReservationButton"
                     onAction="#onViewReservationClick"
-                    style="-fx-background-color: white; -fx-border-color: #ccc; -fx-pref-width: 400; -fx-alignment: CENTER_LEFT;" />
+                    style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
         </VBox>
     </center>
 </BorderPane>
