@@ -9,3 +9,27 @@ Samuel Omenwu: Front End
 Daniel Anzora: Data Base
 Corvalis Cohen: Backend
 Eric Cordova: Fullstack (Backend)
+
+
+## How To Run
+
+If working in eclipse or intelliJ, you need to  import the project as an existing maven ptoject to ensure your IDE of choice can properly read the file structure and dependencies.
+
+
+run the following command to install all dependencies
+
+```bash
+mvn install 
+``` 
+
+```bash
+mvn dependency:resolve
+```
+
+### Adding Dependencies IntelliJ
+To add a dependency from Maven:
+Open your pom.xml file.
+Locate the <dependencies> block
+add the desired <dependency> block.
+Save the file.
+In IntelliJ, right-click the project and select Maven > Reload Project/Sync Project to update dependencies.

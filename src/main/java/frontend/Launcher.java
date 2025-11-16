@@ -1,4 +1,4 @@
-package org.example.resturant;
+package main.java.frontend;
 
 import javafx.application.Application;
 

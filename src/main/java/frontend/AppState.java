@@ -1,4 +1,4 @@
-package frontend.java;
+package main.java.frontend;
 
 public class AppState
 {

@@ -1,4 +1,4 @@
-package backend_test.java;
+package test.java.backend_test.java;
 
 import org.junit.jupiter.api.Test;
 
