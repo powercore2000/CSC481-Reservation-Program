@@ -1,4 +1,4 @@
-package backend.java.models;
+package main.java.backend.models;
 
 public class User {
 

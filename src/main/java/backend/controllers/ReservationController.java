@@ -1,6 +1,6 @@
-package backend.java.controllers;
+package main.java.backend.controllers;
 
-import backend.java.models.*;
+import main.java.backend.models.*;
 
 import java.util.ArrayList;
 
