@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.resturant.MyReservationsController"
+            style="-fx-background-color: #f5f5f5;">
+    <top>
+        <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
+            <Label text="WEB Name" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 30;">
+            <Label text="My Reservation" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <Button text="Restaurant 1\nDate: Nov 16, 2024  Time: 7 PM  Party: 4"
+                    onAction="#onViewReservationClick"
+                    style="-fx-background-color: white; -fx-border-color: #ccc; -fx-pref-width: 400; -fx-alignment: CENTER_LEFT;" />
+        </VBox>
+    </center>
+</BorderPane>
