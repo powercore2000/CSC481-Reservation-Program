@@ -1,4 +1,4 @@
-package main.java.frontend;
+package org.example.resturant;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class SceneNavigator {
     public static void switchScene(Stage stage, String fxml, String title) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SceneNavigator.class.getResource("/frontend/"+fxml));
+        FXMLLoader loader = new FXMLLoader(SceneNavigator.class.getResource(fxml));
         Scene scene = new Scene(loader.load(), 600, 500);
         stage.setTitle(title);
         stage.setScene(scene);

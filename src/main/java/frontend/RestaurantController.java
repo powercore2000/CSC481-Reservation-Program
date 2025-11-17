@@ -1,39 +1,52 @@
-package main.java.frontend;
+package org.example.resturant;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
-public class RestaurantController {
-    @FXML private Label restaurantName;
-    @FXML private Label restaurantAddress;
+public class RestaurantController
+{
 
-    @FXML
-    protected void initialize() {
-        // Example: could be dynamic if you pass data later
-        restaurantName.setText("Restaurant 1");
-        restaurantAddress.setText("123 Oak St, Carson, CA\nOpen • Closes at 10 PM");
+    @FXML private Label restaurantNameLabel;
+    @FXML private Label addressLabel;
+    @FXML private Label openCloseLabel;
+
+    private String restaurantName;
+
+    public void setRestaurant(String name)
+    {
+        restaurantName = name;
+        restaurantNameLabel.setText(name);
+
+        if (name.equals("Restaurant 1"))
+        {
+            addressLabel.setText("123 Oak St, Carson, CA");
+            openCloseLabel.setText("Open • Closes at 10 PM");
+        }
+        else if (name.equals("Restaurant 2"))
+        {
+            addressLabel.setText("500 Main St, Carson, CA");
+            openCloseLabel.setText("Open • Closes at 11 PM");
+        }
     }
 
     @FXML
-    protected void onMakeReservationClick(javafx.event.ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        SceneNavigator.switchScene(stage, "make-reservation.fxml", "Make Reservation");
+    private void onBackClick() throws IOException
+    {
+        Stage stage = (Stage) restaurantNameLabel.getScene().getWindow();
+        SceneNavigator.switchScene(stage,
+                "/org/example/resturant/home-view.fxml",
+                "Restaurants");
     }
 
     @FXML
-    protected void onBackClick(javafx.event.ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        SceneNavigator.switchScene(stage, "home-view.fxml", "Home");
+    private void onMakeReservationClick() throws IOException
+    {
+        Stage stage = (Stage) restaurantNameLabel.getScene().getWindow();
+        SceneNavigator.switchScene(stage,
+                "/org/example/resturant/make-reservation.fxml",
+                "Make Reservation");
     }
-
-    @FXML
-    protected void onHomeClick(javafx.event.ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        SceneNavigator.switchScene(stage, "home-view.fxml", "Home");
-    }
-
-
 }
