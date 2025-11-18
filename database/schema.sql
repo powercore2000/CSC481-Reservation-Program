@@ -1,0 +1,60 @@
+/* ------------------ CLEAN OLD TABLES (safe if missing) ------------------ */
+DROP TABLE IF EXISTS reservations;
+DROP TABLE IF EXISTS restaurant_schedules;
+DROP TABLE IF EXISTS restaurants;
+DROP TABLE IF EXISTS app_users;
+
+/* ------------------ SQLITE SCHEMA ------------------ */
+
+/* APP USERS */
+CREATE TABLE IF NOT EXISTS app_users (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  full_name     VARCHAR(120) NOT NULL,
+  email         VARCHAR(120) NOT NULL,
+  phone         VARCHAR(32),
+  password_hash VARCHAR(255) NOT NULL,
+  created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (email)
+);
+
+/* RESTAURANTS */
+CREATE TABLE IF NOT EXISTS restaurants (
+  id         INTEGER PRIMARY KEY AUTOINCREMENT,
+  name       VARCHAR(120) NOT NULL,
+  address    VARCHAR(255),
+  city       VARCHAR(100),
+  state      VARCHAR(32),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP
+);
+
+/* WEEKLY SCHEDULE (0=Mon … 6=Sun) */
+CREATE TABLE IF NOT EXISTS restaurant_schedules (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  restaurant_id INTEGER NOT NULL,
+  weekday       SMALLINT NOT NULL,            -- 0..6
+  open_time     TIME NOT NULL,
+  close_time    TIME NOT NULL,
+  CONSTRAINT fk_sched_rest FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
+  CONSTRAINT uq_sched_rest_day UNIQUE (restaurant_id, weekday)
+);
+
+/* RESERVATIONS (User ↔ Restaurant) */
+CREATE TABLE IF NOT EXISTS reservations (
+  id                INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id           INTEGER NOT NULL,
+  restaurant_id     INTEGER NOT NULL,
+  reservation_at    TIMESTAMP NOT NULL,    -- date + time combined
+  party_size        INT NOT NULL,
+  status            VARCHAR(16) NOT NULL,  -- PENDING | CONFIRMED | CANCELLED
+  confirmation_code VARCHAR(32) NOT NULL,
+  special_requests  TEXT,
+  created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_res_user  FOREIGN KEY (user_id)       REFERENCES app_users(id),
+  CONSTRAINT fk_res_rest  FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
+  CONSTRAINT uq_res_confirmation UNIQUE (confirmation_code)
+);
+
+/* Helpful indexes */
+CREATE INDEX IF NOT EXISTS idx_res_user_time ON reservations (user_id, reservation_at);
+CREATE INDEX IF NOT EXISTS idx_res_rest_time ON reservations (restaurant_id, reservation_at);
