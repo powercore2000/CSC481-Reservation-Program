@@ -1,4 +1,4 @@
-package main.java.database;
+package database;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

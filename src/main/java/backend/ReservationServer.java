@@ -1,9 +1,9 @@
-package main.java.backend;
+package backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import main.java.database.*;
+import database.*;
 
 import java.io.File;
 import java.sql.Connection;
@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+
+import database.DbInitializer;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class ReservationServer {
@@ -33,7 +35,7 @@ public class ReservationServer {
 				e.printStackTrace();
 			}
 	        
-		SpringApplication.run(main.java.backend.ReservationServer.class, args);
+		SpringApplication.run(backend.ReservationServer.class, args);
 	}
 
 }

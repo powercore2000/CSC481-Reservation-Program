@@ -1,4 +1,4 @@
-package main.java.frontend;
+package frontend;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
