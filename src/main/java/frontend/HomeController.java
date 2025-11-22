@@ -12,19 +12,22 @@ public class HomeController {
     @FXML private Button viewReservationButton;
 
     @FXML
-    public void initialize() {
-        // Restore sign-in UI state when returning home
-        if (AppState.isSignedIn()) {
+    public void initialize()
+    {
+        if (AppState.isSignedIn())
+        {
             signInButton.setText("👤");
             signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
             viewReservationButton.setVisible(true);
-            signOutButton.setVisible(true);   // show sign out
+            signOutButton.setVisible(true);
         }
     }
 
     @FXML
-    protected void onSignInClick() {
-        if (!AppState.isSignedIn()) {
+    protected void onSignInClick()
+    {
+        if (!AppState.isSignedIn())
+        {
             AppState.setSignedIn(true);
 
             // Change Sign In to profile icon
