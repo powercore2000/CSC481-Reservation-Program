@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.resturant.ReservationInfoController"
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.ReservationInfoController"
             style="-fx-background-color: #f5f5f5;">
-
     <top>
         <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
             <Label text="WEB Name" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
@@ -15,35 +17,19 @@
 
     <center>
         <VBox alignment="CENTER" spacing="15" style="-fx-padding: 30;">
-
-            <HBox spacing="10">
-                <Button text="←"
-                        style="-fx-font-size: 18px;"
-                        onAction="#onBackClick" />
-            </HBox>
-
-            <Label fx:id="infoLabel"
-                   text="Reservation Information"
-                   style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-
-            <VBox style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 20; -fx-pref-width: 400;"
-                  spacing="5">
-
-                <Label fx:id="nameLabel" text="Name: " />
-                <Label fx:id="emailLabel" text="Email: " />
-                <Label fx:id="restaurantLabel" text="Restaurant: " />
-                <Label fx:id="locationLabel" text="Location: " />
-                <Label fx:id="dateLabel" text="Date: " />
-                <Label fx:id="timeLabel" text="Time: " />
-                <Label fx:id="partyLabel" text="Party size: " />
-
+            <Label text="Reservation Information" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <VBox style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 20; -fx-pref-width: 400;">
+                <Label text="Name: John Smith" />
+                <Label text="Email: john@gmail.com" />
+                <Label text="Restaurant: Restaurant 1" />
+                <Label text="Location: 123 Oak St, Carson, CA" />
+                <Label text="Date: Dec 10, 2024" />
+                <Label text="Time: 7:00 PM" />
+                <Label text="Party size: 4" />
             </VBox>
-
             <Button text="Back to Restaurants"
                     onAction="#onBackToHomeClick"
                     style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
-
         </VBox>
     </center>
-
 </BorderPane>

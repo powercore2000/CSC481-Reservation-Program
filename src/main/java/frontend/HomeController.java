@@ -1,4 +1,4 @@
-package org.example.resturant;
+package frontend;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,22 +12,19 @@ public class HomeController {
     @FXML private Button viewReservationButton;
 
     @FXML
-    public void initialize()
-    {
-        if (AppState.isSignedIn())
-        {
+    public void initialize() {
+        // Restore sign-in UI state when returning home
+        if (AppState.isSignedIn()) {
             signInButton.setText("👤");
             signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
             viewReservationButton.setVisible(true);
-            signOutButton.setVisible(true);
+            signOutButton.setVisible(true);   // show sign out
         }
     }
 
     @FXML
-    protected void onSignInClick()
-    {
-        if (!AppState.isSignedIn())
-        {
+    protected void onSignInClick() {
+        if (!AppState.isSignedIn()) {
             AppState.setSignedIn(true);
 
             // Change Sign In to profile icon

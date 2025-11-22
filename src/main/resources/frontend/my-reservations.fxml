@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane style="-fx-background-color: #f5f5f5;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="org.example.resturant.MyReservationsController">
-
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.MyReservationsController"
+            style="-fx-background-color: #f5f5f5;">
     <top>
         <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
-            <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="WEB Name" />
+            <Label text="WEB Name" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
         </HBox>
     </top>
 
     <center>
-        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
-
-            <!-- Back Button -->
-            <Button onAction="#onBackClick" style="-fx-font-size: 18px;" text="←" />
-
-            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="My Reservations example" />
-
-            <!-- THIS MUST EXIST -->
-            <ListView fx:id="reservationList" prefHeight="300" prefWidth="400" />
-
-            <Button onAction="#onViewReservationClick" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold;" text="View Reservation" />
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 30;">
+            <Label text="My Reservations" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <VBox style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 20; -fx-pref-width: 400;">
+                <Label text="No reservations yet" />
+            </VBox>
+            <Button text="View Reservation"
+                    fx:id="viewReservationButton"
+                    onAction="#onViewReservationClick"
+                    style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
         </VBox>
     </center>
-
 </BorderPane>
