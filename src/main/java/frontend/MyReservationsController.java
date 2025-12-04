@@ -1,14 +1,40 @@
-package frontend;
+package org.example.resturant;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
-public class MyReservationsController {
+public class MyReservationsController
+{
+
+    @FXML private ListView<String> reservationList;
+
     @FXML
-    protected void onViewReservationClick(javafx.event.ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        SceneNavigator.switchScene(stage, "reservation-info.fxml", "Reservation Info");
+    public void initialize()
+    {
+        reservationList.getItems().addAll
+                (
+                "John Smith – Dec 10 – 7PM – Party 4",
+                "Mary Johnson – Dec 12 – 6PM – Party 2"
+        );
+    }
+
+    @FXML
+    private void onBackClick() throws IOException
+    {
+        Stage stage = (Stage) reservationList.getScene().getWindow();
+        SceneNavigator.switchScene(stage, "/org/example/resturant/home-view.fxml", "Restaurants");
+    }
+
+    @FXML
+    private void onViewReservationClick() throws IOException
+    {
+        String selected = reservationList.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        Stage stage = (Stage) reservationList.getScene().getWindow();
+        SceneNavigator.switchScene(stage, "/org/example/resturant/reservation-info.fxml", "Reservation Info");
     }
 }

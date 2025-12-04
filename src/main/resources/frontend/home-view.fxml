@@ -6,8 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="frontend.HomeController"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.resturant.HomeController"
             style="-fx-background-color: #f5f5f5;">
     <top>
         <VBox>
@@ -43,14 +43,32 @@
     <center>
         <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 30;">
             <Label text="Restaurants" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
             <VBox spacing="10" alignment="CENTER">
-                <Button text="Restaurant 1"
+
+                <Button text="Andies"
                         onAction="#onSelectRestaurant1"
                         style="-fx-background-color: white; -fx-pref-width: 400; -fx-pref-height: 40; -fx-border-color: #ddd;" />
-                <Button text="Restaurant 2"
+
+                <Button text="Jay's Sushi Palace"
                         onAction="#onSelectRestaurant2"
                         style="-fx-background-color: white; -fx-pref-width: 400; -fx-pref-height: 40; -fx-border-color: #ddd;" />
+
+                <Button text="Mama Rosa's Italian Kitchen"
+                        onAction="#onSelectRestaurant3"
+                        style="-fx-background-color: white; -fx-pref-width: 400; -fx-pref-height: 40; -fx-border-color: #ddd;" />
+
+                <Button text="Golden Dragon BBQ"
+                        onAction="#onSelectRestaurant4"
+                        style="-fx-background-color: white; -fx-pref-width: 400; -fx-pref-height: 40; -fx-border-color: #ddd;" />
+
+                <Button text="The Garden Vegan Bistro"
+                        onAction="#onSelectRestaurant5"
+                        style="-fx-background-color: white; -fx-pref-width: 400; -fx-pref-height: 40; -fx-border-color: #ddd;" />
+
             </VBox>
+
         </VBox>
     </center>
+
 </BorderPane>

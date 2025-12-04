@@ -1,4 +1,4 @@
-package frontend;
+package org.example.resturant;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,12 +13,14 @@ public class HomeController {
 
     @FXML
     public void initialize() {
-        // Restore sign-in UI state when returning home
         if (AppState.isSignedIn()) {
             signInButton.setText("👤");
             signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
             viewReservationButton.setVisible(true);
-            signOutButton.setVisible(true);   // show sign out
+            signOutButton.setVisible(true);
+        } else {
+            viewReservationButton.setVisible(false);
+            signOutButton.setVisible(false);
         }
     }
 
@@ -26,12 +28,8 @@ public class HomeController {
     protected void onSignInClick() {
         if (!AppState.isSignedIn()) {
             AppState.setSignedIn(true);
-
-            // Change Sign In to profile icon
             signInButton.setText("👤");
             signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
-
-            // Show Sign Out + View Reservation
             viewReservationButton.setVisible(true);
             signOutButton.setVisible(true);
         }
@@ -40,30 +38,77 @@ public class HomeController {
     @FXML
     protected void onSignOutClick() {
         AppState.setSignedIn(false);
-
-        // Reset UI back to logged-out mode
         signInButton.setText("Sign In");
         signInButton.setStyle("-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold;");
-
         viewReservationButton.setVisible(false);
         signOutButton.setVisible(false);
     }
 
+    private Stage getStage() {
+        return (Stage) signInButton.getScene().getWindow();
+    }
+
+    // ======= 5 RESTAURANTS =======
+
     @FXML
-    protected void onSelectRestaurant1(javafx.event.ActionEvent event) throws IOException {
-        Stage stage = (Stage) signInButton.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "restaurant-view.fxml", "Restaurant 1");
+    protected void onSelectRestaurant1() {
+        AppState.setSelectedRestaurant(1);
+        AppState.setSelectedRestaurantName("Andies");
+        goToRestaurantPage();
     }
 
     @FXML
-    protected void onSelectRestaurant2(javafx.event.ActionEvent event) throws IOException {
-        Stage stage = (Stage) signInButton.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "restaurant-view.fxml", "Restaurant 2");
+    protected void onSelectRestaurant2() {
+        AppState.setSelectedRestaurant(2);
+        AppState.setSelectedRestaurantName("Jay's Sushi Palace");
+        goToRestaurantPage();
     }
 
     @FXML
-    protected void onViewReservationClick() throws IOException {
-        Stage stage = (Stage) viewReservationButton.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "my-reservations.fxml", "My Reservations");
+    protected void onSelectRestaurant3() {
+        AppState.setSelectedRestaurant(3);
+        AppState.setSelectedRestaurantName("Mama Rosa's Italian Kitchen");
+        goToRestaurantPage();
+    }
+
+    @FXML
+    protected void onSelectRestaurant4() {
+        AppState.setSelectedRestaurant(4);
+        AppState.setSelectedRestaurantName("Golden Dragon BBQ");
+        goToRestaurantPage();
+    }
+
+    @FXML
+    protected void onSelectRestaurant5() {
+        AppState.setSelectedRestaurant(5);
+        AppState.setSelectedRestaurantName("The Garden Vegan Bistro");
+        goToRestaurantPage();
+    }
+
+    private void goToRestaurantPage() {
+        try {
+            SceneNavigator.switchScene(
+                    getStage(),
+                    "/org/example/resturant/restaurant-view.fxml",
+                    AppState.getSelectedRestaurantName()
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ======= VIEW RESERVATIONS =======
+
+    @FXML
+    protected void onViewReservationClick() {
+        try {
+            SceneNavigator.switchScene(
+                    getStage(),
+                    "/org/example/resturant/my-reservations.fxml",
+                    "My Reservations"
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

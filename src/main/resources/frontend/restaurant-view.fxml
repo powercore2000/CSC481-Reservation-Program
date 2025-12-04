@@ -3,33 +3,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="frontend.RestaurantController"
-            style="-fx-background-color: #f5f5f5;">
+<BorderPane style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.resturant.RestaurantController">
+
     <top>
-        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
-            <Button text="Back" onAction="#onBackClick" />
-            <Label text="Restaurant Details" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
+            <Label style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" text="WEB Name" />
         </HBox>
     </top>
-    <!-- ======================= CONTENT ========================= -->
+
     <center>
         <VBox alignment="TOP_CENTER" spacing="20">
             <VBox maxWidth="700" prefHeight="289.0" prefWidth="463.0" spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
 
-                <!-- Back + Home buttons -->
                 <HBox spacing="10">
                     <Button fx:id="backButton" onAction="#onBackClick" style="-fx-font-size: 18px;" text="←" />
 
-                    <Button fx:id="homeButton" onAction="#onHomeClick" style="-fx-font-size: 18px;" text="⌂" />
                 </HBox>
 
-                <!-- Restaurant Name -->
-                <Label fx:id="restaurantNameLabel" text="Restaurant Name" style="-fx-font-size: 32px; -fx-font-weight: bold;" />
+                <Label fx:id="restaurantNameLabel" style="-fx-font-size: 32px; -fx-font-weight: bold;" text="Restaurant Name" />
 
                 <HBox alignment="TOP_LEFT" spacing="40">
 
-                    <!-- LEFT COLUMN: Address -->
                     <VBox spacing="10">
                         <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="address" />
                         <Label fx:id="addressLabel" style="-fx-font-size: 14px;" text="123 Oak St, Carson, CA" />
@@ -37,22 +31,20 @@
                         <Label fx:id="openCloseLabel" style="-fx-font-size: 14px;" text="Open • Closes at 10 PM" />
                     </VBox>
 
-                    <!-- RIGHT COLUMN: Schedule -->
                     <VBox prefHeight="172.0" prefWidth="168.0" spacing="5">
                         <Label prefHeight="20.0" prefWidth="69.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Schedule" />
 
                         <Label text="Monday          10am - 12am" />
-                        <Label text="Tuesday         10am - 12am" />
-                        <Label text="Wednesday  10am - 12am" />
+                        <Label text="Tuesday          10am - 12am" />
+                        <Label text="Wednesday   10am - 12am" />
                         <Label text="Thursday        10am - 12am" />
-                        <Label text="Friday               10am - 12am" />
-                        <Label text="Saturday    10am - 12am" />
-                        <Label text="Sunday      10am - 12am" />
+                        <Label text="Friday              10am - 12am" />
+                        <Label text="Saturday        10am - 12am" />
+                        <Label text="Sunday          10am - 12am" />
                     </VBox>
 
                 </HBox>
 
-                <!-- Make Reservation Button -->
                 <Button alignment="CENTER" maxWidth="200" onAction="#onMakeReservationClick" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 8;" text="Make Reservation" />
             </VBox>
         </VBox>
