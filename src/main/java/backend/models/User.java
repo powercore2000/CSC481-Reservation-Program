@@ -9,4 +9,17 @@ public class User {
     
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
+	public void setEmail(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void setPhoneNumber(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void setPasswordHash(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
