@@ -1,4 +1,4 @@
-package org.example.resturant;
+package frontend;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,7 +19,7 @@ public class MakeReservationController
     {
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
-                "/org/example/resturant/restaurant-view.fxml",
+                "/frontend/restaurant-view.fxml",
                 "Restaurant Info");
     }
 
@@ -28,7 +28,7 @@ public class MakeReservationController
     {
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
-                "/org/example/resturant/home-view.fxml",
+                "/frontend/home-view.fxml",
                 "Restaurants");
     }
 
@@ -37,7 +37,7 @@ public class MakeReservationController
     {
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
-                "/org/example/resturant/reservation-info.fxml",
+                "/frontend/reservation-info.fxml",
                 "Reservation Info");
     }
 }

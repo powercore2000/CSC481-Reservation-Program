@@ -1,4 +1,4 @@
-package org.example.resturant;
+package frontend;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -25,7 +25,7 @@ public class MyReservationsController
     private void onBackClick() throws IOException
     {
         Stage stage = (Stage) reservationList.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "/org/example/resturant/home-view.fxml", "Restaurants");
+        SceneNavigator.switchScene(stage, "/frontend/home-view.fxml", "Restaurants");
     }
 
     @FXML
@@ -35,6 +35,6 @@ public class MyReservationsController
         if (selected == null) return;
 
         Stage stage = (Stage) reservationList.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "/org/example/resturant/reservation-info.fxml", "Reservation Info");
+        SceneNavigator.switchScene(stage, "/frontend/reservation-info.fxml", "Reservation Info");
     }
 }
