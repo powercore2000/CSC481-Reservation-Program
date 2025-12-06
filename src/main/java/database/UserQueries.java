@@ -1,3 +1,5 @@
+package database;
+
 import backend.models.User;
 
 import java.sql.*;
