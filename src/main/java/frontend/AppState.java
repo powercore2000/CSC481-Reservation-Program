@@ -1,4 +1,4 @@
-package frontend;
+package org.example.resturant;
 
 public class AppState
 {
@@ -13,4 +13,27 @@ public class AppState
     {
         signedIn = value;
     }
+    private static String selectedRestaurantName = "";
+
+    public static void setSelectedRestaurantName(String name)
+    {
+        selectedRestaurantName = name;
+    }
+
+    public static String getSelectedRestaurantName()
+    {
+        return selectedRestaurantName;
+    }
+    private static int selectedRestaurant = 0;
+
+    public static int getSelectedRestaurant()
+    {
+        return selectedRestaurant;
+    }
+
+    public static void setSelectedRestaurant(int id)
+    {
+        selectedRestaurant = id;
+    }
+
 }
