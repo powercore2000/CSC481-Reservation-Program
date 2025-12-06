@@ -1,6 +1,7 @@
 package database;
 
-import main.java.backend.models.User;
+import backend.models.*;
+
 import java.sql.*;
 import java.util.*;
 
@@ -12,7 +13,7 @@ public class UserQueries
 
     public List<User> getAllUsers()
     {
-        List<User> users = new ArrayList<>();
+        List<backend.models.User> users = new ArrayList<>();
 
         String sql = "SELECT full_name, email, phone, password_hash FROM app_users";
 
