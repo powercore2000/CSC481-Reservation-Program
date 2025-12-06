@@ -7,14 +7,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class RestaurantController {
-    @FXML private Label restaurantName;
-    @FXML private Label restaurantAddress;
+    @FXML private Label restaurantNameLabel;
+    @FXML private Label addressLabel;
+    @FXML private Label openCloseLabel;
 
     @FXML
     protected void initialize() {
-        // Example: could be dynamic if you pass data later
-        restaurantName.setText("Restaurant 1");
-        restaurantAddress.setText("123 Oak St, Carson, CA\nOpen • Closes at 10 PM");
+    	restaurantNameLabel.setText("Restaurant 1");
+        addressLabel.setText("123 Oak St, Carson, CA");
+        openCloseLabel.setText("Open • Closes at 10 PM");
     }
 
     @FXML
