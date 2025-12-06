@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
+import backend.models.Reservation;
+import java.time.LocalDate;
+
 
 public class MakeReservationController
 {
@@ -35,6 +38,15 @@ public class MakeReservationController
     @FXML
     private void onCreateReservationClick() throws IOException
     {
+    	String name = nameField.getText();
+        String email = emailField.getText();
+        LocalDate date = datePicker.getValue();
+        String time = timeField.getText();
+        int partySize = Integer.parseInt(partyField.getText());
+        
+        Reservation reservation = new Reservation(name, email, partySize, date, time);
+        System.out.println("Created reservation: " + reservation);
+    	
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
                 "/frontend/reservation-info.fxml",
