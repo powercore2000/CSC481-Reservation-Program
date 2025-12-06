@@ -1,81 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="frontend.MakeReservationController"
             style="-fx-background-color: #f5f5f5;">
+
     <top>
-        <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
-        	<children>
-            	<Label text="WEB Name" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
-            </children>
+        <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;" spacing="10">
+            <Label text="WEB Name" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
         </HBox>
     </top>
 
     <center>
-        <VBox spacing="20"
-              alignment="TOP_CENTER"
-              style="-fx-padding: 30;">
-            <children>
-                <Label text="Make Reservation"
-                       style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30;">
 
-                <GridPane hgap="15" vgap="12">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" />
-                        <ColumnConstraints prefWidth="200" hgrow="ALWAYS" />
-                    </columnConstraints>
+            <HBox spacing="10">
+                <Button text="←" style="-fx-font-size: 18px;" onAction="#onBackClick"/>
+                <Button text="⌂" style="-fx-font-size: 18px;" onAction="#onHomeClick"/>
+            </HBox>
 
-                    <!-- Row 0 -->
-                    <children>
-                        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                        <TextField fx:id="nameField"
-                                   promptText="Enter your name"
-                                   GridPane.rowIndex="0"
-                                   GridPane.columnIndex="1" />
+            <Label text="Make Reservation" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
-                        <!-- Row 1 -->
-                        <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                        <TextField fx:id="emailField"
-                                   promptText="Enter your email"
-                                   GridPane.rowIndex="1"
-                                   GridPane.columnIndex="1" />
+            <GridPane hgap="15" vgap="12">
 
-                        <!-- Row 2 -->
-                        <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                        <DatePicker fx:id="datePicker"
-                                    GridPane.rowIndex="2"
-                                    GridPane.columnIndex="1" />
+                <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="nameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                        <!-- Row 3 -->
-                        <Label text="Time:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                        <TextField fx:id="timeField"
-                                   promptText="e.g. 7:30 PM"
-                                   GridPane.rowIndex="3"
-                                   GridPane.columnIndex="1" />
+                <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="emailField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                        <!-- Row 4 -->
-                        <Label text="Party size:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-                        <TextField fx:id="partyField"
-                                   promptText="e.g. 4"
-                                   GridPane.rowIndex="4"
-                                   GridPane.columnIndex="1" />
-                    </children>
-                </GridPane>
+                <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                <Button text="Create Reservation"
-                        onAction="#onCreateReservationClick"
-                        style="-fx-background-color: #c0392b;
-                               -fx-text-fill: white;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 5;
-                               -fx-padding: 8 20;" />
-            </children>
+                <Label text="Time:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="timeField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Party size:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="partyField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            </GridPane>
+
+            <Button text="Create Reservation"
+                    onAction="#onCreateReservationClick"
+                    style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
         </VBox>
     </center>
+
 </BorderPane>
