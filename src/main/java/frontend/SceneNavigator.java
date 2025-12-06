@@ -1,4 +1,4 @@
-package org.example.resturant;
+package frontend;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -1,4 +1,4 @@
-package org.example.resturant;
+package frontend;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -38,13 +38,13 @@ public class ReservationInfoController
     private void onBackClick() throws IOException
     {
         Stage stage = (Stage) infoLabel.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "/org/example/resturant/my-reservations.fxml", "My Reservations");
+        SceneNavigator.switchScene(stage, "/frontend/my-reservations.fxml", "My Reservations");
     }
 
     @FXML
     private void onBackToHomeClick() throws IOException
     {
         Stage stage = (Stage) infoLabel.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "/org/example/resturant/home-view.fxml", "Home");
+        SceneNavigator.switchScene(stage, "/frontend/home-view.fxml", "Home");
     }
 }

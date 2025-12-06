@@ -1,4 +1,4 @@
-package org.example.resturant;
+package frontend;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -56,7 +56,7 @@ public class RestaurantController {
         try {
             SceneNavigator.switchScene(
                     stage,
-                    "/org/example/resturant/home-view.fxml",
+                    "/frontend/home-view.fxml",
                     "Restaurants"
             );
         } catch (IOException e) {
@@ -70,7 +70,7 @@ public class RestaurantController {
         try {
             SceneNavigator.switchScene(
                     stage,
-                    "/org/example/resturant/make-reservation.fxml",
+                    "/frontend/make-reservation.fxml",
                     "Make Reservation"
             );
         } catch (IOException e) {
