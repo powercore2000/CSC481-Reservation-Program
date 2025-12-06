@@ -1,4 +1,4 @@
-package database;
+package database.queries;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

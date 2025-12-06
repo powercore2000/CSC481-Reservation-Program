@@ -1,4 +1,4 @@
-package database;
+package database.queries;
 
 import backend.models.User;
 
