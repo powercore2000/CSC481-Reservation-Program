@@ -15,11 +15,11 @@ public class HomeController {
 
     
     @FXML
-    private void onBackClick() throws Exception {
-        Stage stage = (Stage) signInButton.getScene().getWindow();
+    private void onBackClick(javafx.event.ActionEvent event) throws Exception {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         SceneNavigator.switchScene(stage, "/frontend/home-search.fxml", "Smart N Dine");
     }
-    
+
     @FXML
     public void initialize() {
         if (AppState.isSignedIn()) {
@@ -35,18 +35,18 @@ public class HomeController {
 
     @FXML
     protected void onSignInClick() {
-        if (!AppState.isSignedIn()) {
-        	UserDTO user = new UserDTO("Bob Marley","bob@gmail.com","310 111 1234", "BobPass123");
-        	backend.controllers.ReservationController.createUser(user);
-        	
-        	
-            AppState.setSignedIn(true);
-            signInButton.setText("👤");
-            signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
-            viewReservationButton.setVisible(true);
-            signOutButton.setVisible(true);
+        try {
+            SceneNavigator.switchScene(
+                    getStage(),
+                    "/frontend/login-view.fxml",
+                    "Login In"
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+
 
     @FXML
     protected void onSignOutClick() {
