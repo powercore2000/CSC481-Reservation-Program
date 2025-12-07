@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-import database.queries.*;
+import database.queries.DbManager;
+import database.queries.DbInitializer;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class ReservationServer {

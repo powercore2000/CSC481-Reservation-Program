@@ -1,6 +1,6 @@
 package database.queries;
 
-import backend.models.User;
+import backend.models.UserModel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ public class UserQueries
 {
 
     /* ------------ mapping helpers ------------ */
-    private static User map(ResultSet rs) throws SQLException
+    private static UserModel map(ResultSet rs) throws SQLException
     {
-        User u = new User();
+        UserModel u = new UserModel();
         u.setUserId(rs.getLong("id"));          // model field must exist
         u.setName(rs.getString("full_name"));
         u.setEmail(rs.getString("email"));
@@ -24,10 +24,10 @@ public class UserQueries
 
     /* ------------------ READ ------------------ */
 
-    public List<User> findAll()
+    public List<UserModel> findAll()
     {
         String sql = "SELECT id, full_name, email, phone, password_hash FROM app_users ORDER BY id";
-        List<User> out = new ArrayList<>();
+        List<UserModel> out = new ArrayList<>();
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery())
@@ -42,7 +42,7 @@ public class UserQueries
         return out;
     }
 
-    public Optional<User> findById(long id)
+    public Optional<UserModel> findById(long id)
     {
         String sql = "SELECT id, full_name, email, phone, password_hash FROM app_users WHERE id = ?";
         try (Connection c = DbManager.getConnection();
@@ -65,7 +65,7 @@ public class UserQueries
         return Optional.empty();
     }
 
-    public Optional<User> findByEmail(String email)
+    public Optional<UserModel> findByEmail(String email)
     {
         String sql = "SELECT id, full_name, email, phone, password_hash FROM app_users WHERE email = ?";
         try (Connection c = DbManager.getConnection();
@@ -88,7 +88,7 @@ public class UserQueries
     /* ----------------- CREATE ----------------- */
 
     /** Inserts and returns generated id, or -1 on failure. */
-    public long insert(User u)
+    public long insert(UserModel u)
     {
         String sql = "INSERT INTO app_users (full_name, email, phone, password_hash) VALUES (?,?,?,?)";
         try (Connection c = DbManager.getConnection();
@@ -116,7 +116,7 @@ public class UserQueries
 
     /* ----------------- UPDATE ----------------- */
 
-    public boolean update(User u)
+    public boolean update(UserModel u)
     {
         if (u.getUserId() == null) return false;
 

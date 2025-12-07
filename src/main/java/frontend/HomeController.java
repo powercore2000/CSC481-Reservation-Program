@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+import database.dto.UserDTO;
+
 public class HomeController {
 
     @FXML private Button signInButton;
@@ -34,6 +36,10 @@ public class HomeController {
     @FXML
     protected void onSignInClick() {
         if (!AppState.isSignedIn()) {
+        	UserDTO user = new UserDTO("Bob Marley","bob@gmail.com","310 111 1234", "BobPass123");
+        	backend.controllers.ReservationController.createUser(user);
+        	
+        	
             AppState.setSignedIn(true);
             signInButton.setText("👤");
             signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
