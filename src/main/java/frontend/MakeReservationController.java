@@ -45,7 +45,7 @@ public class MakeReservationController
         int partySize = Integer.parseInt(partyField.getText());
         
         Reservation reservation = new Reservation(name, email, partySize, date, time);
-        System.out.println("Created reservation: " + reservation);
+        System.out.println("Created reservation: " + reservation); // prints out the output that should be in the my reservation section
     	
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
