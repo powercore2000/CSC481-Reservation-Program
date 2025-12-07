@@ -1,6 +1,7 @@
 package backend.controllers;
 
 import backend.models.*;
+import database.dto.ReservationDTO;
 
 import java.util.ArrayList;
 
@@ -30,11 +31,24 @@ public class ReservationController {
 	
 	
     @GetMapping("/reservations")
-    public ArrayList<Reservation> getAllReservations() {
-        return new ArrayList<Reservation>();
+    public ArrayList<ReservationDTO> getAllReservations() {
+        return new ArrayList<ReservationDTO>();
     }
 	@GetMapping("/users")
 	public ArrayList<User> getAllUsers(){
 		return new ArrayList<User>();
 	}
+	
+	public static void CreateReservation(ReservationDTO reservation) {
+		
+		System.out.println("Created reservation: " + reservation);
+		//ReservationModel resMod = ReservationMapper.toModel(reservation);     
+        //database.queries.ReservationQueries.createReservation(reservation);
+		
+        database.queries.ReservationQueries.saveReservation(reservation);
+        database.queries.ReservationQueries.listAll();		 	
+
+		
+	}
+	
 }

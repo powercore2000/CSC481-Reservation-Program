@@ -3,8 +3,6 @@ package backend;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import database.*;
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,7 +10,7 @@ import java.sql.SQLException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-import database.DbInitializer;
+import database.queries.*;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class ReservationServer {
