@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DbManager {
+	
     public static final String JDBC_URL = "jdbc:sqlite:./database/reservation_database.db";
 
     public static Connection getConnection() throws SQLException {

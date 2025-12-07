@@ -129,10 +129,11 @@ public class UserQueries
     /* ----------------- UPDATE ----------------- */
 
     public static boolean update(UserDTO u)
+
     {
         if (u.getUserId() == null) return false;
 
-        String sql = "UPDATE app_users SET full_name = ?, email = ?, phone = ?, password_hash = ? WHERE id = ?";
+        String sql = "UPDATE app_users SET full_name = ?, phone = ?, password_hash = ? WHERE email = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
@@ -141,6 +142,10 @@ public class UserQueries
             ps.setString(3, u.getPhoneNumber());
             ps.setString(4, u.getPasswordString());
             ps.setLong(5, u.getUserId());
+            ps.setString(2, u.getPhoneNumber());
+            ps.setString(3, u.getPasswordString());
+            ps.setString(4, u.getEmail());
+
             return ps.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -163,5 +168,36 @@ public class UserQueries
         }
         return false;
     }
+
+
+    /* ----------------- SAVE (INSERT or UPDATE) ----------------- */
+
+    /* Saves a user using email as the unique identifier
+    * If no user with that email exist --> INSERT
+    * If user exist --> UPDATE
+    * */
+/*
+    public User saveUser(User u)
+    {
+        Optional<User> existing = findByEmail(u.getEmail());
+
+        if (existing.isEmpty())
+        {
+            // INSERT NEW USER
+            long id = insert(u);
+            if (id < 0) return null;
+            u.setUserId(id);
+            return u;
+        } else {
+            // UPDATE EXISTING USER (by email)
+            boolean ok = updateByEmail(u);
+            if (!ok) return null;
+
+            // preserve existing userID
+            u.setUserId(existing.get().getUserId());
+            return u;
+        }
+    }
+    */
 }
 

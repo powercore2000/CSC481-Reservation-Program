@@ -5,56 +5,17 @@ import database.dto.*;
 
 import java.util.ArrayList;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import backend.models.ReservationMapper;
+import backend.models.ReservationModel;
 
 
 @RestController
 
 public class ReservationController {
-	
-	public static UserDTO currentUser;
-	
-	@GetMapping
-	public static String welcome() {
-		
-		return "Welcome to hell";
-	}
-			
-    @PostMapping("/signUp")
-    public static Boolean createUser(@RequestBody UserDTO newUser) {
-    	
-        System.out.println( "User created: " + newUser.getName());
-        long key = database.queries.UserQueries.insert(newUser);
-        if(key == -1L) {
-        	System.out.println("User not made");
-        	//throw new RuntimeException("hu?\ntrace-line1\ntrace-line2");
-        	return false;
-        }
-        currentUser = newUser;
-        database.queries.UserQueries.findAll();
-        return true;
-    }
-    
-    @GetMapping("/signUp2")
-    public static Boolean createUser() {
-    	UserDTO newUser = new UserDTO("Bobby2", "bob2@gmail.com", "310 111 1234", "4566667");
-        System.out.println( "User created: " + newUser.getName());
-        database.queries.UserQueries.insert(newUser);
-        database.queries.UserQueries.findAll();
-        return true;
-    }
-    
-    @GetMapping("/listAllUsers")
-    public static Boolean getAllUsers() {
-    	database.queries.UserQueries.findAll();
-        return true;
-    }
-
-	@PostMapping("/login")
-    public static String loginUser(@RequestBody UserDTO loginUser) {
-		
-        return "Logging in " + loginUser.getEmail();
-    }
 	
 	
     @GetMapping("/reservations")
@@ -62,16 +23,30 @@ public class ReservationController {
         return new ArrayList<ReservationDTO>();
     }
 
-	
-	public static void CreateReservation(ReservationDTO reservation) {
-		
-		System.out.println("Created reservation: " + reservation);
-		//ReservationModel resMod = ReservationMapper.toModel(reservation);     
-        //database.queries.ReservationQueries.createReservation(reservation);
-		
-        database.queries.ReservationQueries.saveReservation(reservation);
-        database.queries.ReservationQueries.listAll();		 	
+    @PostMapping("/create")
+    public ResponseEntity<Boolean> createReservation(@RequestBody ReservationDTO reservationDto) {
 
+        Boolean result = CreateReservation(reservationDto);
+
+        if (result) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        }
+    }
+    
+	public static Boolean CreateReservation(ReservationDTO reservation) {
+	    if(!UserController.isUserLoggedIn()) {
+	    	System.out.println("Cant add reservation user not loggedin! Logging in default user:");
+	    	UserController.loginUser(new UserDTO("Debug Userman", "bobBot69@hotbotmail.com", "310 111 1234", "debugBotPAs$12"));
+	    	//return false;
+	    }
+	    
+		reservation.setEmail(UserController.getCurrentUser().getEmail()); 
+		System.out.println("Created reservation: " + reservation);  
+        database.queries.ReservationQueries.createReservation(reservation);
+        database.queries.ReservationQueries.listAll();		 	
+        return true;
 		
 	}
 	
