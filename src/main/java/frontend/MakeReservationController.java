@@ -31,7 +31,7 @@ public class MakeReservationController
     {
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
-                "/frontend/home-view.fxml",
+                "/frontend/home-search.fxml",
                 "Restaurants");
     }
 

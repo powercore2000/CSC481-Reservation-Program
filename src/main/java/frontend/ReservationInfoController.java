@@ -45,6 +45,6 @@ public class ReservationInfoController
     private void onBackToHomeClick() throws IOException
     {
         Stage stage = (Stage) infoLabel.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "/frontend/home-view.fxml", "Home");
+        SceneNavigator.switchScene(stage, "/frontend/home-search.fxml", "Home");
     }
 }
