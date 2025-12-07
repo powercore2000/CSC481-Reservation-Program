@@ -1,6 +1,6 @@
 package backend.models;
 
-public class User {
+public class UserModel {
 
     private String name;//full_name
     private Long userId;

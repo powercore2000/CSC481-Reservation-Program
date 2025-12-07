@@ -1,7 +1,7 @@
 package backend.controllers;
 
-import backend.models.*;
-import database.dto.ReservationDTO;
+import database.dto.*;
+
 
 import java.util.ArrayList;
 
@@ -13,30 +13,30 @@ import org.springframework.web.bind.annotation.*;
 public class ReservationController {
 	
 	@GetMapping
-	public String welcome() {
+	public static String welcome() {
 		
 		return "Welcome to hell";
 	}
 			
     @PostMapping("/signUp")
-    public String createUser(@RequestBody User user) {
-        return "User created: " + user.getName();
+    public static String createUser(@RequestBody UserDTO newUser) {
+        return "User created: " + newUser.getName();
     }
 
 	@PostMapping("/login")
-    public String login(@RequestBody String email, String password) {
+    public static String login(@RequestBody UserDTO loginUser) {
 		
-        return "Hash pass and see if they exist!";
+        return "Logging in " + loginUser.getEmail();
     }
 	
 	
     @GetMapping("/reservations")
-    public ArrayList<ReservationDTO> getAllReservations() {
+    public static ArrayList<ReservationDTO> getAllReservations() {
         return new ArrayList<ReservationDTO>();
     }
 	@GetMapping("/users")
-	public ArrayList<User> getAllUsers(){
-		return new ArrayList<User>();
+	public static ArrayList<UserDTO> getAllUsers(){
+		return new ArrayList<UserDTO>();
 	}
 	
 	public static void CreateReservation(ReservationDTO reservation) {
