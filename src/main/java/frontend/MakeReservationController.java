@@ -36,7 +36,7 @@ public class MakeReservationController
     {
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
-                "/frontend/home-view.fxml",
+                "/frontend/home-search.fxml",
                 "Restaurants");
     }
 
@@ -52,10 +52,6 @@ public class MakeReservationController
         
         ReservationDTO reservation = new ReservationDTO(name, email, partySize, date, time, "Reserved", uuid.toString());
         backend.controllers.ReservationController.CreateReservation(reservation);
-
-       
-        
-        
     	
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,

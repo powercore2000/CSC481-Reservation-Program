@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.HomeSearchController"
+            style="-fx-background-color: #f5f5f5;">
+
+    <top>
+        <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
+            <children>
+                <Label text="WEB NAME"
+                       style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="7">
+        	<Label prefHeight="67.0"/>
+			<HBox alignment="TOP_CENTER" spacing="10">
+				<Button text="Search" onAction="#onSearchClick"/>
+                <TextField fx:id="searchField" promptText="Search for Restaurants that have your food type " style="-fx-pref-width: 300;" />
+ 
+            </HBox>
+            <Button text="View All" onAction="#onViewAllClick"/>
+
+        </VBox>    </center>
+
+</BorderPane>

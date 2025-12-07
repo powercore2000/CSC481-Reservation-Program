@@ -13,6 +13,13 @@ public class HomeController {
     @FXML private Button signOutButton;
     @FXML private Button viewReservationButton;
 
+    
+    @FXML
+    private void onBackClick() throws Exception {
+        Stage stage = (Stage) signInButton.getScene().getWindow();
+        SceneNavigator.switchScene(stage, "/frontend/home-search.fxml", "Smart N Dine");
+    }
+    
     @FXML
     public void initialize() {
         if (AppState.isSignedIn()) {
