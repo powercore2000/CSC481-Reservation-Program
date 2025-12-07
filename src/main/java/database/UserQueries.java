@@ -119,7 +119,7 @@ public class UserQueries
     {
         if (u.getUserId() == null) return false;
 
-        String sql = "UPDATE app_users SET full_name = ?, email = ?, phone = ?, password_hash = ? WHERE email = ?";
+        String sql = "UPDATE app_users SET full_name = ?, phone = ?, password_hash = ? WHERE email = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
