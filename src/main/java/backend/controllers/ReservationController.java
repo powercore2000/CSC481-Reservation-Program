@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 public class ReservationController {
 	
+	public static UserDTO currentUser;
+	
 	@GetMapping
 	public static String welcome() {
 		
@@ -20,8 +22,15 @@ public class ReservationController {
 			
     @PostMapping("/signUp")
     public static Boolean createUser(@RequestBody UserDTO newUser) {
+    	
         System.out.println( "User created: " + newUser.getName());
-        database.queries.UserQueries.insert(newUser);
+        long key = database.queries.UserQueries.insert(newUser);
+        if(key == -1L) {
+        	System.out.println("User not made");
+        	//throw new RuntimeException("hu?\ntrace-line1\ntrace-line2");
+        	return false;
+        }
+        currentUser = newUser;
         database.queries.UserQueries.findAll();
         return true;
     }
