@@ -153,7 +153,8 @@ public class UserQueries
 
     /* ----------------- SAVE (INSERT or UPDATE) ----------------- */
 
-    /* Saves a user using email as the unique identifier
+    /**
+     * Saves a user using email as the unique identifier
     * If no user with that email exist --> INSERT
     * If user exist --> UPDATE
     * */
