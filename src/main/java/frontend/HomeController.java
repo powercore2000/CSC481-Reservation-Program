@@ -5,22 +5,13 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-import database.dto.UserDTO;
-
-public class HomeController {
+public class HomeController
+{
 
     @FXML private Button signInButton;
     @FXML private Button signOutButton;
     @FXML private Button viewReservationButton;
     @FXML private Button backButton;
-
-    
-    @FXML
-    private void onBackClick() throws IOException
-    {
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
-    }
 
     @FXML
     public void initialize()
@@ -34,21 +25,11 @@ public class HomeController {
     }
 
     @FXML
-
-    protected void onLogInClick() {
-        try {
-            SceneNavigator.switchScene(
-                    getStage(),
-                    "/frontend/login-view.fxml",
-                    "Login In"
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void onBackClick() throws IOException
+    {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
     }
-
-
-
 
 
 
@@ -64,7 +45,6 @@ public class HomeController {
             signOutButton.setVisible(true);
         }
     }
-
     @FXML
     protected void onSignOutClick()
     {

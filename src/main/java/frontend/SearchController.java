@@ -13,6 +13,8 @@ public class SearchController {
     @FXML private Button signOutButton;
     @FXML private TextField searchField;
 
+
+
     @FXML
     public void initialize()
     {
