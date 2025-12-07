@@ -26,9 +26,11 @@
                         onAction="#onSignOutClick" />
 
                 <!-- SIGN IN / PROFILE BUTTON -->
-                <Button fx:id="signInButton" text="Sign In"
-                        style="-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold; -fx-background-radius: 5;"
-                        onAction="#onSignInClick"/>
+                <Button fx:id="signInButton" text="Log In"
+        		style="-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold; -fx-background-radius: 5;"
+        		onAction="#onSignInClick"/>
+
+
             </HBox>            
                 
             <HBox alignment="CENTER_LEFT" style="-fx-padding: 10 20 0 20;">
