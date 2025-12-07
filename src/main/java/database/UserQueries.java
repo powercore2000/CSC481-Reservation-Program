@@ -1,5 +1,6 @@
 package database;
 
+
 import backend.models.User;
 
 import java.sql.*;
@@ -114,19 +115,19 @@ public class UserQueries
 
     /* ----------------- UPDATE ----------------- */
 
-    public boolean update(User u)
+    public boolean updateByEmail(User u)
     {
         if (u.getUserId() == null) return false;
 
-        String sql = "UPDATE app_users SET full_name = ?, email = ?, phone = ?, password_hash = ? WHERE id = ?";
+        String sql = "UPDATE app_users SET full_name = ?, email = ?, phone = ?, password_hash = ? WHERE email = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
             ps.setString(1, u.getName());
-            ps.setString(2, u.getEmail());
-            ps.setString(3, u.getPhoneNumber());
-            ps.setString(4, u.getPasswordHash());
-            ps.setLong(5, u.getUserId());
+            ps.setString(2, u.getPhoneNumber());
+            ps.setString(3, u.getPasswordHash());
+            ps.setString(4, u.getEmail());
+
             return ps.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,5 +149,34 @@ public class UserQueries
             e.printStackTrace();
         }
         return false;
+    }
+
+    /* ----------------- SAVE (INSERT or UPDATE) ----------------- */
+
+    /* Saves a user using email as the unique identifier
+    * If no user with that email exist --> INSERT
+    * If user exist --> UPDATE
+    * */
+
+    public User saveUser(User u)
+    {
+        Optional<User> existing = findByEmail(u.getEmail());
+
+        if (existing.isEmpty())
+        {
+            // INSERT NEW USER
+            long id = insert(u);
+            if (id < 0) return null;
+            u.setUserId(id);
+            return u;
+        } else {
+            // UPDATE EXISTING USER (by email)
+            boolean ok = updateByEmail(u);
+            if (!ok) return null;
+
+            // preserve existing userID
+            u.setUserId(existing.get().getUserId());
+            return u;
+        }
     }
 }
