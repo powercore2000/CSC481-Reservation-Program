@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="frontend.MenuController"
+            style="-fx-background-color: #f2f2f2;">
+
+    <!-- ======= TOP RED HEADER ======= -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10"
+              style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
+            <Label text="WEB Name"
+                   style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Back button on the right under header in the mockup -->
+            <Button text="Back"
+                    style="-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold; -fx-background-radius: 5;"
+                    onAction="#onBackClick"/>
+        </HBox>
+    </top>
+
+    <!-- ======= CENTER CONTENT ======= -->
+    <center>
+        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30;">
+
+            <!-- Menu title -->
+            <Label fx:id="menuTitleLabel"
+                   text="Restaurant Name's Menu"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <!-- Row of 4 menu items, like your sketch -->
+            <HBox spacing="20" alignment="CENTER">
+
+                <!-- ITEM 1 -->
+                <VBox spacing="5" alignment="CENTER">
+                    <Button text="Image"
+                            style="-fx-pref-width: 100; -fx-pref-height: 100;
+                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;"/>
+                    <Label text="Food Name 1"/>
+                    <Label text="price: $9.99"/>
+                    <Label text="Tasty dish with ..."/>
+                    <Label text="Category: Buffet"/>
+                    <Button text="Nutritional facts"
+                            style="-fx-background-color: #c0392b; -fx-text-fill: white;
+                                   -fx-background-radius: 5;"/>
+                </VBox>
+
+                <!-- ITEM 2 -->
+                <VBox spacing="5" alignment="CENTER">
+                    <Button text="Image"
+                            style="-fx-pref-width: 100; -fx-pref-height: 100;
+                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;"/>
+                    <Label text="Food Name 2"/>
+                    <Label text="price :$12.49"/>
+                    <Label text="Another menu item..."/>
+                    <Label text="Category: Cafe"/>
+                    <Button text="Nutritional facts"
+                            style="-fx-background-color: #c0392b; -fx-text-fill: white;
+                                   -fx-background-radius: 5;"/>
+                </VBox>
+
+                <!-- ITEM 3 -->
+                <VBox spacing="5" alignment="CENTER">
+                    <Button text="Image"
+                            style="-fx-pref-width: 100; -fx-pref-height: 100;
+                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;"/>
+                    <Label text="Food Name 3"/>
+                    <Label text="price: $15.99"/>
+                    <Label text="Fine dining special..."/>
+                    <Label text="Category: Fine Dining"/>
+                    <Button text="Nutritional facts"
+                            style="-fx-background-color: #c0392b; -fx-text-fill: white;
+                                   -fx-background-radius: 5;"/>
+                </VBox>
+
+                <!-- ITEM 4 -->
+                <VBox spacing="5" alignment="CENTER">
+                    <Button text="Image"
+                            style="-fx-pref-width: 100; -fx-pref-height: 100;
+                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;"/>
+                    <Label text="Food Name 4"/>
+                    <Label text="price: $8.50"/>
+                    <Label text="Light bistro meal...\"/>
+                    <Label text="Category: Bistro"/>
+                    <Button text="Nutritional facts"
+                            style="-fx-background-color: #c0392b; -fx-text-fill: white;
+                                   -fx-background-radius: 5;"/>
+                </VBox>
+
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>
