@@ -3,8 +3,6 @@ package database.queries;
 import backend.models.UserModel;
 import database.dto.UserDTO;
 
-import backend.models.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,7 +143,7 @@ public class UserQueries
             ps.setString(4, u.getPasswordString());
             ps.setLong(5, u.getUserId());
             ps.setString(2, u.getPhoneNumber());
-            ps.setString(3, u.getPasswordHash());
+            ps.setString(3, u.getPasswordString());
             ps.setString(4, u.getEmail());
 
             return ps.executeUpdate() == 1;
@@ -178,7 +176,7 @@ public class UserQueries
     * If no user with that email exist --> INSERT
     * If user exist --> UPDATE
     * */
-
+/*
     public User saveUser(User u)
     {
         Optional<User> existing = findByEmail(u.getEmail());
@@ -200,5 +198,6 @@ public class UserQueries
             return u;
         }
     }
+    */
 }
 
