@@ -1,35 +1,49 @@
 package frontend;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class MenuController
-{
+public class MenuController {
 
     @FXML
-    private Label menuTitleLabel;
-
-    @FXML
-    public void initialize()
-    {
-        // Set title like "Andies Menu", "Jays sushi palace Menu", etc.
-        String name = AppState.getSelectedRestaurantName();
-        if (name == null || name.isBlank())
-        {
-            name = "Restaurant";
-        }
-        menuTitleLabel.setText(name + "'s Menu");
+    private void onBackClick(ActionEvent event) throws Exception {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "restaurant-view.fxml", "Restaurant");
     }
 
     @FXML
-    private void onBackClick() throws IOException
-    {
-        // Go back to that restaurant's info page
-        Stage stage = (Stage) menuTitleLabel.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "restaurant-view.fxml",
-                AppState.getSelectedRestaurantName());
+    private void onViewMore1(ActionEvent event) throws Exception {
+        AppState.setSelectedMenuItem(1);
+        goToDetail(event);
     }
+
+    @FXML
+    private void onViewMore2(ActionEvent event) throws Exception
+    {
+        AppState.setSelectedMenuItem(2);
+        goToDetail(event);
+    }
+
+    @FXML
+    private void onViewMore3(ActionEvent event) throws Exception
+    {
+        AppState.setSelectedMenuItem(3);
+        goToDetail(event);
+    }
+
+    @FXML
+    private void onViewMore4(ActionEvent event) throws Exception
+    {
+        AppState.setSelectedMenuItem(4);
+        goToDetail(event);
+    }
+
+    private void goToDetail(ActionEvent event) throws Exception
+    {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "menu-item-detail.fxml", "Item Details");
+    }
+
 }
