@@ -63,6 +63,14 @@ public class RestaurantController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void onMenuClick() throws IOException
+    {
+        Stage stage = (Stage) restaurantNameLabel.getScene().getWindow();
+        SceneNavigator.switchScene(stage, "menu-view.fxml",
+                AppState.getSelectedRestaurantName() + " Menu");
+    }
+
 
     @FXML
     private void onMakeReservationClick() {
