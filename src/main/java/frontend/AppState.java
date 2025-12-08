@@ -8,6 +8,10 @@ public class AppState
 
         return signedIn;
     }
+//If you want to actually remember the username, you can add this
+//private static String currentUserName;
+//public static void setCurrentUserName(String name) { currentUserName = name; }
+//public static String getCurrentUserName() { return currentUserName; }
 
     public static void setSignedIn(boolean value)
     {

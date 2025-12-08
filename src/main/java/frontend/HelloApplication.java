@@ -10,12 +10,17 @@ public class HelloApplication extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("search-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("SelectResturantType.fxml"));
         Scene scene = new Scene(loader.load(), 600, 500);
         stage.setTitle("Smart N Dine");
         stage.setScene(scene);
         stage.show();
     }
-
+    public class Launcher
+    {
+        public static void main(String[] args) {
+            Application.launch(HelloApplication.class, args);
+        }
+    }
 
 }

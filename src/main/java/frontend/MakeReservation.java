@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class MakeReservationController
+public class MakeReservation
 {
 
     @FXML private TextField nameField;
@@ -28,7 +28,7 @@ public class MakeReservationController
     {
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
-                "/frontend/home-view.fxml",
+                "/frontend/resturantlists.fxml",
                 "Restaurants");
     }
 

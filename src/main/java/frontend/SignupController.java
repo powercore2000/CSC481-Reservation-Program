@@ -47,7 +47,7 @@ public class SignupController
         // AppState.setCurrentUserName(username);
 
         Stage stage = getStage(event);
-        SceneNavigator.switchScene(stage, "search-view.fxml", "Restaurants");
+        SceneNavigator.switchScene(stage, "SelectResturantType.fxml", "Restaurants");
     }
 
     @FXML

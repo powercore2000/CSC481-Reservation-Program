@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SearchController
+public class SelectResturantType
 {
 
     @FXML private Button signInButton;
@@ -54,7 +54,7 @@ public class SearchController
 
     private void goToRestaurantList() throws IOException {
         Stage stage = getStage();
-        SceneNavigator.switchScene(stage, "home-view.fxml", "Restaurants");
+        SceneNavigator.switchScene(stage, "resturantlists.fxml", "Restaurants");
     }
 
     @FXML
