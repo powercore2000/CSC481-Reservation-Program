@@ -10,11 +10,26 @@ VALUES
 
 /* ---------- RESTAURANTS ---------- */
 /* IDs will be 1, 2, 3 in this order */
-INSERT INTO restaurants (name, address, city, state)
+INSERT INTO restaurants (name, address, city, state, restaurant_menu_id)
 VALUES
-  ('Cedar Grill',  '123 Main St', 'Claremont', 'CA'),
-  ('Vista Patio',  '77 Oak Ave',  'Pomona',    'CA'),
-  ('Golden Spoon', '55 Pine Rd',  'Upland',    'CA');
+  ('Cedar Grill',  '123 Main St', 'Claremont', 'CA', NULL),
+  ('Vista Patio',  '77 Oak Ave',  'Pomona',    'CA', NULL),
+  ('Golden Spoon', '55 Pine Rd',  'Upland',    'CA', NULL);
+
+
+/* ---------- RESTAURANT MENUS (1:1 with restaurants) ---------- */
+/* These will get ids 1, 2, 3 matching restaurant_id */
+INSERT INTO restaurant_menus (restaurant_id)
+VALUES
+  (1),  -- Cedar Grill menu
+  (2),  -- Vista Patio menu
+  (3);  -- Golden Spoon menu
+
+
+/* Wire restaurants back to their menus (set restaurant_menu_id) */
+UPDATE restaurants SET restaurant_menu_id = 1 WHERE id = 1;
+UPDATE restaurants SET restaurant_menu_id = 2 WHERE id = 2;
+UPDATE restaurants SET restaurant_menu_id = 3 WHERE id = 3;
 
 
 /* ---------- WEEKLY SCHEDULES (Mon–Sun) ---------- */
@@ -62,21 +77,23 @@ VALUES
   ('Chocolate Lava Cake', 'Warm chocolate cake with ice cream',     899, 'Dessert');
 
 
-/* ---------- WHICH RESTAURANT SERVES WHICH FOOD ---------- */
-/* Cedar Grill (1) */
-INSERT INTO restaurant_food (restaurant_id, food_id) VALUES
+/* ---------- WHICH MENU SERVES WHICH FOOD (via MENU_FOOD) ---------- */
+/* restaurant_menus: 1 = Cedar Grill, 2 = Vista Patio, 3 = Golden Spoon */
+
+/* Cedar Grill menu (menu id = 1) */
+INSERT INTO menu_food (restaurant_menu_id, food_id) VALUES
   (1, 1),  -- Classic Burger
   (1, 2),  -- Grilled Chicken
   (1, 7);  -- Chocolate Lava Cake
 
-/* Vista Patio (2) */
-INSERT INTO restaurant_food (restaurant_id, food_id) VALUES
+/* Vista Patio menu (menu id = 2) */
+INSERT INTO menu_food (restaurant_menu_id, food_id) VALUES
   (2, 3),  -- Street Tacos
   (2, 4),  -- Spicy Nachos
   (2, 7);  -- Chocolate Lava Cake
 
-/* Golden Spoon (3) */
-INSERT INTO restaurant_food (restaurant_id, food_id) VALUES
+/* Golden Spoon menu (menu id = 3) */
+INSERT INTO menu_food (restaurant_menu_id, food_id) VALUES
   (3, 5),  -- Avocado Toast
   (3, 6),  -- Berry Pancakes
   (3, 7);  -- Chocolate Lava Cake
