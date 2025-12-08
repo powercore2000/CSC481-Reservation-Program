@@ -12,22 +12,17 @@ public class ReservationQueries {
 
     /* ---------- LIST RESERVATIONS FOR A USER ---------- */
 
-    public static List<Map<String, Object>> forUser(long userId)
+    public static List<ReservationModel> getAllReservationsForUser(long userId)
     {
         String sql = """
-            SELECT r.id,
-                   r.reservation_at,
-                   r.party_size,
-                   r.status,
-                   r.confirmation_code,
-                   rest.name AS restaurant_name
+            SELECT *
             FROM reservations r
             JOIN restaurants rest ON rest.id = r.restaurant_id
             WHERE r.user_id = ?
             ORDER BY r.reservation_at
         """;
 
-        List<Map<String, Object>> out = new ArrayList<>();
+        List<ReservationModel> out = new ArrayList<>();
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
@@ -35,21 +30,29 @@ public class ReservationQueries {
             ps.setLong(1, userId);
             try (ResultSet rs = ps.executeQuery())
             {
+        		DbManager.openDatabase();
                 while (rs.next())
                 {
-                    Map<String, Object> row = new HashMap<>();
-                    row.put("id", rs.getLong("id"));
-                    row.put("reservation_at", rs.getString("reservation_at"));
-                    row.put("party_size", rs.getInt("party_size"));
-                    row.put("status", rs.getString("status"));
-                    row.put("confirmation_code", rs.getString("confirmation_code"));
-                    row.put("restaurant_name", rs.getString("restaurant_name"));
+                	ReservationModel row = new ReservationModel();
+
+                    // Required columns (match your validatePresenceOf + PK)
+                    row.set("id",             rs.getLong("id"));
+                    row.set("user_id",        rs.getLong("user_id"));
+                    row.set("restaurant_id",  rs.getLong("restaurant_id"));
+                    row.set("reservation_at", rs.getTimestamp("reservation_at"));
+                    row.set("party_size",     rs.getInt("party_size"));
+                    row.set("status",         rs.getString("status"));
+                    row.set("confirmation_code", rs.getString("confirmation_code"));
+
+                    // Extra, joined column – not in reservations table, but fine as a transient attr
+
+
                     out.add(row);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
         return out;
     }
 
@@ -72,18 +75,19 @@ public class ReservationQueries {
 
             try (ResultSet rs = ps.executeQuery())
             {
+            	DbManager.openDatabase();
                 while (rs.next())
                 {
                 	ReservationModel row = new ReservationModel();
 
-					row.set("id", rs.getLong("id"));
-					row.set("user_id", rs.getLong("user_id"));
-					row.set("restaurant_id", rs.getLong("restaurant_id"));
-					row.set("reservation_at", rs.getTimestamp("reservation_at")); 
-					row.set("party_size", rs.getInt("party_size"));
-					row.set("status", rs.getString("status"));
-					row.set("confirmation_code", rs.getString("confirmation_code"));
-					row.set("special_requests", rs.getString("special_requests"));
+                    // Required columns (match your validatePresenceOf + PK)
+                    row.set("id",             rs.getLong("id"));
+                    row.set("user_id",        rs.getLong("user_id"));
+                    row.set("restaurant_id",  rs.getLong("restaurant_id"));
+                    row.set("reservation_at", rs.getTimestamp("reservation_at"));
+                    row.set("party_size",     rs.getInt("party_size"));
+                    row.set("status",         rs.getString("status"));
+                    row.set("confirmation_code", rs.getString("confirmation_code"));
 
                     // ⚠️ restaurant_name does not exist in SELECT * unless you join restaurants
                     // So this will remain null unless that column exists in your table.
@@ -98,7 +102,7 @@ public class ReservationQueries {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
         return out;
     }
 
@@ -109,13 +113,11 @@ public class ReservationQueries {
     public static Optional<ReservationDTO> createReservation(ReservationDTO res) {
     	try {
 
-    		Base.open("org.sqlite.JDBC",DbManager.JDBC_URL, "", "");
-
-    		Base.exec("PRAGMA foreign_keys = ON;");
     		
     		ReservationModel resMod = ReservationMapper.toModel(res);
     		ReservationDTO filledDTO = ReservationMapper.toDTO(resMod);
     		
+    		DbManager.openDatabase();
     		if(resMod == null) {
     			System.out.println("Not adding reservation to db");
     			return Optional.empty();
@@ -135,7 +137,7 @@ public class ReservationQueries {
 	        return Optional.empty();
 	    }
     	finally {
-    		Base.close();
+    		DbManager.closeDatabase();
     	}
 
     }

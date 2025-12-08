@@ -133,7 +133,8 @@ public class ResturantLists
             RestaurantDTO r = restaurants.get(index);
             AppState.setSelectedRestaurant(index + 1);   // 1-based id if you need it
             AppState.setSelectedRestaurantName(r.getName());
-
+            backend.controllers.RestaurantController.selectRestaurant(r);
+            
             SceneNavigator.switchScene(
                     getStage(),
                     "restaurant-view.fxml",   // relative to frontend package

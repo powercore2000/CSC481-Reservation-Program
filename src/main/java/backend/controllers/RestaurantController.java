@@ -42,9 +42,15 @@ public class RestaurantController {
     }
     
 
-    @PostMapping("/updateSchedule")
-    public ResponseEntity<Boolean> createReservation(@RequestBody RestaurantDTO restaurantDto) {
 
+    
+    @PostMapping("/selectRestaurant")
+    public static ResponseEntity<Boolean> selectRestaurant(@RequestBody RestaurantDTO restaurantDto) {
+
+    		selectedRestaurantId = restaurantDto.getId();
+    		
+    		System.out.println("Set retaurant id to " + getSelectedRestaurantID());
+    		
             return ResponseEntity.ok(true);
 
     }

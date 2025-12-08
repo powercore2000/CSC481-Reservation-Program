@@ -39,9 +39,10 @@ public class SignupManager
         String email = emailField.getText().trim();
         String pw = passwordField.getText();
         String pw2 = confirmPasswordField.getText();
+        String phone = phoneField.getText();
 
         // Very simple validation (no real database here)
-        if (fullName.isEmpty() || email.isEmpty() || pw.isEmpty() || pw2.isEmpty()) {
+        if (fullName.isEmpty() || email.isEmpty() || pw.isEmpty() || pw2.isEmpty() || phone.isEmpty()) {
             errorLabel.setText("Please fill in all fields.");
             return;
         }
@@ -51,18 +52,18 @@ public class SignupManager
             return;
         }
 
-        UserDTO signUpUser = new UserDTO(fullNameField,email,password);
-        Boolean signInState = backend.controllers.UserController.loginUser(loginUser);
+        UserDTO signUpUser = new UserDTO(fullName,email,phone,pw);
+        Boolean signInState = backend.controllers.UserController.createUser(signUpUser);
         
         if(!signInState) {
-        	errorLabel.setText("No user found with that username and password.");
+        	errorLabel.setText("User Signup Failed!");
         	return;
         }
-        // this helps pretend login success
-        AppState.setSignedIn(true);
-        
         // “Create” account – in this project we just mark the user as signed in
-        AppState.setSignedIn(true);
+        AppState.setSignedIn(signInState);
+        
+
+
         // optional: remember username if you want to show it later
         // AppState.setCurrentUserName(username);
 

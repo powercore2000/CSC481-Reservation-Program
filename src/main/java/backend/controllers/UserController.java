@@ -4,8 +4,12 @@ import database.dto.*;
 
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.*;
+
+import backend.models.UserModel;
+import backend.services.UserMapper;
 
 
 @RestController
@@ -39,8 +43,8 @@ public class UserController {
         return true;
     }
     
-    @GetMapping("/signUp2")
-    public static Boolean createUser() {
+    @GetMapping("/debugSignUp")
+    public static Boolean createUserDebug() {
     	UserDTO newUser = new UserDTO("Bobby2", "bob2@gmail.com", "310 111 1234", "4566667");
         System.out.println( "User created: " + newUser.getName());
         database.queries.UserQueries.insert(newUser);
@@ -58,18 +62,17 @@ public class UserController {
     public static Boolean loginUser(@RequestBody UserDTO loginUser) {
 		
 		System.out.printf("Signing in with email:%s pass:%s%n",loginUser.getEmail(), loginUser.getPasswordString());
-		Boolean validUser = !database.queries.UserQueries.findByEmailAndPassword(loginUser.getEmail(), loginUser.getPasswordString()).isEmpty();
-		if(validUser){
-			currentUser = loginUser;
+		Optional<UserModel> validUser = database.queries.UserQueries.findByEmailAndPassword(loginUser.getEmail(), loginUser.getPasswordString());
+		if(validUser.isEmpty()) {
+			System.out.println("Invalid user passed in for login!");
+	        return false;
+		}
+			
+			currentUser = UserMapper.toDTO(validUser.get());
 			System.out.println("Logged in user " + loginUser.getEmail());
 			return true;
 		}
-		
-		System.out.println("Invalid user passed in for login!");
-        return false;
-    }
-	
-	
+
 
 	
 }

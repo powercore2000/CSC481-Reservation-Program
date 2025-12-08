@@ -42,9 +42,7 @@ public class RestaurantQueries {
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
         	
-        	Base.open("org.sqlite.JDBC",DbManager.JDBC_URL, "", "");
-
-    		Base.exec("PRAGMA foreign_keys = ON;");
+        	DbManager.openDatabase();
     		
             while (rs.next()) {
                 RestaurantModel r = new RestaurantModel();
@@ -61,7 +59,7 @@ public class RestaurantQueries {
         }
         
         finally {
-        	Base.close();
+        	DbManager.closeDatabase();
         }
 
         return out;

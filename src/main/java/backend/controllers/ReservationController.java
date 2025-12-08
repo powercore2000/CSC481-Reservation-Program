@@ -1,16 +1,20 @@
 package backend.controllers;
 
 import database.dto.*;
-
+import database.queries.ReservationQueries;
+import database.queries.RestaurantQueries;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import backend.models.ReservationModel;
+import backend.models.RestaurantModel;
 import backend.services.ReservationMapper;
+import backend.services.RestaurantMapper;
 
 
 @RestController
@@ -19,10 +23,43 @@ public class ReservationController {
 	
 	private static ReservationDTO cachedReservation;
 	public static ReservationDTO getCachedReservation(){return cachedReservation;}
+	public static void setCachedReservation(ReservationDTO dto) {cachedReservation = dto;}
 	
-    @GetMapping("/getUsersReservations")
-    public static ArrayList<ReservationDTO> getAllReservationsForUser() {
-        return new ArrayList<ReservationDTO>();
+    @GetMapping("/currentsReservations")
+    public static ArrayList<ReservationDTO> currentUserReservations() {
+    	
+    	List<ReservationModel> list = ReservationQueries.getAllReservationsForUser(UserController.getCurrentUser().getUserId());
+    	
+    	ArrayList<ReservationDTO> allReservations = new ArrayList<ReservationDTO>();
+        
+        
+        for (ReservationModel model : list) {
+     	   
+        	allReservations.add(ReservationMapper.toDTO(model));
+     	   
+        }
+        
+        return allReservations;
+             
+    }
+    
+    
+    
+    @PostMapping("/getUserReservations")
+    public static ArrayList<ReservationDTO> getAllReservationsForUser(@RequestBody UserDTO user) {
+    	
+    	List<ReservationModel> list = ReservationQueries.getAllReservationsForUser(user.getUserId());
+    	
+    	ArrayList<ReservationDTO> allReservations = new ArrayList<ReservationDTO>();
+        
+        for (ReservationModel model : list) {
+     	   
+        	allReservations.add(ReservationMapper.toDTO(model));
+     	   
+        }
+        
+        return allReservations;
+             
     }
 
     @PostMapping("/create")
@@ -36,7 +73,7 @@ public class ReservationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
         }
     }
-    
+     
 	public static Boolean CreateReservation(ReservationDTO reservation) {
 	    if(!UserController.isUserLoggedIn()) {
 	    	System.out.println("Cant add reservation user not loggedin! Logging in default user:");

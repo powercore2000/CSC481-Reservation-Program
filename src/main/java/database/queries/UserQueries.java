@@ -38,6 +38,8 @@ public class UserQueries
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery())
         {
+        	
+        	DbManager.openDatabase();
             while (rs.next())
             {
             	UserModel row = new UserModel();
@@ -53,7 +55,7 @@ public class UserQueries
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
         return out;
     }
 
@@ -63,6 +65,7 @@ public class UserQueries
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
+        	DbManager.openDatabase();
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery())
             {
@@ -75,7 +78,7 @@ public class UserQueries
         } catch (SQLException e)
         {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
 
         return Optional.empty();
     }
@@ -86,6 +89,7 @@ public class UserQueries
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
+        	DbManager.openDatabase();
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery())
             {
@@ -96,7 +100,7 @@ public class UserQueries
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
         return Optional.empty();
     }
     
