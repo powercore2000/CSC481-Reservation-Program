@@ -1,14 +1,14 @@
 /* ------------------ CLEAN OLD TABLES (safe if missing) ------------------ */
 /* Drop children first because of foreign keys */
 DROP TABLE IF EXISTS reservation_food;
-DROP TABLE IF EXISTS restaurant_food;
+DROP TABLE IF EXISTS menu_food;          -- bridge
+DROP TABLE IF EXISTS restaurant_menus;   -- menu table
 DROP TABLE IF EXISTS restaurant_tags;
 DROP TABLE IF EXISTS food;
 
 DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS restaurant_schedules;
 DROP TABLE IF EXISTS restaurants;
-DROP TABLE IF EXISTS restaurant_types;
 DROP TABLE IF EXISTS app_users;
 
 /* ------------------ SQLITE SCHEMA ------------------ */
@@ -25,13 +25,6 @@ CREATE TABLE IF NOT EXISTS app_users
   UNIQUE (email)
 );
 
-/* RESTAURANT TYPES (e.g., Italian, Mexican, Cafe, Grill) */
-CREATE TABLE IF NOT EXISTS restaurant_types
-(
-  id        INTEGER PRIMARY KEY AUTOINCREMENT,
-  type_name VARCHAR(64) NOT NULL UNIQUE
-);
-
 /* RESTAURANTS */
 CREATE TABLE IF NOT EXISTS restaurants
 (
@@ -40,10 +33,18 @@ CREATE TABLE IF NOT EXISTS restaurants
   address            VARCHAR(255),
   city               VARCHAR(100),
   state              VARCHAR(32),
-  restaurant_type_id INTEGER,   -- connector to restaurant_types
+  restaurant_menu_id INTEGER,   -- points to Restaurant Menu
   created_at         TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at         TIMESTAMP,
-  CONSTRAINT fk_rest_type FOREIGN KEY (restaurant_type_id) REFERENCES restaurant_types(id)
+  CONSTRAINT fk_rest_menu FOREIGN KEY (restaurant_menu_id) REFERENCES restaurant_menus(id)
+);
+
+/* RESTAURANT MENUS (one per restaurant) */
+CREATE TABLE IF NOT EXISTS restaurant_menus
+(
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  restaurant_id INTEGER NOT NULL UNIQUE,  -- 1:1 back to Restaurant
+  CONSTRAINT fk_menu_rest FOREIGN KEY (restaurant_id) REFERENCES restaurants(id)
 );
 
 /* WEEKLY SCHEDULE (0=Mon … 6=Sun) */
@@ -51,44 +52,42 @@ CREATE TABLE IF NOT EXISTS restaurant_schedules
 (
   id            INTEGER PRIMARY KEY AUTOINCREMENT,
   restaurant_id INTEGER NOT NULL,
-  weekday       SMALLINT NOT NULL,            -- 0..6
+  weekday       SMALLINT NOT NULL,   -- 0..6
   open_time     TIME NOT NULL,
   close_time    TIME NOT NULL,
   CONSTRAINT fk_sched_rest FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
   CONSTRAINT uq_sched_rest_day UNIQUE (restaurant_id, weekday)
 );
 
-/* FOOD MENU ITEMS */
+/* FOOD MENU ITEMS (global) */
 CREATE TABLE IF NOT EXISTS food
 (
   id           INTEGER PRIMARY KEY AUTOINCREMENT,
   name         VARCHAR(120) NOT NULL,
   description  TEXT,
-  price_cents  INT NOT NULL,             -- store price as cents
-  category     VARCHAR(64)               -- e.g. 'Entree', 'Dessert', 'Vegan'
+  price_cents  INT NOT NULL,          -- store price as cents
+  category     VARCHAR(64)            -- e.g. 'Entree', 'Dessert', 'Vegan'
 );
 
 /* TAGS PER RESTAURANT (Italian, Spicy, Vegan, etc.) */
 CREATE TABLE IF NOT EXISTS restaurant_tags
 (
-  id                 INTEGER PRIMARY KEY AUTOINCREMENT,
-  restaurant_id      INTEGER NOT NULL,
-  restaurant_type_id INTEGER,          -- connector to restaurant_types
-  tag_name           VARCHAR(64) NOT NULL,
-  CONSTRAINT fk_tag_rest FOREIGN KEY (restaurant_id)      REFERENCES restaurants(id),
-  CONSTRAINT fk_tag_type FOREIGN KEY (restaurant_type_id) REFERENCES restaurant_types(id),
+  id             INTEGER PRIMARY KEY AUTOINCREMENT,
+  restaurant_id  INTEGER NOT NULL,
+  tag_name       VARCHAR(64) NOT NULL,
+  CONSTRAINT fk_tag_rest FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
   CONSTRAINT uq_rest_tag UNIQUE (restaurant_id, tag_name)
 );
 
-/* WHICH RESTAURANT OFFERS WHICH FOOD ITEMS */
-CREATE TABLE IF NOT EXISTS restaurant_food
+/* MENU_FOOD: bridge between Restaurant Menu and Food (M:N) */
+CREATE TABLE IF NOT EXISTS menu_food
 (
-  id             INTEGER PRIMARY KEY AUTOINCREMENT,
-  restaurant_id  INTEGER NOT NULL,
-  food_id        INTEGER NOT NULL,
-  CONSTRAINT fk_rf_rest FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
-  CONSTRAINT fk_rf_food FOREIGN KEY (food_id) REFERENCES food(id),
-  CONSTRAINT uq_rest_food UNIQUE (restaurant_id, food_id)
+  id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+  restaurant_menu_id INTEGER NOT NULL,
+  food_id            INTEGER NOT NULL,
+  CONSTRAINT fk_menu_food_menu FOREIGN KEY (restaurant_menu_id) REFERENCES restaurant_menus(id),
+  CONSTRAINT fk_menu_food_food FOREIGN KEY (food_id)          REFERENCES food(id),
+  CONSTRAINT uq_menu_food UNIQUE (restaurant_menu_id, food_id)
 );
 
 /* RESERVATIONS (User ↔ Restaurant) */
@@ -125,4 +124,5 @@ CREATE INDEX IF NOT EXISTS idx_res_rest_time   ON reservations (restaurant_id, r
 CREATE INDEX IF NOT EXISTS idx_tag_name        ON restaurant_tags (tag_name);
 CREATE INDEX IF NOT EXISTS idx_res_food_res    ON reservation_food (reservation_id);
 CREATE INDEX IF NOT EXISTS idx_res_food_food   ON reservation_food (food_id);
-CREATE INDEX IF NOT EXISTS idx_rest_type       ON restaurants (restaurant_type_id);
+CREATE INDEX IF NOT EXISTS idx_menu_food_menu  ON menu_food (restaurant_menu_id);
+CREATE INDEX IF NOT EXISTS idx_menu_food_food  ON menu_food (food_id);
