@@ -1,6 +1,7 @@
 package database.dto;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class ReservationDTO {
 	
@@ -19,6 +20,17 @@ public class ReservationDTO {
         this.partySize = partySize;
         this.date = date;
         this.time = time;
+        this.confirmationCode = confirmationCode;
+        setStatus(status);
+    }
+    
+    public ReservationDTO(String name, String email, int partySize, LocalDate date, String time, String status) {
+        this.name = name;
+        this.email = email;
+        this.partySize = partySize;
+        this.date = date;
+        this.time = time;
+        confirmationCode = UUID.randomUUID().toString();
         setStatus(status);
     }
     

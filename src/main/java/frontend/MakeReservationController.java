@@ -5,6 +5,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+import com.sun.javafx.scene.control.IntegerField;
+
+import database.dto.ReservationDTO;
+
 public class MakeReservationController
 {
 
@@ -12,7 +16,7 @@ public class MakeReservationController
     @FXML private TextField emailField;
     @FXML private DatePicker datePicker;
     @FXML private TextField timeField;
-    @FXML private TextField partyField;
+    @FXML private IntegerField partyField;
 
     @FXML
     private void onBackClick() throws IOException
@@ -35,6 +39,23 @@ public class MakeReservationController
     @FXML
     private void onCreateReservationClick() throws IOException
     {
+    	ReservationDTO reservation = new ReservationDTO(
+    			nameField.getText(), 
+    			emailField.getText(), 
+    			partyField.getValue(), 
+    			datePicker.getValue(), 
+    			timeField.getText(), 
+    			"PENDING"
+    			);
+    	Boolean makeReservation = backend.controllers.ReservationController.CreateReservation(reservation);
+    	
+    	if(!makeReservation) {
+    		System.out.println("Error in making a reservation!");
+    		return;
+    	}
+
+    		System.out.println("Succeeded in making a reservation!");
+    	
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
                 "/frontend/reservation-info.fxml",

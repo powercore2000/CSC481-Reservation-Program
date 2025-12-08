@@ -17,6 +17,12 @@ import backend.services.ReservationMapper;
 @RequestMapping("/restaurants")
 public class RestaurantController {
 	
+    // Handles which restaurant the browsing user has selected to make a reservation at
+	private static long selectedRestaurantId = 1;
+	
+	public static long getSelectedRestaurantID() { return selectedRestaurantId;}
+	
+	public static void setSelectedRestaurantID(long id) {selectedRestaurantId = id;}
 	
     @GetMapping("/listAll")
     public static ArrayList<RestaurantDTO> getAllReservations() {

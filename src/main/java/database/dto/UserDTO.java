@@ -9,12 +9,6 @@ public class UserDTO {
     private String passwordString; //password_hash
     
     
-    // Handles which restaurant the browsing user has selected to make a reservation at
-	private static long selectedRestaurantId = 1;
-	
-	public static long getSelectedRestaurantID() { return selectedRestaurantId;}
-	
-	public static void setSelectedRestaurantID(long id) {selectedRestaurantId = id;}
     /**
      * Creates a UserDTO client model 
      *
@@ -29,6 +23,19 @@ public class UserDTO {
     	this.name = name;
     	this.email = email;
     	this.phoneNumber = phoneNumber;
+    	this.passwordString = passwordString;
+    }
+    
+    /**
+     * For creating a UserDTO on the client used to login 
+     *
+     * @param email of user
+     * @param plainText string password of user
+     * @return UserDTO new DTO model instance
+     */
+    public UserDTO(String email, String passwordString) {
+    	
+    	this.email = email;
     	this.passwordString = passwordString;
     }
     

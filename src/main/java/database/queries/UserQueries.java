@@ -96,6 +96,20 @@ public class UserQueries
         }
         return Optional.empty();
     }
+    
+    public static Optional<UserModel> findByEmailAndPassword(String email, String password)
+    {
+    	UserModel foundUser = findByEmail(email).orElse(null);
+    	System.out.println("User found is : " + foundUser);
+    	if(foundUser == null)
+    		return Optional.empty();
+    	
+    	if(foundUser.doesPasswordMatch(password))   	
+    		return Optional.of(foundUser);
+    	
+    	return Optional.empty();
+    	
+    }
 
     /* ----------------- CREATE ----------------- */
 

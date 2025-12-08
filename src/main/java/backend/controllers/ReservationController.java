@@ -24,7 +24,7 @@ public class ReservationController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Boolean> createReservation(@RequestBody ReservationDTO reservationDto) {
+    public static ResponseEntity<Boolean> createReservation(@RequestBody ReservationDTO reservationDto) {
 
         Boolean result = CreateReservation(reservationDto);
 

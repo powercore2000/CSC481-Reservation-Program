@@ -57,9 +57,11 @@ public class UserController {
 	@PostMapping("/login")
     public static Boolean loginUser(@RequestBody UserDTO loginUser) {
 		
-		Boolean validUser = !database.queries.UserQueries.findByEmail(loginUser.getEmail()).isEmpty();
+		System.out.printf("Signing in with email:%s pass:%s%n",loginUser.getEmail(), loginUser.getPasswordString());
+		Boolean validUser = !database.queries.UserQueries.findByEmailAndPassword(loginUser.getEmail(), loginUser.getPasswordString()).isEmpty();
 		if(validUser){
 			currentUser = loginUser;
+			System.out.println("Logged in user " + loginUser.getEmail());
 			return true;
 		}
 		
