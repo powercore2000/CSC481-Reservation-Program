@@ -1,8 +1,9 @@
 package database.queries;
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.DB;
 import java.sql.*;
 import java.util.*;
-
+import database.queries.DbManager;
 import backend.models.*;
 import database.dto.ReservationDTO;
 
@@ -52,7 +53,7 @@ public class ReservationQueries {
     }
 
     /* ---------- LIST ALL RESERVATIONS -------------------*/
-    public static List<Map<String, Object>> listAll()
+    public static List<ReservationModel> listAll()
     {
         String sql = """
             SELECT *
@@ -60,7 +61,7 @@ public class ReservationQueries {
             ORDER BY r.reservation_at
         """;
 
-        List<Map<String, Object>> out = new ArrayList<>();
+        List<ReservationModel> out = new ArrayList<>();
         
         System.out.println("Print all db entries");
         
@@ -72,19 +73,24 @@ public class ReservationQueries {
             {
                 while (rs.next())
                 {
-                    Map<String, Object> row = new HashMap<>();
-                    row.put("id", rs.getLong("id"));
-                    row.put("reservation_at", rs.getString("reservation_at"));
-                    row.put("party_size", rs.getInt("party_size"));
-                    row.put("status", rs.getString("status"));
-                    row.put("confirmation_code", rs.getString("confirmation_code"));
+                	ReservationModel row = new ReservationModel();
+
+					row.set("id", rs.getLong("id"));
+					row.set("user_id", rs.getLong("user_id"));
+					row.set("restaurant_id", rs.getLong("restaurant_id"));
+					row.set("reservation_at", rs.getTimestamp("reservation_at")); 
+					row.set("party_size", rs.getInt("party_size"));
+					row.set("status", rs.getString("status"));
+					row.set("confirmation_code", rs.getString("confirmation_code"));
+					row.set("special_requests", rs.getString("special_requests"));
 
                     // ⚠️ restaurant_name does not exist in SELECT * unless you join restaurants
                     // So this will remain null unless that column exists in your table.
-
+					ReservationDTO dto = ReservationMapper.toDTO(row);
 
                     // 🔥 LOG THE ENTRY
                     System.out.println("Reservation Found: " + row);
+                    System.out.println("Display Resv Here: " + dto);
 
                     out.add(row);
                 }
@@ -101,13 +107,17 @@ public class ReservationQueries {
 
     public static void createReservation(ReservationDTO res) {
     	try {
-    		
-    		Base.open("org.sqlite.JDBC", DbManager.JDBC_URL, "", "");
-    		
+
+    		Base.open("org.sqlite.JDBC",DbManager.JDBC_URL, "", "");
+
     		Base.exec("PRAGMA foreign_keys = ON;");
     		
     		ReservationModel resMod = ReservationMapper.toModel(res);
     		
+    		if(resMod == null) {
+    			System.out.println("Not adding reservation to db");
+    			return;
+    		}
     		if(!resMod.saveIt()) {
     			throw new RuntimeException("Could not save reservation: " + resMod.errors());
     		}

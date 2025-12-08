@@ -1,6 +1,7 @@
 package frontend;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -10,6 +11,7 @@ public class RestaurantController {
     @FXML private Label restaurantNameLabel;
     @FXML private Label addressLabel;
     @FXML private Label openCloseLabel;
+    @FXML private Button backButton;
 
     @FXML
     private void initialize() {
@@ -49,6 +51,21 @@ public class RestaurantController {
             }
         }
     }
+    
+    @FXML
+    private void onMenuClick() {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        try {
+            SceneNavigator.switchScene(
+                    stage,
+                    "/frontend/menu-view.fxml",
+                    AppState.getSelectedRestaurantName() + " Menu"
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     private void onBackClick() {
@@ -63,6 +80,18 @@ public class RestaurantController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void onMenuClick() {
+        Stage stage = (Stage) restaurantNameLabel.getScene().getWindow();
+        try {
+            SceneNavigator.switchScene(stage, "menu-view.fxml",
+                    AppState.getSelectedRestaurantName() + " Menu");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     @FXML
     private void onMakeReservationClick() {

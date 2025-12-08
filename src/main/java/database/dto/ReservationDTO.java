@@ -31,6 +31,7 @@ public class ReservationDTO {
     public String getConfirmationCode() {return confirmationCode;}
     
     public void setStatus(String status) {this.status = status;}
+    public void setEmail(String email) {this.email = email;}
 
     @Override
     public String toString() {

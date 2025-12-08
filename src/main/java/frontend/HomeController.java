@@ -12,29 +12,30 @@ public class HomeController {
     @FXML private Button signInButton;
     @FXML private Button signOutButton;
     @FXML private Button viewReservationButton;
+    @FXML private Button backButton;
 
     
     @FXML
-    private void onBackClick(javafx.event.ActionEvent event) throws Exception {
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        SceneNavigator.switchScene(stage, "/frontend/home-search.fxml", "Smart N Dine");
+    private void onBackClick() throws IOException
+    {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
     }
 
     @FXML
-    public void initialize() {
-        if (AppState.isSignedIn()) {
+    public void initialize()
+    {
+        if (AppState.isSignedIn())
+        {
             signInButton.setText("👤");
-            signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
-            viewReservationButton.setVisible(true);
             signOutButton.setVisible(true);
-        } else {
-            viewReservationButton.setVisible(false);
-            signOutButton.setVisible(false);
+            viewReservationButton.setVisible(true);
         }
     }
 
     @FXML
-    protected void onSignInClick() {
+
+    protected void onLogInClick() {
         try {
             SceneNavigator.switchScene(
                     getStage(),
@@ -48,8 +49,25 @@ public class HomeController {
 
 
 
+
+
+
+@FXML
+    protected void onSignInClick()
+    {
+        if (!AppState.isSignedIn())
+        {
+            AppState.setSignedIn(true);
+            signInButton.setText("👤");
+            signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
+            viewReservationButton.setVisible(true);
+            signOutButton.setVisible(true);
+        }
+    }
+
     @FXML
-    protected void onSignOutClick() {
+    protected void onSignOutClick()
+    {
         AppState.setSignedIn(false);
         signInButton.setText("Sign In");
         signInButton.setStyle("-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold;");

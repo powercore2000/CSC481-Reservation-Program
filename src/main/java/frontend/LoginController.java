@@ -1,8 +1,14 @@
 package frontend;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.event.ActionEvent;
+
 
 public class LoginController {
 
@@ -18,7 +24,9 @@ public class LoginController {
     }
 
     @FXML
-    private void onCancelClick() {
-        System.out.println("Cancel clicked");
+    private void onCancelClick(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "/frontend/home-view.fxml", "Smart N Dine");
     }
+
 }

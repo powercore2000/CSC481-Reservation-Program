@@ -5,49 +5,48 @@ import database.dto.*;
 
 import java.util.ArrayList;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import backend.models.ReservationMapper;
+import backend.models.ReservationModel;
 
 
 @RestController
 
 public class ReservationController {
 	
-	@GetMapping
-	public static String welcome() {
-		
-		return "Welcome to hell";
-	}
-			
-    @PostMapping("/signUp")
-    public static String createUser(@RequestBody UserDTO newUser) {
-        return "User created: " + newUser.getName();
-    }
-
-	@PostMapping("/login")
-    public static String login(@RequestBody UserDTO loginUser) {
-		
-        return "Logging in " + loginUser.getEmail();
-    }
-	
 	
     @GetMapping("/reservations")
     public static ArrayList<ReservationDTO> getAllReservations() {
         return new ArrayList<ReservationDTO>();
     }
-	@GetMapping("/users")
-	public static ArrayList<UserDTO> getAllUsers(){
-		return new ArrayList<UserDTO>();
-	}
-	
-	public static void CreateReservation(ReservationDTO reservation) {
-		
-		System.out.println("Created reservation: " + reservation);
-		//ReservationModel resMod = ReservationMapper.toModel(reservation);     
-        //database.queries.ReservationQueries.createReservation(reservation);
-		
-        database.queries.ReservationQueries.saveReservation(reservation);
-        database.queries.ReservationQueries.listAll();		 	
 
+    @PostMapping("/create")
+    public ResponseEntity<Boolean> createReservation(@RequestBody ReservationDTO reservationDto) {
+
+        Boolean result = CreateReservation(reservationDto);
+
+        if (result) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        }
+    }
+    
+	public static Boolean CreateReservation(ReservationDTO reservation) {
+	    if(!UserController.isUserLoggedIn()) {
+	    	System.out.println("Cant add reservation user not loggedin! Logging in default user:");
+	    	UserController.loginUser(new UserDTO("Debug Userman", "bobBot69@hotbotmail.com", "310 111 1234", "debugBotPAs$12"));
+	    	//return false;
+	    }
+	    
+		reservation.setEmail(UserController.getCurrentUser().getEmail()); 
+		System.out.println("Created reservation: " + reservation);  
+        database.queries.ReservationQueries.createReservation(reservation);
+        database.queries.ReservationQueries.listAll();		 	
+        return true;
 		
 	}
 	
