@@ -27,18 +27,17 @@
                         onAction="#onSignOutClick" />
 
                 <!-- SIGN IN / PROFILE BUTTON -->
-                <Button fx:id="signInButton" text="Log In"
-        		style="-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold; -fx-background-radius: 5;"
-        		onAction="#onSignInClick"/>
+                <Button fx:id="signInButton" text="Sign In"
+                        style="-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold; -fx-background-radius: 5;"
+                        onAction="#onSignInClick"/>
+            </HBox>
 
-
-            </HBox>            
-                
-            <HBox alignment="CENTER_LEFT" style="-fx-padding: 10 20 0 20;">
-            <Button text="←"
-                    style="-fx-font-size: 18px;"
-                    onAction="#onBackClick"/>
-
+            <!-- 🔙 BACK ARROW LIKE IN RESTAURANT VIEW -->
+            <HBox spacing="10" style="-fx-padding: 10 25;">
+                <Button fx:id="backButton"
+                        onAction="#onBackClick"
+                        style="-fx-font-size: 18px;"
+                        text="←" />
             </HBox>
 
             <!-- (your View Reservation button can stay here if you want) -->

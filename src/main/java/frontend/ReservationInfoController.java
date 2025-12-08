@@ -19,9 +19,8 @@ public class ReservationInfoController
     @FXML private Label timeLabel;
     @FXML private Label partyLabel;
 
-    // Called to set the reservation details
-    public void setReservationDetails(String name, String email, String restaurant,
-                                      String location, String date, String time, String party) {
+    public void setReservationDetails(String name, String email, String restaurant, String location, String date, String time, String party)
+    {
 
         infoLabel.setText("Reservation Details");
 
@@ -45,6 +44,6 @@ public class ReservationInfoController
     private void onBackToHomeClick() throws IOException
     {
         Stage stage = (Stage) infoLabel.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "/frontend/home-search.fxml", "Home");
+        SceneNavigator.switchScene(stage, "/frontend/home-view.fxml", "Home");
     }
 }

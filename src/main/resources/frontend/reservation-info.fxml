@@ -36,6 +36,8 @@
                 <Label fx:id="dateLabel" text="Date: " />
                 <Label fx:id="timeLabel" text="Time: " />
                 <Label fx:id="partyLabel" text="Party size: " />
+                <Label fx:id="foodlabel" text="Pre order: " />
+
 
             </VBox>
 

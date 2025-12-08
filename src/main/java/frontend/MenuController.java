@@ -1,40 +1,49 @@
 package frontend;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class MenuController
-{
+public class MenuController {
 
     @FXML
-    private Label menuTitleLabel;
+    private void onBackClick(ActionEvent event) throws Exception {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "restaurant-view.fxml", "Restaurant");
+    }
 
     @FXML
-    public void initialize()
+    private void onViewMore1(ActionEvent event) throws Exception {
+        AppState.setSelectedMenuItem(1);
+        goToDetail(event);
+    }
+
+    @FXML
+    private void onViewMore2(ActionEvent event) throws Exception
     {
-        // Set title like "Andies Menu", "Jays sushi palace Menu", etc.
-        String name = AppState.getSelectedRestaurantName();
-        if (name == null || name.isBlank())
-        {
-            name = "Restaurant";
-        }
-        menuTitleLabel.setText(name + "'s Menu");
+        AppState.setSelectedMenuItem(2);
+        goToDetail(event);
     }
 
     @FXML
-    private void onBackClick() {
-        Stage stage = (Stage) menuTitleLabel.getScene().getWindow();
-        try {
-            SceneNavigator.switchScene(
-                    stage,
-                    "/frontend/restaurant-view.fxml",
-                    AppState.getSelectedRestaurantName()
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void onViewMore3(ActionEvent event) throws Exception
+    {
+        AppState.setSelectedMenuItem(3);
+        goToDetail(event);
     }
+
+    @FXML
+    private void onViewMore4(ActionEvent event) throws Exception
+    {
+        AppState.setSelectedMenuItem(4);
+        goToDetail(event);
+    }
+
+    private void goToDetail(ActionEvent event) throws Exception
+    {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "menu-item-detail.fxml", "Item Details");
+    }
+
 }

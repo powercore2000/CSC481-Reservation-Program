@@ -5,14 +5,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-
-import java.time.LocalDate;
-import java.util.UUID;
-
-import database.dto.*;
-
-
-
 public class MakeReservationController
 {
 
@@ -36,23 +28,13 @@ public class MakeReservationController
     {
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
-                "/frontend/home-search.fxml",
+                "/frontend/home-view.fxml",
                 "Restaurants");
     }
 
     @FXML
     private void onCreateReservationClick() throws IOException
     {
-    	String name = nameField.getText();
-        String email = emailField.getText();
-        LocalDate date = datePicker.getValue();
-        String time = timeField.getText();
-        int partySize = Integer.parseInt(partyField.getText());
-        UUID uuid = UUID.randomUUID();
-        
-        ReservationDTO reservation = new ReservationDTO(name, email, partySize, date, time, "Reserved", uuid.toString());
-        backend.controllers.ReservationController.CreateReservation(reservation);
-    	
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
                 "/frontend/reservation-info.fxml",

@@ -1,32 +1,53 @@
 package frontend;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.event.ActionEvent;
-
-
-public class LoginController {
+public class LoginController
+{
 
     @FXML
-    private TextField emailField;
+    private TextField usernameField;
 
     @FXML
     private PasswordField passwordField;
 
     @FXML
-    private void onLoginClick() {
-        System.out.println("Login clicked with email: " + emailField.getText());
+    private Label errorLabel;
+
+    @FXML
+    private void onLoginClick(ActionEvent event) throws IOException
+    {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        // super simple check – you can replace with whatever you need
+        if (username == null || username.isBlank() ||
+                password == null || password.isBlank()) {
+            errorLabel.setText("Please enter both username and password.");
+            return;
+        }
+
+        // this helps pretend login success
+        AppState.setSignedIn(true);
+        //   to remember username, add a field in AppState and set it here
+
+        // go back to home (or search) after login
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
     }
 
     @FXML
-    private void onCancelClick(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        SceneNavigator.switchScene(stage, "/frontend/home-view.fxml", "Smart N Dine");
+    private void onCancelClick(ActionEvent event) throws IOException
+    {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
     }
-
 }

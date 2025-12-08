@@ -1,48 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="frontend.LoginController"
             style="-fx-background-color: #f5f5f5;">
 
-
+    <!-- TOP RED HEADER -->
     <top>
-        <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
-            <children>
-                <Label text="WEB NAME"
-                       style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
-            </children>
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
+            <Label text="WEB Name"
+                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- optional: nothing on the right for now -->
         </HBox>
     </top>
 
+    <!-- CENTER LOGIN CARD -->
     <center>
-        <VBox alignment="TOP_CENTER" spacing="10">
-        	<Label text="Login"
-                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+            <VBox spacing="15"
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
 
-            <GridPane hgap="10" vgap="10" alignment="CENTER">
-                <Label text="Email:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="emailField"
-                           promptText="email@example.com"
-                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Sign In"
+                       style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-                <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="passwordField"
-                               promptText="password"
-                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-            </GridPane>
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
 
-            <HBox spacing="10" alignment="CENTER">
-                <Button text="Cancel" onAction="#onCancelClick"/>
-                <Button text="Login"
-                        onAction="#onLoginClick"
-                        style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
-            </HBox>
+                    <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="usernameField"
+                               promptText="Enter username"
+                               GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        </VBox>    
-	</center>
+                    <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <PasswordField fx:id="passwordField"
+                                   promptText="Enter password"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <Label fx:id="errorLabel"
+                       textFill="red"
+                       style="-fx-font-size: 12px;"/>
+
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Button text="Cancel"
+                            onAction="#onCancelClick"
+                            style="-fx-background-color: #bdc3c7; -fx-text-fill: white; -fx-background-radius: 5;"/>
+
+                    <Button text="Login"
+                            onAction="#onLoginClick"
+                            style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                </HBox>
+
+            </VBox>
+        </VBox>
+    </center>
 
 </BorderPane>

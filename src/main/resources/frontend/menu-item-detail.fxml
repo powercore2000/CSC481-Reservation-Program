@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="frontend.MenuItemDetailController"
+            style="-fx-background-color: #f5f5f5;">
+
+    <!-- TOP RED HEADER -->
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
+            <Label text="WEB Name"
+                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Back button to go back to menu -->
+            <Button text="Back"
+                    onAction="#onBackToMenuClick"
+                    style="-fx-background-color: white; -fx-text-fill: #c0392b;
+                           -fx-font-weight: bold; -fx-background-radius: 5;"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER CONTENT -->
+    <center>
+        <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 30;">
+            <Label fx:id="foodNameLabel"
+                   text="Food Name"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <!-- fake image area -->
+            <Button prefWidth="200" prefHeight="150"
+                    text="Image"
+                    style="-fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;"/>
+
+            <VBox spacing="8" style="-fx-padding: 10;">
+                <Label fx:id="categoryLabel" text="Category: Example"/>
+                <Label fx:id="priceLabel" text="Price: $0.00"/>
+                <Label fx:id="descriptionLabel" wrapText="true" text="Description: Tasty food description goes here."/>
+            </VBox>
+
+
+            <HBox alignment="BOTTOM_RIGHT" style="-fx-padding: 20 0 0 0;">
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Add to Cart"
+                        onAction="#onAddToCartClick"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

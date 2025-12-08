@@ -3,24 +3,17 @@ package frontend;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 import java.io.IOException;
+import javafx.scene.Node;
 
-import database.dto.UserDTO;
-
-public class HomeController {
+public class HomeController
+{
 
     @FXML private Button signInButton;
     @FXML private Button signOutButton;
     @FXML private Button viewReservationButton;
     @FXML private Button backButton;
-
-    
-    @FXML
-    private void onBackClick() throws IOException
-    {
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
-    }
 
     @FXML
     public void initialize()
@@ -34,37 +27,21 @@ public class HomeController {
     }
 
     @FXML
-
-    protected void onLogInClick() {
-        try {
-            SceneNavigator.switchScene(
-                    getStage(),
-                    "/frontend/login-view.fxml",
-                    "Login In"
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void onBackClick() throws IOException
+    {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
     }
-
-
-
 
 
 
 @FXML
-    protected void onSignInClick()
-    {
-        if (!AppState.isSignedIn())
-        {
-            AppState.setSignedIn(true);
-            signInButton.setText("👤");
-            signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
-            viewReservationButton.setVisible(true);
-            signOutButton.setVisible(true);
-        }
-    }
-
+private void onSignInClick(ActionEvent event) throws IOException
+{
+    // instead of directly setting signed in, go to login screen
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    SceneNavigator.switchScene(stage, "login-view.fxml", "Sign In");
+}
     @FXML
     protected void onSignOutClick()
     {
@@ -80,7 +57,7 @@ public class HomeController {
     }
 
     // ======= 5 RESTAURANTS =======
-
+//function that controls the resturans visible on the resurant view page and it takes in a list of resturans DTO the class would be called resturan DTO
     @FXML
     protected void onSelectRestaurant1() {
         AppState.setSelectedRestaurant(1);

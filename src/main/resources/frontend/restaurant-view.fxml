@@ -3,10 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane style="-fx-background-color: #f2f2f2;"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="frontend.RestaurantController">
+<BorderPane style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.RestaurantController">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
@@ -47,18 +44,10 @@
                     </VBox>
 
                 </HBox>
-                <Button mnemonicParsing="false"
-				        prefHeight="26.0" prefWidth="191.0"
-				        style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 8;"
-				        text="MENU"
-				        onAction="#onMenuClick"/>
+                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="191.0" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 8;" text="MENU"  onAction="#onMenuClick"/>
 
-                <!-- Make Reservation -->
-                <Button alignment="CENTER" maxWidth="200"
-                        onAction="#onMakeReservationClick"
-                        style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 8;"
-                        text="Make Reservation" />
-        	</VBox>
+                <Button alignment="CENTER" maxWidth="200" onAction="#onMakeReservationClick" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 8;" text="Make Reservation" />
+            </VBox>
         </VBox>
     </center>
 
