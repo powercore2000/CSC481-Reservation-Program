@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.SignupController"
+            fx:controller="frontend.SignupManager"
             style="-fx-background-color: #f5f5f5;">
 
     <!-- TOP RED HEADER -->
@@ -37,17 +37,20 @@
                     <ColumnConstraints hgrow="ALWAYS"/>
                 </columnConstraints>
 
-                <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Full Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="emailField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+				<Label text="Phone Number:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="phoneField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                <Label text="Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="passwordField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="emailField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                <Label text="Confirm Password:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Password:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="passwordField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Confirm Password:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
             </GridPane>
 
             <Label fx:id="errorLabel"

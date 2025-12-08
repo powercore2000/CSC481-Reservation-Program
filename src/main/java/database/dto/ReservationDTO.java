@@ -1,12 +1,17 @@
 package database.dto;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class ReservationDTO {
 	
 	
 	private String name;
     private String email;
+    
+    private String restaurantName;
+    private String restaurantLocation;
+    
     private int partySize;
     private LocalDate date;
     private String time;
@@ -19,6 +24,17 @@ public class ReservationDTO {
         this.partySize = partySize;
         this.date = date;
         this.time = time;
+        this.confirmationCode = confirmationCode;
+        setStatus(status);
+    }
+    
+    public ReservationDTO(String name, String email, int partySize, LocalDate date, String time, String status) {
+        this.name = name;
+        this.email = email;
+        this.partySize = partySize;
+        this.date = date;
+        this.time = time;
+        confirmationCode = UUID.randomUUID().toString();
         setStatus(status);
     }
     
@@ -30,8 +46,13 @@ public class ReservationDTO {
     public String getStatus() {return status;}
     public String getConfirmationCode() {return confirmationCode;}
     
+    public String getRestaurantName() {return restaurantName;}
+    public String getRestaurantLocation() {return restaurantLocation;}
+    
     public void setStatus(String status) {this.status = status;}
     public void setEmail(String email) {this.email = email;}
+    public void setRestaurantName(String restaurantName) {this.restaurantName = restaurantName;}
+    public void setRestaurantLocation(String restaurantLocation) {this.restaurantLocation = restaurantLocation;}
 
     @Override
     public String toString() {

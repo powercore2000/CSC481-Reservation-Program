@@ -40,3 +40,9 @@ In IntelliJ, right-click the project and select Maven > Reload Project/Sync Proj
 Run ReservationClient.java to start the frontend of the application.
 
 Run ReservationServer.java to start the backend of the application.
+
+If you get the `Models not Instrumented error` run this command once: 
+
+```bash
+mvn spring-boot:run
+```

@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import database.dto.ReservationDTO;
+
 public class ReservationInfo {
 
     @FXML private Label infoLabel;
@@ -18,6 +20,25 @@ public class ReservationInfo {
     @FXML private Label partyLabel;
     @FXML private Label foodlabel;
 
+    ReservationDTO initalRes;
+    
+    @FXML
+    public void initialize() {
+    	
+    	initalRes = backend.controllers.ReservationController.getCachedReservation();
+        
+    	setReservationInfo(
+    			initalRes.getName(),
+    			initalRes.getEmail(),
+    			initalRes.getRestaurantName(),
+    			initalRes.getRestaurantLocation(),
+    			initalRes.getDate().toString(),
+    			initalRes.getTime().toString(),
+    			initalRes.getPartySize(),
+    			""
+    			);
+      }
+    
     private Stage getStage() {
         return (Stage) infoLabel.getScene().getWindow();
     }
@@ -37,6 +58,8 @@ public class ReservationInfo {
     @FXML
     private void onViewMenuClick() throws IOException {
         // go to menu view for the restaurant
+    	AppState.setBuyMode(true);
+    	backend.controllers.RestaurantController.setCurrentRestaurantByReservation(initalRes);
         SceneNavigator.switchScene(getStage(), "menu-view.fxml", "Menu");
     }
 
@@ -48,7 +71,7 @@ public class ReservationInfo {
             String location,
             String date,
             String time,
-            String partySize,
+            int partySize,
             String preorder
     ) {
         nameLabel.setText("Name: " + name);

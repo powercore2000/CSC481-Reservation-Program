@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import com.sun.javafx.scene.control.IntegerField?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="frontend.MakeReservation"
@@ -38,7 +39,7 @@
                 <TextField fx:id="timeField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
                 <Label text="Party size:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <TextField fx:id="partyField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <IntegerField fx:id="partyField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
             </GridPane>
 

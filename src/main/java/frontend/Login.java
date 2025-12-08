@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
+import database.dto.UserDTO;
 public class Login
 {
 
@@ -25,16 +27,23 @@ public class Login
     @FXML
     private void onLoginClick(ActionEvent event) throws IOException
     {
-        String username = usernameField.getText();
+        String email = usernameField.getText();
         String password = passwordField.getText();
 
         // super simple check – you can replace with whatever you need
-        if (username == null || username.isBlank() ||
+        if (email == null || email.isBlank() ||
                 password == null || password.isBlank()) {
             errorLabel.setText("Please enter both username and password.");
             return;
         }
-
+        
+        UserDTO loginUser = new UserDTO(email,password);
+        Boolean signInState = backend.controllers.UserController.loginUser(loginUser);
+        
+        if(!signInState) {
+        	errorLabel.setText("No user found with that username and password.");
+        	return;
+        }
         // this helps pretend login success
         AppState.setSignedIn(true);
         //   to remember username, add a field in AppState and set it here

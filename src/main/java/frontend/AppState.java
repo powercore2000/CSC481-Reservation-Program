@@ -48,6 +48,10 @@ public class AppState {
     public static void setSelectedMenuItem(int id) {
         selectedMenuItem = id;
     }
+    
+    private static Boolean buyMode = false;
+    public static void setBuyMode(Boolean b) {buyMode = b;}
+    public static Boolean getBuyMode() {return buyMode;}
 
     // ===== CART STATE =====
     private static final List<CartItem> cartItems = new ArrayList<>();

@@ -14,7 +14,9 @@ public class RestaurantView
 
     @FXML
     private void initialize() {
+    	
         int id = AppState.getSelectedRestaurant();
+       
         String name = AppState.getSelectedRestaurantName();
 
         if (name == null || name.isEmpty()) {
@@ -53,6 +55,7 @@ public class RestaurantView
 
     @FXML
     private void onBackClick() {
+    	 AppState.setBuyMode(false);
         Stage stage = (Stage) restaurantNameLabel.getScene().getWindow();
         try {
             SceneNavigator.switchScene(

@@ -1,5 +1,8 @@
 package database.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserDTO {
 
     private String name;//full_name
@@ -9,12 +12,6 @@ public class UserDTO {
     private String passwordString; //password_hash
     
     
-    // Handles which restaurant the browsing user has selected to make a reservation at
-	private static long selectedRestaurantId = 1;
-	
-	public static long getSelectedRestaurantID() { return selectedRestaurantId;}
-	
-	public static void setSelectedRestaurantID(long id) {selectedRestaurantId = id;}
     /**
      * Creates a UserDTO client model 
      *
@@ -31,6 +28,35 @@ public class UserDTO {
     	this.phoneNumber = phoneNumber;
     	this.passwordString = passwordString;
     }
+    @JsonCreator
+    public UserDTO(
+    	 @JsonProperty("userId") long id, 
+    	 @JsonProperty("name") String name, 
+    	 @JsonProperty("email") String email, 
+    	 @JsonProperty("phoneNumber") String phoneNumber, 
+    	 @JsonProperty("passwordString") String passwordString) {
+    	
+    	this.userId = id;
+    	this.name = name;
+    	this.email = email;
+    	this.phoneNumber = phoneNumber;
+    	this.passwordString = passwordString;
+    }
+    
+    /**
+     * For creating a UserDTO on the client used to login 
+     *
+     * @param email of user
+     * @param plainText string password of user
+     * @return UserDTO new DTO model instance
+     */
+    public UserDTO(String email, String passwordString) {
+    	
+    	this.email = email;
+    	this.passwordString = passwordString;
+    }
+    
+    public UserDTO() {}
     
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
