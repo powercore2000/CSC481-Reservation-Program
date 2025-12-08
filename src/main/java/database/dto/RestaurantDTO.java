@@ -16,6 +16,13 @@ public class RestaurantDTO {
         this.city = city;
         this.state = state;
     }
+    
+    public RestaurantDTO(String name,String address, String city, String state) {
+        this.name = name;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+    }
 
     public Long getId()       	{ return id; }
     public String getName()   	{ return name; }

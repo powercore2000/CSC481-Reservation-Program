@@ -9,10 +9,11 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
 import database.dto.ReservationDTO;            // from your DTO file
-import database.dto.UserDTO;
+import database.queries.RestaurantQueries;
 import database.queries.UserQueries;
-import backend.controllers.ReservationController;
+import backend.controllers.RestaurantController;
 import backend.models.ReservationModel;        // from your ActiveJDBC model
+import backend.models.RestaurantModel;
 import backend.models.UserModel;
 
 public class ReservationMapper {
@@ -45,7 +46,7 @@ public class ReservationMapper {
 	        UserModel attatchedUser = UserQueries.findByEmail(resDTO.getEmail()).get();
 	
 	        model.set("user_id",attatchedUser.getUserId());
-	        model.set("restaurant_id", UserDTO.getSelectedRestaurantID());
+	        model.set("restaurant_id", RestaurantController.getSelectedRestaurantID());
 	        model.set("reservation_at",ts);
 	        model.set("party_size", resDTO.getPartySize());
 	        model.set("status", resDTO.getStatus());
@@ -80,8 +81,9 @@ public class ReservationMapper {
         Timestamp ts = model.getReservationAt();
         LocalDateTime dateTime = ts.toLocalDateTime();
         UserModel attatchedUser = UserQueries.findById(model.getUserId()).get();
+        RestaurantModel attatchedRestaurant = RestaurantQueries.findRestaurantById(model.getRestaurantId()).get();
         
-        return new ReservationDTO(
+        ReservationDTO newDTO =  new ReservationDTO(
         	attatchedUser.getName(),                // Get from User table
         	attatchedUser.getEmail(),               // Get from User table
             model.getPartySize(),
@@ -90,11 +92,17 @@ public class ReservationMapper {
             model.getStatus(),
             model.getConfirmationCode()
         );
+        
+        newDTO.setRestaurantLocation(attatchedRestaurant.getAddress());
+        newDTO.setRestaurantName(attatchedRestaurant.getName());
+        
+        return newDTO;
     }
+
     
     public static Boolean isStringNullOrEmpty(String str) {
     	
-    	return str.isBlank() || str == null;
+    	return  str == null || str.isBlank();
     }
     
     

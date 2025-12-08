@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.javalite.activejdbc.Base;
+
 public class UserQueries
 {
 
@@ -32,9 +34,12 @@ public class UserQueries
         String sql = "SELECT * FROM app_users ORDER BY id";
         List<UserModel> out = new ArrayList<>();
         try (Connection c = DbManager.getConnection();
+        		
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery())
         {
+        	
+        	DbManager.openDatabase();
             while (rs.next())
             {
             	UserModel row = new UserModel();
@@ -50,16 +55,17 @@ public class UserQueries
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
         return out;
     }
 
     public static Optional<UserModel> findById(long id)
     {
-        String sql = "SELECT id, full_name, email, phone, password_hash FROM app_users WHERE id = ?";
+        String sql = "SELECT * FROM app_users WHERE id = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
+        	DbManager.openDatabase();
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery())
             {
@@ -72,17 +78,18 @@ public class UserQueries
         } catch (SQLException e)
         {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
 
         return Optional.empty();
     }
 
     public static Optional<UserModel> findByEmail(String email)
     {
-        String sql = "SELECT id, full_name, email, phone, password_hash FROM app_users WHERE email = ?";
+        String sql = "SELECT * FROM app_users WHERE email = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
+        	DbManager.openDatabase();
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery())
             {
@@ -93,8 +100,22 @@ public class UserQueries
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
         return Optional.empty();
+    }
+    
+    public static Optional<UserModel> findByEmailAndPassword(String email, String password)
+    {
+    	UserModel foundUser = findByEmail(email).orElse(null);
+    	System.out.println("User found is : " + foundUser);
+    	if(foundUser == null)
+    		return Optional.empty();
+    	
+    	if(foundUser.doesPasswordMatch(password))   	
+    		return Optional.of(foundUser);
+    	
+    	return Optional.empty();
+    	
     }
 
     /* ----------------- CREATE ----------------- */

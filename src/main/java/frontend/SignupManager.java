@@ -6,15 +6,19 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SignupController
+import database.dto.UserDTO;
+
+public class SignupManager
 {
 
-    @FXML private TextField usernameField;
+    @FXML private TextField fullNameField;
     @FXML private TextField emailField;
+    @FXML private TextField phoneField;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private Label errorLabel;
@@ -22,16 +26,23 @@ public class SignupController
     private Stage getStage(ActionEvent event) {
         return (Stage) ((Node) event.getSource()).getScene().getWindow();
     }
+    
+    public void initalize() {
+    	phoneField.setTextFormatter(new TextFormatter<>(change -> {
+    	    return change.getControlNewText().matches("[0-9()\\-\\s]*") ? change : null;
+    	}));
+    }
 
     @FXML
     private void onSignupClick(ActionEvent event) throws IOException {
-        String username = usernameField.getText().trim();
+        String fullName = fullNameField.getText().trim();
         String email = emailField.getText().trim();
         String pw = passwordField.getText();
         String pw2 = confirmPasswordField.getText();
+        String phone = phoneField.getText();
 
         // Very simple validation (no real database here)
-        if (username.isEmpty() || email.isEmpty() || pw.isEmpty() || pw2.isEmpty()) {
+        if (fullName.isEmpty() || email.isEmpty() || pw.isEmpty() || pw2.isEmpty() || phone.isEmpty()) {
             errorLabel.setText("Please fill in all fields.");
             return;
         }
@@ -41,13 +52,23 @@ public class SignupController
             return;
         }
 
+        UserDTO signUpUser = new UserDTO(fullName,email,phone,pw);
+        Boolean signInState = backend.controllers.UserController.createUser(signUpUser);
+        
+        if(!signInState) {
+        	errorLabel.setText("User Signup Failed!");
+        	return;
+        }
         // “Create” account – in this project we just mark the user as signed in
-        AppState.setSignedIn(true);
+        AppState.setSignedIn(signInState);
+        
+
+
         // optional: remember username if you want to show it later
         // AppState.setCurrentUserName(username);
 
         Stage stage = getStage(event);
-        SceneNavigator.switchScene(stage, "search-view.fxml", "Restaurants");
+        SceneNavigator.switchScene(stage, "SelectResturantType.fxml", "Restaurants");
     }
 
     @FXML

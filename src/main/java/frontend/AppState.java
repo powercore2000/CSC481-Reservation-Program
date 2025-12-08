@@ -8,6 +8,10 @@ public class AppState
 
         return signedIn;
     }
+//If you want to actually remember the username, you can add this
+//private static String currentUserName;
+//public static void setCurrentUserName(String name) { currentUserName = name; }
+//public static String getCurrentUserName() { return currentUserName; }
 
     public static void setSignedIn(boolean value)
     {
@@ -47,5 +51,9 @@ public class AppState
     {
         selectedMenuItem = id;
     }
+    
+    private static Boolean buyMode = false;
+    public static void setBuyMode(Boolean b) {buyMode = b;}
+    public static Boolean getBuyMode() {return buyMode;}
 
 }

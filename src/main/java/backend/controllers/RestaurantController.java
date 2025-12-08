@@ -1,34 +1,102 @@
 package backend.controllers;
 
 import database.dto.*;
-
+import database.queries.ReservationQueries;
+import database.queries.RestaurantQueries;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import backend.models.FoodModel;
 import backend.models.ReservationModel;
+import backend.models.RestaurantModel;
+import backend.services.FoodMapper;
 import backend.services.ReservationMapper;
+import backend.services.RestaurantMapper;
 
 
 @RestController
 @RequestMapping("/restaurants")
 public class RestaurantController {
 	
+    // Handles which restaurant the browsing user has selected to make a reservation at
+	private static long selectedRestaurantId = 1;
+	
+	public static long getSelectedRestaurantID() { return selectedRestaurantId;}
+	
+	public static void setSelectedRestaurantID(long id) {selectedRestaurantId = id;}
+	
+	private static FoodDTO selectedFood;
+	
+	public static FoodDTO getSelectedFood() { return selectedFood;}
+	
+	public static void setSelectedFoodID(FoodDTO newFood) {selectedFood = newFood;}
 	
     @GetMapping("/listAll")
-    public static ArrayList<RestaurantDTO> getAllReservations() {
-        return new ArrayList<RestaurantDTO>();
+    public static List<RestaurantDTO> getAllRestaurants() {
+    	List<RestaurantDTO> allRestaurants = new ArrayList<RestaurantDTO>();
+       
+       List<RestaurantModel> allModels = RestaurantQueries.findAll();
+       
+       for (RestaurantModel r : allModels) {
+    	   
+    	   allRestaurants.add(RestaurantMapper.toDTO(r));
+       }
+       
+       return allRestaurants;
     }
     
+    public static RestaurantDTO getCurrentRestaurant(){
+    	
+    	Optional<RestaurantModel> response = RestaurantQueries.findRestaurantById(selectedRestaurantId);
+		
+    	if(response.isEmpty())
+    		return null;
+		
+        return RestaurantMapper.toDTO( response.get());
+    }
+    
+    public static long setCurrentRestaurantByReservation(ReservationDTO reservation){
+    	
+    	try {
+    	long id = ReservationMapper.toModel(reservation).getRestaurantId();
+    	setSelectedRestaurantID(id);
+    	return id;
+    	} catch (Exception e) {
+    		System.out.println(e);
+    	}
+		
+        return -1;
+    }
 
-    @PostMapping("/updateSchedule")
-    public ResponseEntity<Boolean> createReservation(@RequestBody RestaurantDTO restaurantDto) {
+    
+    @PostMapping("/selectRestaurant")
+    public static ResponseEntity<Boolean> selectRestaurant(@RequestBody RestaurantDTO restaurantDto) {
 
+    		selectedRestaurantId = restaurantDto.getId();
+    		
+    		System.out.println("Set retaurant id to " + getSelectedRestaurantID());
+    		
             return ResponseEntity.ok(true);
 
+    }
+    
+    public static List<FoodDTO> allRestaurantFood(){
+    	
+    	List<FoodModel> foodModels = RestaurantQueries.FoodForRestaurant(selectedRestaurantId);
+    	 List<FoodDTO> displayFood  = new ArrayList<FoodDTO>(); 
+    	 
+    	for (FoodModel f : foodModels) {
+     	   
+    		displayFood.add(FoodMapper.toDTO(f));
+        }
+        
+        return displayFood;
     }
     
 	

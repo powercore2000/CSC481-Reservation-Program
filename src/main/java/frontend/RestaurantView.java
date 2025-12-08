@@ -5,7 +5,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class RestaurantController {
+public class RestaurantView
+{
 
     @FXML private Label restaurantNameLabel;
     @FXML private Label addressLabel;
@@ -13,7 +14,9 @@ public class RestaurantController {
 
     @FXML
     private void initialize() {
+    	
         int id = AppState.getSelectedRestaurant();
+       
         String name = AppState.getSelectedRestaurantName();
 
         if (name == null || name.isEmpty()) {
@@ -52,11 +55,12 @@ public class RestaurantController {
 
     @FXML
     private void onBackClick() {
+    	 AppState.setBuyMode(false);
         Stage stage = (Stage) restaurantNameLabel.getScene().getWindow();
         try {
             SceneNavigator.switchScene(
                     stage,
-                    "/frontend/home-view.fxml",
+                    "/frontend/resturantlists.fxml",
                     "Restaurants"
             );
         } catch (IOException e) {
@@ -70,6 +74,7 @@ public class RestaurantController {
         SceneNavigator.switchScene(stage, "menu-view.fxml",
                 AppState.getSelectedRestaurantName() + " Menu");
     }
+
 
 
     @FXML

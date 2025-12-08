@@ -18,7 +18,21 @@ public class UserModel {
     public String getPhoneNumber() {return phoneNumber;}
     public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
     public String getPasswordHash() {return passwordHash;}
-    public void setPasswordHash(String passwordHash) {this.passwordHash = passwordHash;}
+    public void setPasswordHash(String passwordHash) {
+    	
+    	//Insert Hashing function here
+    	this.passwordHash = passwordHash; 	
+ 
+    }
+    
+    public Boolean doesPasswordMatch(String passString) {
+    	System.out.printf("Checking hash:%s vs pass:%s%n",passwordHash,passString);
+    	//Insert hashing function here
+    	return passwordHash.equals(passString);
+    	
+    }
+    
+    
     public void setCreatedAt(String createdAt) {this.createdAt = createdAt;}
     
     @Override

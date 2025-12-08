@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.MenuItemDetailController"
+            fx:controller="frontend.MenuItemDetail"
             style="-fx-background-color: #f5f5f5;">
 
     <!-- TOP RED HEADER -->
@@ -47,6 +47,7 @@
             <HBox alignment="BOTTOM_RIGHT" style="-fx-padding: 20 0 0 0;">
                 <Region HBox.hgrow="ALWAYS"/>
                 <Button text="Add to Cart"
+                		fx:id="addToCartButton"
                         onAction="#onAddToCartClick"
                         style="-fx-background-color: #27ae60; -fx-text-fill: white;
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
