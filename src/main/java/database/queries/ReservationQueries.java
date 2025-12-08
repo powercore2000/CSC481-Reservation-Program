@@ -106,7 +106,7 @@ public class ReservationQueries {
     
     /* ---------- CREATE A RESERVATION ---------- */
 
-    public static void createReservation(ReservationDTO res) {
+    public static Boolean createReservation(ReservationDTO res) {
     	try {
 
     		Base.open("org.sqlite.JDBC",DbManager.JDBC_URL, "", "");
@@ -117,7 +117,7 @@ public class ReservationQueries {
     		
     		if(resMod == null) {
     			System.out.println("Not adding reservation to db");
-    			return;
+    			return true;
     		}
     		if(!resMod.saveIt()) {
     			throw new RuntimeException("Could not save reservation: " + resMod.errors());
@@ -126,10 +126,13 @@ public class ReservationQueries {
     	}
 	     catch (Exception e) {
 	        e.printStackTrace();
+	        return false;
 	    }
     	finally {
     		Base.close();
     	}
+    	
+    	return false;
     }
     
     public static long saveReservation(ReservationDTO res) {

@@ -8,6 +8,10 @@ public class ReservationDTO {
 	
 	private String name;
     private String email;
+    
+    private String restaurantName;
+    private String restaurantLocation;
+    
     private int partySize;
     private LocalDate date;
     private String time;
@@ -42,8 +46,13 @@ public class ReservationDTO {
     public String getStatus() {return status;}
     public String getConfirmationCode() {return confirmationCode;}
     
+    public String getRestaurantName() {return restaurantName;}
+    public String getRestaurantLocation() {return restaurantLocation;}
+    
     public void setStatus(String status) {this.status = status;}
     public void setEmail(String email) {this.email = email;}
+    public void setRestaurantName(String restaurantName) {this.restaurantName = restaurantName;}
+    public void setRestaurantLocation(String restaurantLocation) {this.restaurantLocation = restaurantLocation;}
 
     @Override
     public String toString() {
