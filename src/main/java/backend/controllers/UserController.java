@@ -38,7 +38,8 @@ public class UserController {
         	//throw new RuntimeException("hu?\ntrace-line1\ntrace-line2");
         	return false;
         }
-        currentUser = newUser;
+        //Done to initlize the id value to the user created
+        currentUser = UserMapper.toDTO(UserMapper.toModel(newUser));
         database.queries.UserQueries.findAll();
         return true;
     }

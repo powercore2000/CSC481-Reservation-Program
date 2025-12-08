@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import backend.models.FoodModel;
 import backend.models.ReservationModel;
 import backend.models.RestaurantModel;
+import backend.services.FoodMapper;
 import backend.services.ReservationMapper;
 import backend.services.RestaurantMapper;
 
@@ -53,6 +55,19 @@ public class RestaurantController {
     		
             return ResponseEntity.ok(true);
 
+    }
+    
+    public static List<FoodDTO> allRestaurantFood(){
+    	
+    	List<FoodModel> foodModels = RestaurantQueries.FoodForRestaurant(selectedRestaurantId);
+    	 List<FoodDTO> displayFood  = new ArrayList<FoodDTO>(); 
+    	 
+    	for (FoodModel f : foodModels) {
+     	   
+    		displayFood.add(FoodMapper.toDTO(f));
+        }
+        
+        return displayFood;
     }
     
 	

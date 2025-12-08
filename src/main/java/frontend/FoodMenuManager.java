@@ -1,12 +1,26 @@
 package frontend;
 
 import javafx.fxml.FXML;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import database.dto.FoodDTO;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-public class MenuController {
+public class FoodMenuManager {
 
+	
+	public void initialize() {
+		
+		List<FoodDTO> food = backend.controllers.RestaurantController.allRestaurantFood();
+		
+		for(FoodDTO f : food) {
+			System.out.println(f);
+		}
+	}
     @FXML
     private void onBackClick(ActionEvent event) throws Exception {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

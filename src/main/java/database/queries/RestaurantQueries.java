@@ -1,5 +1,6 @@
 package database.queries;
 
+import backend.models.FoodModel;
 import backend.models.RestaurantModel;
 import backend.models.UserModel;
 
@@ -191,7 +192,7 @@ public class RestaurantQueries {
     /* ---------- MENU (FOOD ITEMS) FOR A RESTAURANT ---------- */
     // Uses new schema: restaurant_menus + menu_food + food
 
-    public static List<Map<String, Object>> menuForRestaurant(long restaurantId)
+    public static List<FoodModel> FoodForRestaurant(long restaurantId)
     {
         String sql = """
             SELECT f.id,
@@ -208,25 +209,26 @@ public class RestaurantQueries {
             ORDER BY f.name
         """;
 
-        List<Map<String, Object>> out = new ArrayList<>();
+        List<FoodModel> out = new ArrayList<FoodModel>();
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-
+        	DbManager.openDatabase();
+        	
             ps.setLong(1, restaurantId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Map<String, Object> row = new HashMap<>();
-                    row.put("id",          rs.getLong("id"));
-                    row.put("name",        rs.getString("name"));
-                    row.put("description", rs.getString("description"));
-                    row.put("price_cents", rs.getInt("price_cents"));
-                    row.put("category",    rs.getString("category"));
+                	FoodModel row = new FoodModel();
+                    row.setFoodId( rs.getLong("id"));
+                    row.setName(rs.getString("name"));
+                    row.setDescription(rs.getString("description"));
+                    row.setPriceCents(rs.getInt("price_cents"));
+                    row.setCategory(rs.getString("category"));
                     out.add(row);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
         return out;
     }
 }
