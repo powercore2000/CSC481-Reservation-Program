@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.*;
 import database.queries.DbManager;
 import backend.models.*;
+import backend.services.ReservationMapper;
 import database.dto.ReservationDTO;
 
 public class ReservationQueries {
