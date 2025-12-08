@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
 import database.dto.ReservationDTO;            // from your DTO file
+import database.queries.DbManager;
 import database.queries.RestaurantQueries;
 import database.queries.UserQueries;
 import backend.controllers.RestaurantController;
@@ -27,6 +28,7 @@ public class ReservationMapper {
      */
     public static ReservationModel toModel(ReservationDTO resDTO) {
 
+    	DbManager.openDatabase();
         ReservationModel model = new ReservationModel();
 
         DateTimeFormatter fmt = new DateTimeFormatterBuilder()
@@ -63,7 +65,7 @@ public class ReservationMapper {
         } catch(Exception e) {
             System.out.println("Stopping model conversion: " + e.toString());
             return null;
-        }
+        } finally {DbManager.closeDatabase();}
     }
 
     /**

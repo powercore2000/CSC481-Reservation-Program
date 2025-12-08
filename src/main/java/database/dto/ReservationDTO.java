@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ReservationDTO {
 
     // --- NEW FIELDS (Required for Logic) ---
@@ -47,6 +50,30 @@ public class ReservationDTO {
         this.date = date;
         this.time = time;
         this.confirmationCode = UUID.randomUUID().toString();
+        setStatus(status);
+    }
+
+    
+    @JsonCreator
+    public ReservationDTO(
+    	 @JsonProperty("name") String name, 
+    	 @JsonProperty("email") String email, 
+    	 @JsonProperty("partySize") int partySize, 
+    	 @JsonProperty("date") LocalDate date, 
+    	 @JsonProperty("time") String time,
+    	 @JsonProperty("status") String status,
+    	 @JsonProperty("confirmationCode") String confirmationCode,
+    	 @JsonProperty("id") Long id)
+    
+    	{
+    	
+    	this.name = name;
+        this.email = email;
+        this.partySize = partySize;
+        this.date = date;
+        this.time = time;
+        this.confirmationCode = confirmationCode;
+        this.id = id;
         setStatus(status);
     }
 

@@ -81,10 +81,10 @@ public class ReservationController {
     }
     
     @PostMapping("/addFoodTargetReservation")
-    public static ResponseEntity<Boolean> addFoodToTargetReservation(@RequestBody FoodDTO food, @RequestBody ReservationDTO reservation) {
+    public static ResponseEntity<Boolean> addFoodToTargetReservation(@RequestBody AddFoodToReservationRequest foodReq) {
     	
-    	ReservationModel targetResModel = ReservationMapper.toModel(reservation);
-    	Boolean success = FoodQueries.attachToReservation(targetResModel.getLongId(), food.getId());
+    	ReservationModel targetResModel = ReservationMapper.toModel(foodReq.getReservation());
+    	Boolean success = FoodQueries.attachToReservation(targetResModel.getUserId(), foodReq.getFood().getId());
         
         if(success)
         	return ResponseEntity.ok(true);
@@ -94,7 +94,7 @@ public class ReservationController {
     }
     
     @GetMapping("/getFoodCurrentReservations")
-    public static ArrayList<FoodDTO> getAllFoodFromReservation() {
+    public static ArrayList<FoodDTO> getAllFoodFromCurrentReservation() {
     	
     	List<FoodModel> list = FoodQueries.findAllReservationFood(cachedReservation);
     	
@@ -110,6 +110,22 @@ public class ReservationController {
              
     }
     
+    @PostMapping("/getFoodTargetReservations")
+    public static ArrayList<FoodDTO> getAllFoodFromTargetReservation(@RequestBody ReservationDTO targetRes) {
+    	
+    	List<FoodModel> list = FoodQueries.foodForReservation(targetRes.getId());
+    	
+    	ArrayList<FoodDTO> allFood = new ArrayList<FoodDTO>();
+        
+        for (FoodModel food : list) {
+     	   
+        	allFood.add(FoodMapper.toDTO(food));
+     	   
+        }
+        
+        return allFood;
+             
+    }
     
 
     @PostMapping("/create")
