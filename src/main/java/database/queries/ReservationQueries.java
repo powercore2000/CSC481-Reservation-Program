@@ -106,7 +106,7 @@ public class ReservationQueries {
     
     /* ---------- CREATE A RESERVATION ---------- */
 
-    public static Boolean createReservation(ReservationDTO res) {
+    public static Optional<ReservationDTO> createReservation(ReservationDTO res) {
     	try {
 
     		Base.open("org.sqlite.JDBC",DbManager.JDBC_URL, "", "");
@@ -114,25 +114,30 @@ public class ReservationQueries {
     		Base.exec("PRAGMA foreign_keys = ON;");
     		
     		ReservationModel resMod = ReservationMapper.toModel(res);
+    		ReservationDTO filledDTO = ReservationMapper.toDTO(resMod);
     		
     		if(resMod == null) {
     			System.out.println("Not adding reservation to db");
-    			return true;
+    			return Optional.empty();
     		}
     		if(!resMod.saveIt()) {
     			throw new RuntimeException("Could not save reservation: " + resMod.errors());
+    		}
+    		// Create succeeded
+    		else {
+    			System.out.println("Created reservation: " + filledDTO);
+    			return Optional.of(filledDTO);
     		}
     		
     	}
 	     catch (Exception e) {
 	        e.printStackTrace();
-	        return false;
+	        return Optional.empty();
 	    }
     	finally {
     		Base.close();
     	}
-    	
-    	return false;
+
     }
     
     public static long saveReservation(ReservationDTO res) {

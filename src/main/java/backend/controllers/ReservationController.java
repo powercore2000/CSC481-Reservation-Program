@@ -17,7 +17,8 @@ import backend.services.ReservationMapper;
 
 public class ReservationController {
 	
-	private static ReservationDTO createdReservation;
+	private static ReservationDTO cachedReservation;
+	public static ReservationDTO getCachedReservation(){return cachedReservation;}
 	
     @GetMapping("/reservations")
     public static ArrayList<ReservationDTO> getAllReservations() {
@@ -45,7 +46,7 @@ public class ReservationController {
 	    
 		reservation.setEmail(UserController.getCurrentUser().getEmail()); 
 		System.out.println("Created reservation: " + reservation);  
-        database.queries.ReservationQueries.createReservation(reservation);
+		cachedReservation = database.queries.ReservationQueries.createReservation(reservation).get();
         database.queries.ReservationQueries.listAll();		 	
         return true;
 		

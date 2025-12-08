@@ -56,7 +56,7 @@ public class UserQueries
 
     public static Optional<UserModel> findById(long id)
     {
-        String sql = "SELECT id, full_name, email, phone, password_hash FROM app_users WHERE id = ?";
+        String sql = "SELECT * FROM app_users WHERE id = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
@@ -79,7 +79,7 @@ public class UserQueries
 
     public static Optional<UserModel> findByEmail(String email)
     {
-        String sql = "SELECT id, full_name, email, phone, password_hash FROM app_users WHERE email = ?";
+        String sql = "SELECT * FROM app_users WHERE email = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {

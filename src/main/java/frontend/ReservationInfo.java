@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import database.dto.ReservationDTO;
+
 public class ReservationInfo {
 
     @FXML private Label infoLabel;
@@ -21,8 +23,18 @@ public class ReservationInfo {
     @FXML
     public void initialize() {
     	
-    	//setReservationDetails();
+    	ReservationDTO initalRes = backend.controllers.ReservationController.getCachedReservation();
         
+    	setReservationInfo(
+    			initalRes.getName(),
+    			initalRes.getEmail(),
+    			initalRes.getRestaurantName(),
+    			initalRes.getRestaurantLocation(),
+    			initalRes.getDate().toString(),
+    			initalRes.getTime().toString(),
+    			initalRes.getPartySize(),
+    			""
+    			);
       }
     
     private Stage getStage() {
@@ -55,7 +67,7 @@ public class ReservationInfo {
             String location,
             String date,
             String time,
-            String partySize,
+            int partySize,
             String preorder
     ) {
         nameLabel.setText("Name: " + name);

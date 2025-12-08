@@ -53,6 +53,7 @@ public class ResturantLists
                 "320 China Ave, Compton, CA", "10am - 12am"));
         restaurants.add(new RestaurantDTO("The Garden Vegan Bistro",
                 "401 Greenleaf Rd, Carson, CA", "8am - 10pm"));
+        
 
         // apply them to the buttons
         applyRestaurants(restaurants);

@@ -9,9 +9,11 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
 import database.dto.ReservationDTO;            // from your DTO file
+import database.queries.RestaurantQueries;
 import database.queries.UserQueries;
 import backend.controllers.RestaurantController;
 import backend.models.ReservationModel;        // from your ActiveJDBC model
+import backend.models.RestaurantModel;
 import backend.models.UserModel;
 
 public class ReservationMapper {
@@ -79,8 +81,9 @@ public class ReservationMapper {
         Timestamp ts = model.getReservationAt();
         LocalDateTime dateTime = ts.toLocalDateTime();
         UserModel attatchedUser = UserQueries.findById(model.getUserId()).get();
+        RestaurantModel attatchedRestaurant = RestaurantQueries.findRestaurantById(model.getRestaurantId()).get();
         
-        return new ReservationDTO(
+        ReservationDTO newDTO =  new ReservationDTO(
         	attatchedUser.getName(),                // Get from User table
         	attatchedUser.getEmail(),               // Get from User table
             model.getPartySize(),
@@ -89,7 +92,13 @@ public class ReservationMapper {
             model.getStatus(),
             model.getConfirmationCode()
         );
+        
+        newDTO.setRestaurantLocation(attatchedRestaurant.getAddress());
+        newDTO.setRestaurantName(attatchedRestaurant.getName());
+        
+        return newDTO;
     }
+
     
     public static Boolean isStringNullOrEmpty(String str) {
     	
