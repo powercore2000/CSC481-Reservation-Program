@@ -96,7 +96,7 @@ public class ReservationController {
     @GetMapping("/getFoodCurrentReservations")
     public static ArrayList<FoodDTO> getAllFoodFromReservation() {
     	
-    	List<FoodModel> list = null;
+    	List<FoodModel> list = FoodQueries.findAllReservationFood(cachedReservation);
     	
     	ArrayList<FoodDTO> allFood = new ArrayList<FoodDTO>();
         
