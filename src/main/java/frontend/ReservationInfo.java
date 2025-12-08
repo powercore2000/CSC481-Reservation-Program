@@ -18,6 +18,13 @@ public class ReservationInfo {
     @FXML private Label partyLabel;
     @FXML private Label foodlabel;
 
+    @FXML
+    public void initialize() {
+    	
+    	//setReservationDetails();
+        
+      }
+    
     private Stage getStage() {
         return (Stage) infoLabel.getScene().getWindow();
     }

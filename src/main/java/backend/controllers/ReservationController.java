@@ -17,6 +17,7 @@ import backend.services.ReservationMapper;
 
 public class ReservationController {
 	
+	private static ReservationDTO createdReservation;
 	
     @GetMapping("/reservations")
     public static ArrayList<ReservationDTO> getAllReservations() {
