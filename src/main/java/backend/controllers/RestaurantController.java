@@ -1,10 +1,12 @@
 package backend.controllers;
 
 import database.dto.*;
+import database.queries.ReservationQueries;
 import database.queries.RestaurantQueries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,12 @@ public class RestaurantController {
 	
 	public static void setSelectedRestaurantID(long id) {selectedRestaurantId = id;}
 	
+	private static FoodDTO selectedFood;
+	
+	public static FoodDTO getSelectedFood() { return selectedFood;}
+	
+	public static void setSelectedFoodID(FoodDTO newFood) {selectedFood = newFood;}
+	
     @GetMapping("/listAll")
     public static List<RestaurantDTO> getAllRestaurants() {
     	List<RestaurantDTO> allRestaurants = new ArrayList<RestaurantDTO>();
@@ -43,7 +51,28 @@ public class RestaurantController {
        return allRestaurants;
     }
     
-
+    public static RestaurantDTO getCurrentRestaurant(){
+    	
+    	Optional<RestaurantModel> response = RestaurantQueries.findRestaurantById(selectedRestaurantId);
+		
+    	if(response.isEmpty())
+    		return null;
+		
+        return RestaurantMapper.toDTO( response.get());
+    }
+    
+    public static long setCurrentRestaurantByReservation(ReservationDTO reservation){
+    	
+    	try {
+    	long id = ReservationMapper.toModel(reservation).getRestaurantId();
+    	setSelectedRestaurantID(id);
+    	return id;
+    	} catch (Exception e) {
+    		System.out.println(e);
+    	}
+		
+        return -1;
+    }
 
     
     @PostMapping("/selectRestaurant")

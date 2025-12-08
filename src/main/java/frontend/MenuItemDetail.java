@@ -1,7 +1,9 @@
 package frontend;
 
+import database.dto.FoodDTO;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -19,44 +21,24 @@ public class MenuItemDetail
 
     @FXML
     private Label descriptionLabel;
+    
+    @FXML
+    private Button addToCartButton;
 
     @FXML
     public void initialize()
     {
         int id = AppState.getSelectedMenuItem();
 
-        switch (id) {
-            case 1 -> {
-                foodNameLabel.setText("Spicy Ramen");
-                categoryLabel.setText("Category: Noodles");
-                priceLabel.setText("Price: $12.99");
-                descriptionLabel.setText("Description: Rich spicy broth with tender noodles and toppings.");
-            }
-            case 2 -> {
-                foodNameLabel.setText("California Roll");
-                categoryLabel.setText("Category: Sushi");
-                priceLabel.setText("Price: $9.50");
-                descriptionLabel.setText("Description: Crab, avocado, and cucumber rolled in seaweed and rice.");
-            }
-            case 3 -> {
-                foodNameLabel.setText("Cheeseburger");
-                categoryLabel.setText("Category: Grill");
-                priceLabel.setText("Price: $11.25");
-                descriptionLabel.setText("Description: Juicy beef patty with cheese, lettuce, and tomato.");
-            }
-            case 4 -> {
-                foodNameLabel.setText("Vegan Bowl");
-                categoryLabel.setText("Category: Vegan");
-                priceLabel.setText("Price: $10.75");
-                descriptionLabel.setText("Description: Mixed grains, roasted veggies, and house-made sauce.");
-            }
-            default -> {
-                foodNameLabel.setText("Menu Item");
-                categoryLabel.setText("Category: N/A");
-                priceLabel.setText("Price: $0.00");
-                descriptionLabel.setText("Description: No description available.");
-            }
-        }
+        FoodDTO food = backend.controllers.RestaurantController.getSelectedFood();
+        
+        foodNameLabel.setText(food.getName());
+        categoryLabel.setText("Category: "+ food.getCategory());
+        priceLabel.setText("Price: $"+food.getPriceCents());
+        descriptionLabel.setText("Description: "+food.getDescription());
+        
+        addToCartButton.setDisable(!AppState.getBuyMode());
+        	
     }
 
     @FXML

@@ -20,10 +20,12 @@ public class ReservationInfo {
     @FXML private Label partyLabel;
     @FXML private Label foodlabel;
 
+    ReservationDTO initalRes;
+    
     @FXML
     public void initialize() {
     	
-    	ReservationDTO initalRes = backend.controllers.ReservationController.getCachedReservation();
+    	initalRes = backend.controllers.ReservationController.getCachedReservation();
         
     	setReservationInfo(
     			initalRes.getName(),
@@ -56,6 +58,8 @@ public class ReservationInfo {
     @FXML
     private void onViewMenuClick() throws IOException {
         // go to menu view for the restaurant
+    	AppState.setBuyMode(true);
+    	backend.controllers.RestaurantController.setCurrentRestaurantByReservation(initalRes);
         SceneNavigator.switchScene(getStage(), "menu-view.fxml", "Menu");
     }
 

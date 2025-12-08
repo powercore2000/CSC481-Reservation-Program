@@ -25,13 +25,13 @@
             <Label fx:id="menuTitleLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Restaurant Name's Menu" />
 
             <!-- Row of 4 menu items, like your sketch -->
-            <HBox alignment="CENTER" spacing="20">
+            <HBox alignment="CENTER" spacing="20" fx:id="itemsRow">
 
                 <!-- ITEM 1 -->
                 <VBox alignment="CENTER" spacing="5">
                     <Button prefHeight="110.0" prefWidth="105.0" style="-fx-pref-width: 100; -fx-pref-height: 100;  -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" text="Image" />
                     <Label text="Food Name 1"/>
-                    <Button style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-background-radius: 5;" text="View more" onAction="#onViewMore1" />
+                    <Button style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-background-radius: 5;" text="View more" onAction="#onViewMore" />
 
                 </VBox>
 
@@ -40,7 +40,7 @@
                     <Button prefHeight="108.0" prefWidth="109.0" style="-fx-pref-width: 100; -fx-pref-height: 100;                                    -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" text="Image" />
                     <Label text="Food Name 2"/>
 
-                    <Button style="-fx-background-color: #c0392b; -fx-text-fill: white;                                    -fx-background-radius: 5;" text="View more" onAction="#onViewMore2" />
+                    <Button style="-fx-background-color: #c0392b; -fx-text-fill: white;                                    -fx-background-radius: 5;" text="View more" onAction="#onViewMore" />
                 </VBox>
 
                 <!-- ITEM 3 -->
@@ -48,7 +48,7 @@
                     <Button prefHeight="107.0" prefWidth="108.0" style="-fx-pref-width: 100; -fx-pref-height: 100;                                    -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" text="Image" />
                     <Label text="Food Name 3"/>
 
-                    <Button style="-fx-background-color: #c0392b; -fx-text-fill: white;                                    -fx-background-radius: 5;" text="View more" onAction="#onViewMore3"/>
+                    <Button style="-fx-background-color: #c0392b; -fx-text-fill: white;                                    -fx-background-radius: 5;" text="View more" onAction="#onViewMore"/>
                 </VBox>
 
                 <!-- ITEM 4 -->
@@ -56,7 +56,7 @@
                     <Button prefHeight="113.0" prefWidth="108.0" style="-fx-pref-width: 100; -fx-pref-height: 100;                                    -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" text="Image" />
                     <Label text="Food Name 4"/>
 
-                    <Button style="-fx-background-color: #c0392b; -fx-text-fill: white;                                    -fx-background-radius: 5;" text="View more" onAction="#onViewMore4" />
+                    <Button style="-fx-background-color: #c0392b; -fx-text-fill: white;                                    -fx-background-radius: 5;" text="View more" onAction="#onViewMore" />
                 </VBox>
 
             </HBox>

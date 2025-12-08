@@ -51,5 +51,9 @@ public class AppState
     {
         selectedMenuItem = id;
     }
+    
+    private static Boolean buyMode = false;
+    public static void setBuyMode(Boolean b) {buyMode = b;}
+    public static Boolean getBuyMode() {return buyMode;}
 
 }
