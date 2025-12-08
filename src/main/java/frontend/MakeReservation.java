@@ -9,7 +9,8 @@ import com.sun.javafx.scene.control.IntegerField;
 
 import database.dto.ReservationDTO;
 
-public class MakeReservationController
+
+public class MakeReservation
 {
 
     @FXML private TextField nameField;
@@ -32,7 +33,7 @@ public class MakeReservationController
     {
         Stage stage = (Stage) nameField.getScene().getWindow();
         SceneNavigator.switchScene(stage,
-                "/frontend/home-view.fxml",
+                "/frontend/resturantlists.fxml",
                 "Restaurants");
     }
 

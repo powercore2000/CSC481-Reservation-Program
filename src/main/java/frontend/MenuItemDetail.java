@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class MenuItemDetailController
+public class MenuItemDetail
 {
 
     @FXML

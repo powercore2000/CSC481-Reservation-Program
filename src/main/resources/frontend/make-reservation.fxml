@@ -5,7 +5,7 @@
 <?import com.sun.javafx.scene.control.IntegerField?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.MakeReservationController"
+            fx:controller="frontend.MakeReservation"
             style="-fx-background-color: #f5f5f5;">
 
     <top>

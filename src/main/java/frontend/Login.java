@@ -10,9 +10,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import database.dto.UserDTO;
 
-public class LoginController
+import database.dto.UserDTO;
+public class Login
 {
 
     @FXML
@@ -50,13 +50,20 @@ public class LoginController
 
         // go back to home (or search) after login
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
+        SceneNavigator.switchScene(stage, "SelectResturantType.fxml", "Smart N Dine");
     }
 
     @FXML
     private void onCancelClick(ActionEvent event) throws IOException
     {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
+        SceneNavigator.switchScene(stage, "SelectResturantType.fxml", "Smart N Dine");
     }
+    @FXML
+    private void onGoToSignupClick(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "signup-view.fxml", "Sign Up");
+    }
+
+
 }

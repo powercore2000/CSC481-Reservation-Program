@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.LoginController"
+            fx:controller="frontend.Login"
             style="-fx-background-color: #f5f5f5;">
 
     <!-- TOP RED HEADER -->
@@ -45,6 +45,8 @@
                     <PasswordField fx:id="passwordField"
                                    promptText="Enter password"
                                    GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+
                 </GridPane>
 
                 <Label fx:id="errorLabel"
@@ -59,6 +61,12 @@
                     <Button text="Login"
                             onAction="#onLoginClick"
                             style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+
+                    <Button text="Sign Up"
+                            onAction="#onGoToSignupClick"
+                            style="-fx-background-color: #ecf0f1; -fx-text-fill: #c0392b;
+               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+
                 </HBox>
 
             </VBox>
