@@ -1,55 +1,72 @@
 package frontend;
 
-public class AppState
-{
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class AppState {
+
+    // ===== SIGN IN STATE =====
     private static boolean signedIn = false;
 
     public static boolean isSignedIn() {
-
         return signedIn;
     }
-//If you want to actually remember the username, you can add this
-//private static String currentUserName;
-//public static void setCurrentUserName(String name) { currentUserName = name; }
-//public static String getCurrentUserName() { return currentUserName; }
 
-    public static void setSignedIn(boolean value)
-    {
+    public static void setSignedIn(boolean value) {
         signedIn = value;
     }
+
+    // ===== RESTAURANT SELECTION =====
+    private static int selectedRestaurant = 0;
     private static String selectedRestaurantName = "";
 
-    public static void setSelectedRestaurantName(String name)
-    {
-        selectedRestaurantName = name;
-    }
-
-    public static String getSelectedRestaurantName()
-    {
-        return selectedRestaurantName;
-    }
-    private static int selectedRestaurant = 0;
-
-    public static int getSelectedRestaurant()
-    {
+    public static int getSelectedRestaurant() {
         return selectedRestaurant;
     }
 
-    public static void setSelectedRestaurant(int id)
-    {
+    public static void setSelectedRestaurant(int id) {
         selectedRestaurant = id;
     }
 
-    private static int selectedMenuItem = 0;
+    public static String getSelectedRestaurantName() {
+        return selectedRestaurantName;
+    }
 
-    public static int getSelectedMenuItem()
-    {
+    public static void setSelectedRestaurantName(String name) {
+        selectedRestaurantName = name;
+    }
+
+    // ===== MENU ITEM SELECTION =====
+    // -1 means "none selected yet"
+    private static int selectedMenuItem = -1;
+
+    public static int getSelectedMenuItem() {
         return selectedMenuItem;
     }
 
-    public static void setSelectedMenuItem(int id)
-    {
+    public static void setSelectedMenuItem(int id) {
         selectedMenuItem = id;
     }
 
+    // ===== CART STATE =====
+    private static final List<CartItem> cartItems = new ArrayList<>();
+
+    public static void addToCart(CartItem item) {
+        if (item != null) {
+            cartItems.add(item);
+        }
+    }
+
+    public static List<CartItem> getCartItems() {
+        return Collections.unmodifiableList(cartItems);
+    }
+
+    public static void clearCart() {
+        cartItems.clear();
+    }
+
+    public static boolean hasCartItems() {
+        return !cartItems.isEmpty();
+    }
 }
