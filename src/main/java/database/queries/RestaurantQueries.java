@@ -1,16 +1,22 @@
 package database.queries;
 
+import backend.models.RestaurantModel;
+
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RestaurantQueries {
 
-    /* ---------- LIST ALL RESTAURANTS ---------- */
+    /* ---------- LIST ALL RESTAURANTS (returns model) ---------- */
 
-    public List<Map<String, Object>> findAll()
+    public List<RestaurantModel> findAll()
     {
         String sql = "SELECT id, name, address, city, state FROM restaurants ORDER BY name";
-        List<Map<String, Object>> out = new ArrayList<>();
+        List<RestaurantModel> out = new ArrayList<>();
+
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery())
@@ -18,18 +24,19 @@ public class RestaurantQueries {
 
             while (rs.next())
             {
-                Map<String, Object> row = new HashMap<>();
-                row.put("id", rs.getLong("id"));
-                row.put("name", rs.getString("name"));
-                row.put("address", rs.getString("address"));
-                row.put("city", rs.getString("city"));
-                row.put("state", rs.getString("state"));
-                out.add(row);
+                RestaurantModel r = new RestaurantModel();
+                // ActiveJDBC Model.set(...) to populate fields
+                r.set("id", rs.getLong("id"));
+                r.setName(rs.getString("name"));
+                r.setAddress(rs.getString("address"));
+                r.setCity(rs.getString("city"));
+                r.setState(rs.getString("state"));
+                out.add(r);
             }
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return out;
     }
 
@@ -52,8 +59,7 @@ public class RestaurantQueries {
             ps.setLong(1, restaurantId);
             try (ResultSet rs = ps.executeQuery())
             {
-                while (rs.next())
-                {
+                while (rs.next()) {
                     Map<String, Object> row = new HashMap<>();
                     row.put("weekday", rs.getInt("weekday"));
                     row.put("open_time", rs.getString("open_time"));
@@ -116,8 +122,7 @@ public class RestaurantQueries {
             ps.setLong(1, restaurantId);
             try (ResultSet rs = ps.executeQuery())
             {
-                while (rs.next())
-                {
+                while (rs.next()) {
                     Map<String, Object> row = new HashMap<>();
                     row.put("id", rs.getLong("id"));
                     row.put("name", rs.getString("name"));
