@@ -2,26 +2,40 @@ package database.dto;
 
 public class RestaurantTagDTO {
 
-    private long id;
-    private long restaurantId;
+    private Long id;
+    private Long restaurantId;
     private String tagName;
 
-    public RestaurantTagDTO(long id,
-                            long restaurantId,
-                            String tagName) {
+    // Full constructor
+    public RestaurantTagDTO(Long id, Long restaurantId, String tagName) {
         this.id = id;
         this.restaurantId = restaurantId;
         this.tagName = tagName;
     }
 
-    public long getId()            { return id; }
-    public long getRestaurantId()  { return restaurantId; }
-    public String getTagName()     { return tagName; }
+    // Constructor for creating new tags (no id yet)
+    public RestaurantTagDTO(Long restaurantId, String tagName) {
+        this(null, restaurantId, tagName);
+    }
 
-    public void setTagName(String tagName) { this.tagName = tagName; }
+    public Long getId() {
+        return id;
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
 
     @Override
     public String toString() {
-        return tagName;
+        return "RestaurantTagDTO{" +
+                "id=" + id +
+                ", restaurantId=" + restaurantId +
+                ", tagName='" + tagName + '\'' +
+                '}';
     }
 }

@@ -36,4 +36,16 @@ public class AppState
         selectedRestaurant = id;
     }
 
+    private static int selectedMenuItem = 0;
+
+    public static int getSelectedMenuItem()
+    {
+        return selectedMenuItem;
+    }
+
+    public static void setSelectedMenuItem(int id)
+    {
+        selectedMenuItem = id;
+    }
+
 }

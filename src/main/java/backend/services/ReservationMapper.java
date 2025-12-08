@@ -1,4 +1,4 @@
-package backend.models;
+package backend.services;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -13,6 +13,7 @@ import database.dto.UserDTO;
 import database.queries.UserQueries;
 import backend.controllers.ReservationController;
 import backend.models.ReservationModel;        // from your ActiveJDBC model
+import backend.models.UserModel;
 
 public class ReservationMapper {
 

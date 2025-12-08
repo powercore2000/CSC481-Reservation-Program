@@ -1,31 +1,30 @@
 package frontend;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SearchController {
+public class SearchController
+{
 
     @FXML private Button signInButton;
     @FXML private Button signOutButton;
     @FXML private TextField searchField;
 
     @FXML
-    public void initialize()
-    {
-
-        if (AppState.isSignedIn())
-        {
-
+    public void initialize() {
+        if (AppState.isSignedIn()) {
+            // Already signed in → show profile icon + sign out
             signInButton.setText("👤");
             signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
             signOutButton.setVisible(true);
-
         } else {
-
+            // Not signed in → normal "Sign In" button
             signInButton.setText("Sign In");
             signInButton.setStyle("-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold; -fx-background-radius: 5;");
             signOutButton.setVisible(false);
@@ -33,14 +32,13 @@ public class SearchController {
     }
 
     @FXML
-    private void onSignInClick() {
-        if (!AppState.isSignedIn()) {
-            AppState.setSignedIn(true);
+    private void onSignInClick(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "login-view.fxml", "Sign In");
+    }
 
-            signInButton.setText("👤");
-            signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
-            signOutButton.setVisible(true);
-        }
+    private Stage getStage() {
+        return (Stage) signInButton.getScene().getWindow();
     }
 
     @FXML
@@ -52,38 +50,35 @@ public class SearchController {
         signOutButton.setVisible(false);
     }
 
+    // ====== NAVIGATION TO RESTAURANT LIST (HOME) ======
+
     private void goToRestaurantList() throws IOException {
-        Stage stage = (Stage) signInButton.getScene().getWindow();
+        Stage stage = getStage();
         SceneNavigator.switchScene(stage, "home-view.fxml", "Restaurants");
     }
 
     @FXML
-    private void onSearchClick() throws IOException
-    {
+    private void onSearchClick() throws IOException {
         goToRestaurantList();
     }
 
     @FXML
-    private void onBuffetClick() throws IOException
-    {
+    private void onBuffetClick() throws IOException {
         goToRestaurantList();
     }
 
     @FXML
-    private void onCafeClick() throws IOException
-    {
+    private void onCafeClick() throws IOException {
         goToRestaurantList();
     }
 
     @FXML
-    private void onFineDiningClick() throws IOException
-    {
+    private void onFineDiningClick() throws IOException {
         goToRestaurantList();
     }
 
     @FXML
-    private void onBistroClick() throws IOException
-    {
+    private void onBistroClick() throws IOException {
         goToRestaurantList();
     }
 }

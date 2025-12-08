@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="frontend.SignupController"
+            style="-fx-background-color: #f5f5f5;">
+
+    <!-- TOP RED HEADER -->
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
+            <Label text="WEB Name"
+                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Back to login -->
+            <Button text="Back to Login"
+                    onAction="#onBackToLoginClick"
+                    style="-fx-background-color: white; -fx-text-fill: #c0392b;
+                           -fx-font-weight: bold; -fx-background-radius: 5;"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER CONTENT -->
+    <center>
+        <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 30;">
+            <Label text="Create Account"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="emailField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="passwordField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Confirm Password:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <Label fx:id="errorLabel"
+                   textFill="red"
+                   style="-fx-font-size: 12px;"/>
+
+            <Button text="Sign Up"
+                    onAction="#onSignupClick"
+                    style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                           -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 5 20;"/>
+        </VBox>
+    </center>
+
+</BorderPane>
