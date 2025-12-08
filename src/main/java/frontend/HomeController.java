@@ -3,7 +3,9 @@ package frontend;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 import java.io.IOException;
+import javafx.scene.Node;
 
 public class HomeController
 {
@@ -34,17 +36,12 @@ public class HomeController
 
 
 @FXML
-    protected void onSignInClick()
-    {
-        if (!AppState.isSignedIn())
-        {
-            AppState.setSignedIn(true);
-            signInButton.setText("👤");
-            signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
-            viewReservationButton.setVisible(true);
-            signOutButton.setVisible(true);
-        }
-    }
+private void onSignInClick(ActionEvent event) throws IOException
+{
+    // instead of directly setting signed in, go to login screen
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    SceneNavigator.switchScene(stage, "login-view.fxml", "Sign In");
+}
     @FXML
     protected void onSignOutClick()
     {
