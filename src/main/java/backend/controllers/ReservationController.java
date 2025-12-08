@@ -133,7 +133,7 @@ public class ReservationController {
 	    
 		reservation.setEmail(UserController.getCurrentUser().getEmail()); 
 		System.out.println("Created reservation: " + reservation);  
-		cachedReservation = database.queries.ReservationQueries.createReservation(reservation).get();
+		boolean success = ReservationQueries.createReservationWithFood(reservation, reservation.getFoodSelections());
         database.queries.ReservationQueries.listAll();		 	
         return true;
 		
