@@ -1,4 +1,4 @@
-package database;
+package database.queries;
 
 import java.sql.*;
 import java.util.*;

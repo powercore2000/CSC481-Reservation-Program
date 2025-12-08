@@ -5,65 +5,141 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+import database.dto.UserDTO;
+
 public class HomeController {
 
     @FXML private Button signInButton;
     @FXML private Button signOutButton;
     @FXML private Button viewReservationButton;
+    @FXML private Button backButton;
+
+    
+    @FXML
+    private void onBackClick() throws IOException
+    {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        SceneNavigator.switchScene(stage, "search-view.fxml", "Smart N Dine");
+    }
 
     @FXML
-    public void initialize() {
-        // Restore sign-in UI state when returning home
-        if (AppState.isSignedIn()) {
+    public void initialize()
+    {
+        if (AppState.isSignedIn())
+        {
             signInButton.setText("👤");
-            signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
+            signOutButton.setVisible(true);
             viewReservationButton.setVisible(true);
-            signOutButton.setVisible(true);   // show sign out
         }
     }
 
     @FXML
-    protected void onSignInClick() {
-        if (!AppState.isSignedIn()) {
-            AppState.setSignedIn(true);
 
-            // Change Sign In to profile icon
+    protected void onLogInClick() {
+        try {
+            SceneNavigator.switchScene(
+                    getStage(),
+                    "/frontend/login-view.fxml",
+                    "Login In"
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+@FXML
+    protected void onSignInClick()
+    {
+        if (!AppState.isSignedIn())
+        {
+            AppState.setSignedIn(true);
             signInButton.setText("👤");
             signInButton.setStyle("-fx-background-color: white; -fx-background-radius: 50%; -fx-padding: 5;");
-
-            // Show Sign Out + View Reservation
             viewReservationButton.setVisible(true);
             signOutButton.setVisible(true);
         }
     }
 
     @FXML
-    protected void onSignOutClick() {
+    protected void onSignOutClick()
+    {
         AppState.setSignedIn(false);
-
-        // Reset UI back to logged-out mode
         signInButton.setText("Sign In");
         signInButton.setStyle("-fx-background-color: white; -fx-text-fill: #c0392b; -fx-font-weight: bold;");
-
         viewReservationButton.setVisible(false);
         signOutButton.setVisible(false);
     }
 
+    private Stage getStage() {
+        return (Stage) signInButton.getScene().getWindow();
+    }
+
+    // ======= 5 RESTAURANTS =======
+
     @FXML
-    protected void onSelectRestaurant1(javafx.event.ActionEvent event) throws IOException {
-        Stage stage = (Stage) signInButton.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "restaurant-view.fxml", "Restaurant 1");
+    protected void onSelectRestaurant1() {
+        AppState.setSelectedRestaurant(1);
+        AppState.setSelectedRestaurantName("Andies");
+        goToRestaurantPage();
     }
 
     @FXML
-    protected void onSelectRestaurant2(javafx.event.ActionEvent event) throws IOException {
-        Stage stage = (Stage) signInButton.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "restaurant-view.fxml", "Restaurant 2");
+    protected void onSelectRestaurant2() {
+        AppState.setSelectedRestaurant(2);
+        AppState.setSelectedRestaurantName("Jay's Sushi Palace");
+        goToRestaurantPage();
     }
 
     @FXML
-    protected void onViewReservationClick() throws IOException {
-        Stage stage = (Stage) viewReservationButton.getScene().getWindow();
-        SceneNavigator.switchScene(stage, "my-reservations.fxml", "My Reservations");
+    protected void onSelectRestaurant3() {
+        AppState.setSelectedRestaurant(3);
+        AppState.setSelectedRestaurantName("Mama Rosa's Italian Kitchen");
+        goToRestaurantPage();
+    }
+
+    @FXML
+    protected void onSelectRestaurant4() {
+        AppState.setSelectedRestaurant(4);
+        AppState.setSelectedRestaurantName("Golden Dragon BBQ");
+        goToRestaurantPage();
+    }
+
+    @FXML
+    protected void onSelectRestaurant5() {
+        AppState.setSelectedRestaurant(5);
+        AppState.setSelectedRestaurantName("The Garden Vegan Bistro");
+        goToRestaurantPage();
+    }
+
+    private void goToRestaurantPage() {
+        try {
+            SceneNavigator.switchScene(
+                    getStage(),
+                    "/frontend/restaurant-view.fxml",
+                    AppState.getSelectedRestaurantName()
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ======= VIEW RESERVATIONS =======
+
+    @FXML
+    protected void onViewReservationClick() {
+        try {
+            SceneNavigator.switchScene(
+                    getStage(),
+                    "/frontend/my-reservations.fxml",
+                    "My Reservations"
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

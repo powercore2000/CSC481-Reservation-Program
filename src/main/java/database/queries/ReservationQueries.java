@@ -1,13 +1,17 @@
-package database;
-
+package database.queries;
+import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.DB;
 import java.sql.*;
 import java.util.*;
+import database.queries.DbManager;
+import backend.models.*;
+import database.dto.ReservationDTO;
 
 public class ReservationQueries {
 
     /* ---------- LIST RESERVATIONS FOR A USER ---------- */
 
-    public List<Map<String, Object>> forUser(long userId)
+    public static List<Map<String, Object>> forUser(long userId)
     {
         String sql = """
             SELECT r.id,
@@ -48,9 +52,91 @@ public class ReservationQueries {
         return out;
     }
 
+    /* ---------- LIST ALL RESERVATIONS -------------------*/
+    public static List<ReservationModel> listAll()
+    {
+        String sql = """
+            SELECT *
+            FROM reservations r
+            ORDER BY r.reservation_at
+        """;
+
+        List<ReservationModel> out = new ArrayList<>();
+        
+        System.out.println("Print all db entries");
+        
+        try (Connection c = DbManager.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql))
+        {
+
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
+                	ReservationModel row = new ReservationModel();
+
+					row.set("id", rs.getLong("id"));
+					row.set("user_id", rs.getLong("user_id"));
+					row.set("restaurant_id", rs.getLong("restaurant_id"));
+					row.set("reservation_at", rs.getTimestamp("reservation_at")); 
+					row.set("party_size", rs.getInt("party_size"));
+					row.set("status", rs.getString("status"));
+					row.set("confirmation_code", rs.getString("confirmation_code"));
+					row.set("special_requests", rs.getString("special_requests"));
+
+                    // ⚠️ restaurant_name does not exist in SELECT * unless you join restaurants
+                    // So this will remain null unless that column exists in your table.
+					ReservationDTO dto = ReservationMapper.toDTO(row);
+
+                    // 🔥 LOG THE ENTRY
+                    System.out.println("Reservation Found: " + row);
+                    System.out.println("Display Resv Here: " + dto);
+
+                    out.add(row);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+
+   
+    
     /* ---------- CREATE A RESERVATION ---------- */
 
-    public long create(long userId,
+    public static void createReservation(ReservationDTO res) {
+    	try {
+
+    		Base.open("org.sqlite.JDBC",DbManager.JDBC_URL, "", "");
+
+    		Base.exec("PRAGMA foreign_keys = ON;");
+    		
+    		ReservationModel resMod = ReservationMapper.toModel(res);
+    		
+    		if(resMod == null) {
+    			System.out.println("Not adding reservation to db");
+    			return;
+    		}
+    		if(!resMod.saveIt()) {
+    			throw new RuntimeException("Could not save reservation: " + resMod.errors());
+    		}
+    		
+    	}
+	     catch (Exception e) {
+	        e.printStackTrace();
+	    }
+    	finally {
+    		Base.close();
+    	}
+    }
+    
+    public static long saveReservation(ReservationDTO res) {
+    	UUID uuid = UUID.randomUUID();
+    	System.out.println("Saving reservation");
+    	return create(1L,1L,res.getTime(),res.getPartySize(),"Yes",uuid.toString(), "");
+    }
+    public static long create(long userId,
                        long restaurantId,
                        String reservationAt,   // 'YYYY-MM-DD HH:MM:SS'
                        int partySize,
@@ -95,7 +181,7 @@ public class ReservationQueries {
 
     /* ---------- CANCEL A RESERVATION ---------- */
 
-    public boolean cancel(long reservationId)
+    public static boolean cancel(long reservationId)
     {
         String sql = "UPDATE reservations SET status = 'CANCELLED' WHERE id = ?";
         try (Connection c = DbManager.getConnection();
@@ -112,7 +198,7 @@ public class ReservationQueries {
 
     /* ---------- ADD FOOD TO A RESERVATION ---------- */
 
-    public boolean addFood(long reservationId, long foodId, int quantity)
+    public static boolean addFood(long reservationId, long foodId, int quantity)
     {
         String sql = """
             INSERT INTO reservation_food (reservation_id, food_id, quantity)
@@ -134,7 +220,7 @@ public class ReservationQueries {
 
     /* ---------- LIST FOOD ITEMS FOR A RESERVATION ---------- */
 
-    public List<Map<String, Object>> foodForReservation(long reservationId)
+    public static List<Map<String, Object>> foodForReservation(long reservationId)
     {
         String sql = """
             SELECT f.id,

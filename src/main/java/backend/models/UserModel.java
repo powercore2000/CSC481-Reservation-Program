@@ -1,12 +1,13 @@
 package backend.models;
 
-public class User {
+public class UserModel {
 
     private String name;//full_name
     private Long userId;
     private String email;
     private String phoneNumber; //phone
     private String passwordHash; //password_hash
+    private String createdAt;
     
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
@@ -18,4 +19,19 @@ public class User {
     public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
     public String getPasswordHash() {return passwordHash;}
     public void setPasswordHash(String passwordHash) {this.passwordHash = passwordHash;}
+    public void setCreatedAt(String createdAt) {this.createdAt = createdAt;}
+    
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "name='" + name + '\'' +
+                ", userId=" + userId +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
+    }
+
+
 }
