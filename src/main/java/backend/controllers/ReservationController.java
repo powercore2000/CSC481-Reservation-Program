@@ -14,14 +14,14 @@ import backend.services.ReservationMapper;
 
 
 @RestController
-
+@RequestMapping("/reservations")
 public class ReservationController {
 	
 	private static ReservationDTO cachedReservation;
 	public static ReservationDTO getCachedReservation(){return cachedReservation;}
 	
-    @GetMapping("/reservations")
-    public static ArrayList<ReservationDTO> getAllReservations() {
+    @GetMapping("/getUsersReservations")
+    public static ArrayList<ReservationDTO> getAllReservationsForUser() {
         return new ArrayList<ReservationDTO>();
     }
 

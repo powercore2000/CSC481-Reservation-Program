@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.dto.RestaurantDTO;
+
 public class ResturantLists
 {
 
@@ -24,12 +26,13 @@ public class ResturantLists
     @FXML private Button restaurantButton4;
     @FXML private Button restaurantButton5;
 
-    private final List<RestaurantDTO> restaurants = new ArrayList<>();
+    private List<RestaurantDTO> restaurants = new ArrayList<>();
 
     @FXML
     public void initialize()
     {
 
+    	restaurants = backend.controllers.RestaurantController.getAllRestaurants();
         // --- restore sign-in UI state ---
         if (AppState.isSignedIn()) {
             signInButton.setText("👤");
@@ -41,19 +44,19 @@ public class ResturantLists
             signOutButton.setVisible(false);
             viewReservationButton.setVisible(false);
         }
-
+        	/*
         // --- default restaurant list (can be changed later or filtered) ---
         restaurants.add(new RestaurantDTO("Andies",
-                "123 Oak St, Carson, CA", "10am - 12am"));
+                "123 Oak St, Carson, CA", "10am - 12am", "CA"));
         restaurants.add(new RestaurantDTO("Jay's Sushi Palace",
-                "99 Pine St, Gardena, CA", "11am - 1am"));
+                "99 Pine St, Gardena, CA", "11am - 1am", "CA"));
         restaurants.add(new RestaurantDTO("Mama Rosa's Italian Kitchen",
-                "88 Italian Way, Carson, CA", "9am - 11pm"));
+                "88 Italian Way, Carson, CA", "9am - 11pm", "CA"));
         restaurants.add(new RestaurantDTO("Golden Dragon BBQ",
-                "320 China Ave, Compton, CA", "10am - 12am"));
+                "320 China Ave, Compton, CA", "10am - 12am", "CA"));
         restaurants.add(new RestaurantDTO("The Garden Vegan Bistro",
-                "401 Greenleaf Rd, Carson, CA", "8am - 10pm"));
-        
+                "401 Greenleaf Rd, Carson, CA", "8am - 10pm", "CA"));
+        */
 
         // apply them to the buttons
         applyRestaurants(restaurants);
@@ -87,11 +90,11 @@ public class ResturantLists
     }
 
     private List<RestaurantDTO> restaurantList = List.of(
-            new RestaurantDTO("Andies", "123 Oak St, Carson, CA", "10AM - 12AM"),
-            new RestaurantDTO("Jay's Sushi Palace", "901 Sushi Rd, Carson CA", "10AM - 11PM"),
-            new RestaurantDTO("Mama Rosa's Italian Kitchen", "22 Roma Blvd, Carson CA", "11AM - 10PM"),
-            new RestaurantDTO("Golden Dragon BBQ", "17 Fire Grill, Carson CA", "9AM - 12AM"),
-            new RestaurantDTO("The Garden Vegan Bistro", "5 Green Leaf, Carson CA", "9AM - 9PM")
+            new RestaurantDTO("Andies", "123 Oak St, Carson, CA", "10AM - 12AM", "CA"),
+            new RestaurantDTO("Jay's Sushi Palace", "901 Sushi Rd, Carson CA", "10AM - 11PM", "CA"),
+            new RestaurantDTO("Mama Rosa's Italian Kitchen", "22 Roma Blvd, Carson CA", "11AM - 10PM", "CA"),
+            new RestaurantDTO("Golden Dragon BBQ", "17 Fire Grill, Carson CA", "9AM - 12AM", "CA"),
+            new RestaurantDTO("The Garden Vegan Bistro", "5 Green Leaf, Carson CA", "9AM - 9PM", "CA")
     );
 
 
@@ -162,22 +165,5 @@ public class ResturantLists
         }
     }
 
-    public class RestaurantDTO
-    {
 
-        private final String name;
-        private final String address;
-        private final String hours;
-
-        public RestaurantDTO(String name, String address, String hours) {
-            this.name = name;
-            this.address = address;
-            this.hours = hours;
-        }
-
-        public String getName()   { return name; }
-        public String getAddress(){ return address; }
-        public String getHours()  { return hours; }
-
-    }
 }

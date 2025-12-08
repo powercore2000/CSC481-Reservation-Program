@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.javalite.activejdbc.Base;
+
 public class RestaurantQueries {
 
 	
@@ -33,13 +35,17 @@ public class RestaurantQueries {
 
     public static List<RestaurantModel> findAll()
     {
-        String sql = "SELECT id, name, address, city, state FROM restaurants ORDER BY name";
+        String sql = "SELECT * FROM restaurants ORDER BY name";
         List<RestaurantModel> out = new ArrayList<>();
 
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
+        	
+        	Base.open("org.sqlite.JDBC",DbManager.JDBC_URL, "", "");
 
+    		Base.exec("PRAGMA foreign_keys = ON;");
+    		
             while (rs.next()) {
                 RestaurantModel r = new RestaurantModel();
                 // ActiveJDBC Model.set(...) to populate fields
@@ -52,6 +58,10 @@ public class RestaurantQueries {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        
+        finally {
+        	Base.close();
         }
 
         return out;

@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.javalite.activejdbc.Base;
+
 public class UserQueries
 {
 
@@ -32,6 +34,7 @@ public class UserQueries
         String sql = "SELECT * FROM app_users ORDER BY id";
         List<UserModel> out = new ArrayList<>();
         try (Connection c = DbManager.getConnection();
+        		
              PreparedStatement ps = c.prepareStatement(sql);
              ResultSet rs = ps.executeQuery())
         {
