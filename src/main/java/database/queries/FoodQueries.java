@@ -1,6 +1,7 @@
 package database.queries;
 
 import database.dto.FoodDTO;
+import database.dto.ReservationDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class FoodQueries {
 
     /* ---------- MAP HELPER ---------- */
 
-    private FoodDTO mapFood(ResultSet rs) throws SQLException {
+    private static FoodDTO mapFood(ResultSet rs) throws SQLException {
         return new FoodDTO(
                 rs.getLong("id"),
                 rs.getString("name"),
@@ -23,7 +24,23 @@ public class FoodQueries {
 
     /* ---------- LIST ALL FOOD ITEMS ---------- */
 
-    public List<FoodDTO> findAll() {
+    public static List<FoodDTO> findAll() {
+        String sql = "SELECT id, name, description, price_cents, category FROM food ORDER BY name";
+        List<FoodDTO> out = new ArrayList<>();
+        try (Connection c = DbManager.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                out.add(mapFood(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+    
+    public static List<FoodDTO> findAllReservationFood(ReservationDTO res) {
         String sql = "SELECT id, name, description, price_cents, category FROM food ORDER BY name";
         List<FoodDTO> out = new ArrayList<>();
         try (Connection c = DbManager.getConnection();
@@ -41,7 +58,7 @@ public class FoodQueries {
 
     /* ---------- FIND FOOD BY ID ---------- */
 
-    public Optional<FoodDTO> findById(long id) {
+    public static  Optional<FoodDTO> findById(long id) {
         String sql = "SELECT id, name, description, price_cents, category FROM food WHERE id = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -60,7 +77,7 @@ public class FoodQueries {
 
     /* ---------- FOOD FOR A GIVEN RESTAURANT ---------- */
 
-    public List<FoodDTO> findByRestaurant(long restaurantId) {
+    public static List<FoodDTO> findByRestaurant(long restaurantId) {
         String sql = """
                 SELECT f.id,
                        f.name,
@@ -91,7 +108,7 @@ public class FoodQueries {
 
     /* ---------- CREATE NEW FOOD ITEM ---------- */
 
-    public long insert(String name, String description, int priceCents, String category) {
+    public static long insert(String name, String description, int priceCents, String category) {
         String sql = "INSERT INTO food (name, description, price_cents, category) VALUES (?, ?, ?, ?)";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -116,15 +133,15 @@ public class FoodQueries {
 
     /* ---------- ATTACH FOOD TO RESTAURANT MENU ---------- */
 
-    public boolean attachToRestaurant(long restaurantId, long foodId) {
+    public static boolean attachToReservation(long reservationId, long foodId) {
         String sql = """
-                INSERT INTO restaurant_food (restaurant_id, food_id)
+                INSERT INTO restaurant_food (reservation_id, food_id)
                 VALUES (?, ?)
                 """;
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
-            ps.setLong(1, restaurantId);
+            ps.setLong(1, reservationId);
             ps.setLong(2, foodId);
             return ps.executeUpdate() == 1;
         } catch (SQLException e) {

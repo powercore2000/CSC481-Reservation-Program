@@ -1,6 +1,7 @@
 package backend.controllers;
 
 import database.dto.*;
+import database.queries.FoodQueries;
 import database.queries.ReservationQueries;
 import database.queries.RestaurantQueries;
 
@@ -11,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import backend.models.FoodModel;
 import backend.models.ReservationModel;
 import backend.models.RestaurantModel;
+import backend.services.FoodMapper;
 import backend.services.ReservationMapper;
 import backend.services.RestaurantMapper;
 
@@ -63,6 +66,51 @@ public class ReservationController {
         return allReservations;
              
     }
+    
+    @PostMapping("/addFoodCurrentReservation")
+    public static ResponseEntity<Boolean> addFoodToCurrentReservation(@RequestBody FoodDTO food) {
+    	
+    	ReservationModel currentResModel = ReservationMapper.toModel(cachedReservation);
+    	Boolean success = FoodQueries.attachToReservation(currentResModel.getLongId(), food.getId());
+        
+        if(success)
+        	return ResponseEntity.ok(true);
+        
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+             
+    }
+    
+    @PostMapping("/addFoodTargetReservation")
+    public static ResponseEntity<Boolean> addFoodToTargetReservation(@RequestBody FoodDTO food, @RequestBody ReservationDTO reservation) {
+    	
+    	ReservationModel targetResModel = ReservationMapper.toModel(reservation);
+    	Boolean success = FoodQueries.attachToReservation(targetResModel.getLongId(), food.getId());
+        
+        if(success)
+        	return ResponseEntity.ok(true);
+        
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+             
+    }
+    
+    @GetMapping("/getFoodCurrentReservations")
+    public static ArrayList<FoodDTO> getAllFoodFromReservation() {
+    	
+    	List<FoodModel> list = null;
+    	
+    	ArrayList<FoodDTO> allFood = new ArrayList<FoodDTO>();
+        
+        for (FoodModel food : list) {
+     	   
+        	allFood.add(FoodMapper.toDTO(food));
+     	   
+        }
+        
+        return allFood;
+             
+    }
+    
+    
 
     @PostMapping("/create")
     public static ResponseEntity<Boolean> createReservation(@RequestBody ReservationDTO reservationDto) {
