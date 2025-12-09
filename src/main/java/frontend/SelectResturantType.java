@@ -6,8 +6,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import database.queries.RestaurantQueries;
+import backend.models.RestaurantModel;
+import backend.controllers.RestaurantController;
 import java.io.IOException;
+import java.util.List;
 
 public class SelectResturantType
 {
@@ -16,6 +19,23 @@ public class SelectResturantType
     @FXML private Button signOutButton;
     @FXML private TextField searchField;
 
+    
+ // helper for all tag clicks
+    private void printRestaurantsByTag(String tagName) {
+        System.out.println("Tag clicked: " + tagName);
+
+        List<RestaurantModel> restaurants = RestaurantQueries.findByTag(tagName);
+
+        System.out.println("Restaurants with tag = " + tagName + ":");
+        if (restaurants.isEmpty()) {
+            System.out.println(" (none found)");
+        }
+        for (RestaurantModel r : restaurants) {
+            System.out.println(" - " + r.getName());
+        }
+    }
+    
+    
     @FXML
     public void initialize() {
         if (AppState.isSignedIn()) {
@@ -52,6 +72,8 @@ public class SelectResturantType
 
     // ====== NAVIGATION TO RESTAURANT LIST (HOME) ======
 
+ // ====== NAVIGATION TO RESTAURANT LIST (HOME) ======
+
     private void goToRestaurantList() throws IOException {
         Stage stage = getStage();
         SceneNavigator.switchScene(stage, "resturantlists.fxml", "Restaurants");
@@ -59,26 +81,39 @@ public class SelectResturantType
 
     @FXML
     private void onSearchClick() throws IOException {
+        String tag = searchField.getText();
+
+        if (tag != null && !tag.trim().isEmpty()) {
+            RestaurantController.setCurrentTagFilter(tag.trim());
+        } else {
+            // empty search → no filter, show all restaurants
+            RestaurantController.setCurrentTagFilter(null);
+        }
+
         goToRestaurantList();
     }
 
     @FXML
     private void onBuffetClick() throws IOException {
+        RestaurantController.setCurrentTagFilter("Buffet");
         goToRestaurantList();
     }
 
     @FXML
     private void onCafeClick() throws IOException {
+        RestaurantController.setCurrentTagFilter("Cafe");
         goToRestaurantList();
     }
 
     @FXML
     private void onFineDiningClick() throws IOException {
+        RestaurantController.setCurrentTagFilter("Fine Dining");
         goToRestaurantList();
     }
 
     @FXML
     private void onBistroClick() throws IOException {
+        RestaurantController.setCurrentTagFilter("Bistro");
         goToRestaurantList();
     }
 }

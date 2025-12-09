@@ -37,6 +37,36 @@ public class RestaurantController {
 	
 	public static void setSelectedFoodID(FoodDTO newFood) {selectedFood = newFood;}
 	
+	//--------------update----------------
+	@GetMapping("/byTag/{tag}")
+	public static List<RestaurantDTO> getRestaurantsByTag(@PathVariable String tag) {
+
+	    List<RestaurantModel> models = RestaurantQueries.findByTag(tag);
+	    List<RestaurantDTO> dtos = new ArrayList<>();
+
+
+	    for (RestaurantModel r : models) {
+	        dtos.add(RestaurantMapper.toDTO(r));
+	       
+	    }
+
+	    return dtos;
+	}
+	
+	private static String currentTagFilter = null;
+
+	public static void setCurrentTagFilter(String tag) {
+	    currentTagFilter = tag;
+	}
+
+	public static String getCurrentTagFilter() {
+	    return currentTagFilter;
+	}
+
+
+	// -----------------------------------------
+	
+	
     @GetMapping("/listAll")
     public static List<RestaurantDTO> getAllRestaurants() {
     	List<RestaurantDTO> allRestaurants = new ArrayList<RestaurantDTO>();

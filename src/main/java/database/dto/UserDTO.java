@@ -19,8 +19,6 @@ public class UserDTO {
      * @param email of user
      * @param phoneNumber of user
      * @param plainText string password of user
-     * @return UserDTO new DTO model instance
-     */
     public UserDTO(String name, String email, String phoneNumber, String passwordString) {
     	
     	this.name = name;

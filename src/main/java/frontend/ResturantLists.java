@@ -31,9 +31,18 @@ public class ResturantLists
     @FXML
     public void initialize()
     {
+        // 1. check tag filter
+        String tag = backend.controllers.RestaurantController.getCurrentTagFilter();
 
-    	restaurants = backend.controllers.RestaurantController.getAllRestaurants();
-        // --- restore sign-in UI state ---
+        if (tag != null && !tag.isEmpty()) {
+            System.out.println("ResturantLists: Loading restaurants for tag = " + tag);
+            restaurants = backend.controllers.RestaurantController.getRestaurantsByTag(tag);
+        } else {
+            System.out.println("ResturantLists: Loading ALL restaurants");
+            restaurants = backend.controllers.RestaurantController.getAllRestaurants();
+        }
+
+        // 2. restore sign-in UI state
         if (AppState.isSignedIn()) {
             signInButton.setText("👤");
             signOutButton.setVisible(true);
@@ -61,6 +70,7 @@ public class ResturantLists
         // apply them to the buttons
         applyRestaurants(restaurants);
     }
+
 
     /**
      * 👉 Function that controls which restaurants are visible on home-view,

@@ -94,7 +94,57 @@ public class RestaurantQueries {
            return Optional.empty();
 
     }
+    /* ---------- update ---------- */
+    
+    
+    public static List<RestaurantModel> findByTag(String tagName) {
+        String sql = """
+            SELECT r.*
+            FROM restaurants r
+            JOIN restaurant_tags t
+                ON t.restaurant_id = r.id
+            WHERE t.tag_name = ?
+            ORDER BY r.name
+        """;
 
+        List<RestaurantModel> out = new ArrayList<>();
+
+        try (Connection c = DbManager.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            DbManager.openDatabase();
+
+            ps.setString(1, tagName);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    RestaurantModel r = map(rs);
+                    out.add(r);
+                    System.out.println(
+                            " - " + r.getName() +
+                            " | " + r.getAddress() +
+                            " | " + r.getCity() +
+                            ", " + r.getState()+
+                            " : " + r.getId()
+                        );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DbManager.closeDatabase();
+        }
+
+        return out;
+    }
+
+    
+    
+    
+    
+    
     /* ---------- LIST RESTAURANTS WITH TAGS (flattened rows) ---------- */
     // Each row = one restaurant + one tag (tag_name may be null if no tags)
 
