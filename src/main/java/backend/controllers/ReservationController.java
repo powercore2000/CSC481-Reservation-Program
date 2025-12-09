@@ -7,6 +7,7 @@ import database.queries.RestaurantQueries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +72,8 @@ public class ReservationController {
     public static ResponseEntity<Boolean> addFoodToCurrentReservation(@RequestBody FoodDTO food) {
     	
     	ReservationModel currentResModel = ReservationMapper.toModel(cachedReservation);
-    	Boolean success = FoodQueries.attachToReservation(currentResModel.getLongId(), food.getId());
+    	System.out.println(currentResModel.getUserId());
+    	Boolean success = FoodQueries.attachToReservation(currentResModel.getUserId(), food.getId());
         
         if(success)
         	return ResponseEntity.ok(true);
@@ -96,7 +98,8 @@ public class ReservationController {
     @GetMapping("/getFoodCurrentReservations")
     public static ArrayList<FoodDTO> getAllFoodFromCurrentReservation() {
     	
-    	List<FoodModel> list = FoodQueries.findAllReservationFood(cachedReservation);
+    	System.out.println("Handling grabbing food for: " + cachedReservation.getConfirmationCode() + "|" + cachedReservation.getId());
+    	List<FoodModel> list = FoodQueries.foodForReservation(cachedReservation.getId());
     	
     	ArrayList<FoodDTO> allFood = new ArrayList<FoodDTO>();
         
@@ -105,7 +108,7 @@ public class ReservationController {
         	allFood.add(FoodMapper.toDTO(food));
      	   
         }
-        
+        System.out.println("Found :" + allFood.size() + " for reservation : " + cachedReservation.getEmail());
         return allFood;
              
     }
@@ -149,7 +152,14 @@ public class ReservationController {
 	    
 		reservation.setEmail(UserController.getCurrentUser().getEmail()); 
 		System.out.println("Created reservation: " + reservation);  
-		boolean success = ReservationQueries.createReservationWithFood(reservation, reservation.getFoodSelections());
+		
+		Optional<ReservationDTO> r = ReservationQueries.createReservation(reservation);
+		boolean success = !r.isEmpty();
+		
+		if(!success)
+			return false;
+		
+		setCachedReservation(r.get());
         database.queries.ReservationQueries.listAll();		 	
         return true;
 		

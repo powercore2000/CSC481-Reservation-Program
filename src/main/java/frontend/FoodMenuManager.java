@@ -131,7 +131,8 @@ public class FoodMenuManager {
     // Called from the dynamically created "View more" buttons
     @FXML
     private void onViewMore(FoodDTO f, ActionEvent event) throws Exception {
-        AppState.setSelectedMenuItem((int) f.getId());
+        //AppState.setSelectedMenuItem((int) f.getId());
+        AppState.setSelectedFoodItem(f);
         backend.controllers.RestaurantController.setSelectedFoodID(f);
         goToDetail(event);
     }
@@ -141,7 +142,7 @@ public class FoodMenuManager {
     @FXML
     private void onViewMore(ActionEvent event) throws Exception
     {
-        AppState.setSelectedMenuItem(1);
+        //AppState.setSelectedMenuItem(1);
         goToDetail(event);
     }
 

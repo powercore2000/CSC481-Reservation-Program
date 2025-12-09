@@ -51,25 +51,10 @@ public class FoodQueries {
         }
         return out;
     }
-    
-    public static List<FoodModel> findAllReservationFood(ReservationDTO res) {
-        String sql = "SELECT * FROM Reservation_Food WHERE reservation_id = ?";
-        List<FoodModel> out = new ArrayList<>();
-        try (Connection c = DbManager.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                out.add(mapFoodModel(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return out;
-    }
+   
 
     
-    public static List<FoodModel> foodForReservation(long reservationId)
+    public static List<FoodModel> foodForReservation(long reservationId) 
     {
         String sql = """
             SELECT f.id,
@@ -102,6 +87,44 @@ public class FoodQueries {
         } finally {DbManager.closeDatabase();}
         return out;
     }
+    
+    public static List<FoodModel> foodForReservationByCode(long confCode)
+
+    
+    {
+        String sql = """
+            SELECT f.id,
+                   f.name,
+                   f.description,
+                   f.price_cents,
+                   f.category,
+                   rf.quantity
+            FROM reservation_food rf
+            JOIN food f ON f.id = rf.food_id
+            JOIN reservations r ON r.confirmation_code = ? 
+            WHERE rf.reservation_id = r.id
+        """;
+
+        List<FoodModel> out = new ArrayList<>();
+        try (Connection c = DbManager.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql))
+        {
+        	DbManager.openDatabase();
+            ps.setLong(1, confCode);
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
+
+                    out.add(mapFoodModel(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {DbManager.closeDatabase();}
+        return out;
+    }
+    
     /* ---------- FIND FOOD BY ID ---------- */
 
     public static  Optional<FoodDTO> findById(long id) {

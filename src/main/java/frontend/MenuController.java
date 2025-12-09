@@ -45,25 +45,25 @@ public class MenuController {
     // View more for item 1–4
     @FXML
     private void onViewMore1(ActionEvent event) throws IOException {
-        AppState.setSelectedMenuItem(1);
+        //AppState.setSelectedMenuItem(1);
         goToDetail(event);
     }
 
     @FXML
     private void onViewMore2(ActionEvent event) throws IOException {
-        AppState.setSelectedMenuItem(2);
+        //AppState.setSelectedMenuItem(2);
         goToDetail(event);
     }
 
     @FXML
     private void onViewMore3(ActionEvent event) throws IOException {
-        AppState.setSelectedMenuItem(3);
+        //AppState.setSelectedMenuItem(3);
         goToDetail(event);
     }
 
     @FXML
     private void onViewMore4(ActionEvent event) throws IOException {
-        AppState.setSelectedMenuItem(4);
+        //AppState.setSelectedMenuItem(4);
         goToDetail(event);
     }
 
