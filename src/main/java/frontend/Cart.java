@@ -6,9 +6,6 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
-
-import database.dto.FoodDTO;
 
 public class Cart {
 
@@ -28,13 +25,10 @@ public class Cart {
         cartListView.getItems().clear();
 
         double total = 0.0;
-        List<FoodDTO> foodItems = backend.controllers.ReservationController.getAllFoodFromCurrentReservation();
-        
-        for (FoodDTO item : foodItems) {
-        	System.out.println("Found:"+item.toString());
-            String line = item.toString();
+        for (CartItem item : AppState.getCartItems()) {
+            String line = item.getFoodName() + " (" + item.getCategory() + ") - $" + item.getPrice();
             cartListView.getItems().add(line);
-            total += (double)item.getPriceCents()/100;
+            total += item.getPrice();
         }
 
         totalLabel.setText(String.format("Total: $%.2f", total));

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import database.dto.FoodDTO;
-
 public class AppState {
 
     // ===== SIGN IN STATE =====
@@ -41,23 +39,14 @@ public class AppState {
 
     // ===== MENU ITEM SELECTION =====
     // -1 means "none selected yet"
-    private static long selectedMenuItemID = -1;
-    private static FoodDTO selectedFoodItem;
-    
-    public static FoodDTO getSelectedFoodItem() {
-        return selectedFoodItem;
-    }
-    public static void setSelectedFoodItem(FoodDTO f) {
-        selectedFoodItem = f;
-        setSelectedMenuItemID(f.getId());
-    }
-    
-    public static long getSelectedMenuItemID() {
-        return selectedMenuItemID;
+    private static int selectedMenuItem = -1;
+
+    public static int getSelectedMenuItem() {
+        return selectedMenuItem;
     }
 
-    public static void setSelectedMenuItemID(long id) {
-    	selectedMenuItemID = id;
+    public static void setSelectedMenuItem(int id) {
+        selectedMenuItem = id;
     }
     
     private static Boolean buyMode = false;
@@ -65,23 +54,23 @@ public class AppState {
     public static Boolean getBuyMode() {return buyMode;}
 
     // ===== CART STATE =====
-    //private static final List<FoodDTO> cartItems = new ArrayList<>();
+    private static final List<CartItem> cartItems = new ArrayList<>();
 
-    public static void addToCart(FoodDTO item) {
+    public static void addToCart(CartItem item) {
         if (item != null) {
-        	backend.controllers.ReservationController.addFoodToCurrentReservation(item);
+            cartItems.add(item);
         }
     }
 
-    public static List<FoodDTO> getCartItems() {
-        return backend.controllers.ReservationController.getAllFoodFromCurrentReservation();
+    public static List<CartItem> getCartItems() {
+        return Collections.unmodifiableList(cartItems);
     }
 
     public static void clearCart() {
-        //cartItems.clear();
+        cartItems.clear();
     }
 
     public static boolean hasCartItems() {
-        return !backend.controllers.ReservationController.getAllFoodFromCurrentReservation().isEmpty();
+        return !cartItems.isEmpty();
     }
 }

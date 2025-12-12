@@ -98,9 +98,7 @@ public class ReservationMapper {
         newDTO.setRestaurantName(attatchedRestaurant.getName());
 
         // --- NEW: Map ID fields so the DTO tracks the database keys ---
-        if(model.getLong("id") != null)
-        	newDTO.setId(model.getLong("id"));
-        
+        newDTO.setId(model.getLong("id"));
         newDTO.setUserId(model.getLong("user_id"));
         newDTO.setRestaurantId(model.getLong("restaurant_id"));
 

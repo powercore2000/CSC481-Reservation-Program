@@ -115,7 +115,7 @@ public class ReservationQueries {
 
     		
     		ReservationModel resMod = ReservationMapper.toModel(res);
-    		
+    		ReservationDTO filledDTO = ReservationMapper.toDTO(resMod);
     		
     		DbManager.openDatabase();
     		if(resMod == null) {
@@ -127,8 +127,6 @@ public class ReservationQueries {
     		}
     		// Create succeeded
     		else {
-    			
-    			ReservationDTO filledDTO = ReservationMapper.toDTO(resMod);
     			System.out.println("Created reservation: " + filledDTO);
     			return Optional.of(filledDTO);
     		}
@@ -143,60 +141,7 @@ public class ReservationQueries {
     	}
 
     }
-    
-/*
-    public static Optional<ReservationDTO> getReservation(long confirmationCode) {
-    	try {
 
-    		
-            String sql = """
-                    SELECT *
-                    FROM reservations r
-                    JOIN restaurants rest ON rest.id = r.restaurant_id
-                    WHERE r.confirmation_code = ?
-                """;
-
-                //ReservationModel out = new ReservationModel();
-                try (Connection c = DbManager.getConnection();
-                     PreparedStatement ps = c.prepareStatement(sql))
-                {
-
-                    ps.setLong(1, confirmationCode);
-                    try (ResultSet rs = ps.executeQuery())
-                    {
-                		DbManager.openDatabase();
-                        while (rs.next())
-                        {
-                        	ReservationModel row = new ReservationModel();
-
-                            // Required columns (match your validatePresenceOf + PK)
-                            row.set("id",             rs.getLong("id"));
-                            row.set("user_id",        rs.getLong("user_id"));
-                            row.set("restaurant_id",  rs.getLong("restaurant_id"));
-                            row.set("reservation_at", rs.getTimestamp("reservation_at"));
-                            row.set("party_size",     rs.getInt("party_size"));
-                            row.set("status",         rs.getString("status"));
-                            row.set("confirmation_code", rs.getString("confirmation_code"));
-
-                            // Extra, joined column – not in reservations table, but fine as a transient attr
-
-
-                            return Optional.of(ReservationMapper.toDTO(row));
-                        }
-                    }
-                } 
-                catch (SQLException e) {
-                    e.printStackTrace();
-                    DbManager.closeDatabase();
-                } 
-    	}          
-    	
-    	
-    	
-    	
-    }
-    
-*/
     /* ---------- MASTER METHOD: CREATE RESERVATION + FOOD ---------- */
 
     /**
