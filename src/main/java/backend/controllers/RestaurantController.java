@@ -32,12 +32,18 @@ public class RestaurantController {
 	public static void setSelectedRestaurantID(long id) {selectedRestaurantId = id;}
 	
 	private static FoodDTO selectedFood;
-	
-	public static FoodDTO getSelectedFood() { return selectedFood;}
-	
-	public static void setSelectedFoodID(FoodDTO newFood) {selectedFood = newFood;}
-	
+
+	public static FoodDTO getSelectedFood() {
+	    return selectedFood;
+	}
+
+	public static void setSelectedFoodID(FoodDTO newFood) {
+	    selectedFood = newFood;
+	}
+
 	//--------------update----------------
+	
+	
 	@GetMapping("/byTag/{tag}")
 	public static List<RestaurantDTO> getRestaurantsByTag(@PathVariable String tag) {
 

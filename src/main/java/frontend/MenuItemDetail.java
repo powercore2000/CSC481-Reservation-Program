@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import javafx.scene.control.Button;
+import database.dto.FoodDTO;
+
 
 
 
@@ -29,42 +31,30 @@ public class MenuItemDetail {
 
     @FXML
     public void initialize() {
-        int id = AppState.getSelectedMenuItem();
+        FoodDTO f = backend.controllers.RestaurantController.getSelectedFood();
 
-
-        switch (id) {
-            case 1 -> {
-                foodNameLabel.setText("Spicy Ramen");
-                categoryLabel.setText("Category: Noodles");
-                priceLabel.setText("Price: $12.99");
-                descriptionLabel.setText("Rich spicy broth with tender noodles and toppings.");
-            }
-            case 2 -> {
-                foodNameLabel.setText("California Roll");
-                categoryLabel.setText("Category: Sushi");
-                priceLabel.setText("Price: $9.50");
-                descriptionLabel.setText("Crab, avocado, and cucumber rolled in seaweed and rice.");
-            }
-            case 3 -> {
-                foodNameLabel.setText("Cheeseburger");
-                categoryLabel.setText("Category: Grill");
-                priceLabel.setText("Price: $11.25");
-                descriptionLabel.setText("Juicy beef patty with cheese, lettuce, and tomato.");
-            }
-            case 4 -> {
-                foodNameLabel.setText("Vegan Bowl");
-                categoryLabel.setText("Category: Vegan");
-                priceLabel.setText("Price: $10.75");
-                descriptionLabel.setText("Mixed grains, roasted veggies, and house-made sauce.");
-            }
-            default -> {
-                foodNameLabel.setText("Menu Item");
-                categoryLabel.setText("Category: N/A");
-                priceLabel.setText("Price: $0.00");
-                descriptionLabel.setText("No description available.");
-            }
+        if (f == null) {
+            foodNameLabel.setText("Menu Item");
+            categoryLabel.setText("Category: N/A");
+            priceLabel.setText("Price: $0.00");
+            descriptionLabel.setText("No description available.");
+            return;
         }
+
+        foodNameLabel.setText(f.getName());
+
+        String cat = (f.getCategory() == null || f.getCategory().isBlank()) ? "N/A" : f.getCategory();
+        categoryLabel.setText("Category: " + cat);
+
+        double price = f.getPriceCents() / 100.0;
+        priceLabel.setText(String.format("Price: $%.2f", price));
+
+        String desc = (f.getDescription() == null || f.getDescription().isBlank())
+                ? "No description available."
+                : f.getDescription();
+        descriptionLabel.setText(desc);
     }
+
 
 
     @FXML
