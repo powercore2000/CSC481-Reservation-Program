@@ -36,7 +36,7 @@
                 <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
                 <Label text="Time:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <TextField fx:id="timeField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <TextField fx:id="timeField" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="e.g. 7:30 PM"/>
 
                 <Label text="Party size:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                 <IntegerField fx:id="partyField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
