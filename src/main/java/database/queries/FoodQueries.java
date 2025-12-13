@@ -1,17 +1,20 @@
 package database.queries;
 
 import database.dto.FoodDTO;
+import database.dto.ReservationDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import backend.models.FoodModel;
+
 public class FoodQueries {
 
     /* ---------- MAP HELPER ---------- */
 
-    private FoodDTO mapFood(ResultSet rs) throws SQLException {
+    private static FoodDTO mapFoodDTO(ResultSet rs) throws SQLException {
         return new FoodDTO(
                 rs.getLong("id"),
                 rs.getString("name"),
@@ -20,10 +23,20 @@ public class FoodQueries {
                 rs.getString("category")
         );
     }
+    
+    private static FoodModel mapFoodModel(ResultSet rs) throws SQLException {
+        FoodModel food = new FoodModel(              );
+        food.setFoodId(rs.getLong("id"));
+        food.setName(rs.getString("name"));
+        food.setDescription(rs.getString("description"));
+        food.setPriceCents( rs.getInt("price_cents"));
+        food.setCategory(rs.getString("category"));
+        return food;
+    }
 
     /* ---------- LIST ALL FOOD ITEMS ---------- */
 
-    public List<FoodDTO> findAll() {
+    public static List<FoodDTO> findAll() {
         String sql = "SELECT id, name, description, price_cents, category FROM food ORDER BY name";
         List<FoodDTO> out = new ArrayList<>();
         try (Connection c = DbManager.getConnection();
@@ -31,7 +44,23 @@ public class FoodQueries {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                out.add(mapFood(rs));
+                out.add(mapFoodDTO(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+    
+    public static List<FoodModel> findAllReservationFood(ReservationDTO res) {
+        String sql = "SELECT * FROM Reservation_Food WHERE reservation_id = ?";
+        List<FoodModel> out = new ArrayList<>();
+        try (Connection c = DbManager.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                out.add(mapFoodModel(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,9 +68,43 @@ public class FoodQueries {
         return out;
     }
 
+    
+    public static List<FoodModel> foodForReservation(long reservationId)
+    {
+        String sql = """
+            SELECT f.id,
+                   f.name,
+                   f.description,
+                   f.price_cents,
+                   f.category,
+                   rf.quantity
+            FROM reservation_food rf
+            JOIN food f ON f.id = rf.food_id
+            WHERE rf.reservation_id = ?
+        """;
+
+        List<FoodModel> out = new ArrayList<>();
+        try (Connection c = DbManager.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql))
+        {
+        	DbManager.openDatabase();
+            ps.setLong(1, reservationId);
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
+
+                    out.add(mapFoodModel(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {DbManager.closeDatabase();}
+        return out;
+    }
     /* ---------- FIND FOOD BY ID ---------- */
 
-    public Optional<FoodDTO> findById(long id) {
+    public static  Optional<FoodDTO> findById(long id) {
         String sql = "SELECT id, name, description, price_cents, category FROM food WHERE id = ?";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -49,7 +112,7 @@ public class FoodQueries {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return Optional.of(mapFood(rs));
+                    return Optional.of(mapFoodDTO(rs));
                 }
             }
         } catch (SQLException e) {
@@ -60,7 +123,7 @@ public class FoodQueries {
 
     /* ---------- FOOD FOR A GIVEN RESTAURANT ---------- */
 
-    public List<FoodDTO> findByRestaurant(long restaurantId) {
+    public static List<FoodDTO> findByRestaurant(long restaurantId) {
         String sql = """
                 SELECT f.id,
                        f.name,
@@ -80,7 +143,7 @@ public class FoodQueries {
             ps.setLong(1, restaurantId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    out.add(mapFood(rs));
+                    out.add(mapFoodDTO(rs));
                 }
             }
         } catch (SQLException e) {
@@ -91,7 +154,7 @@ public class FoodQueries {
 
     /* ---------- CREATE NEW FOOD ITEM ---------- */
 
-    public long insert(String name, String description, int priceCents, String category) {
+    public static long insert(String name, String description, int priceCents, String category) {
         String sql = "INSERT INTO food (name, description, price_cents, category) VALUES (?, ?, ?, ?)";
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -116,20 +179,20 @@ public class FoodQueries {
 
     /* ---------- ATTACH FOOD TO RESTAURANT MENU ---------- */
 
-    public boolean attachToRestaurant(long restaurantId, long foodId) {
+    public static boolean attachToReservation(long reservationId, long foodId) {
         String sql = """
-                INSERT INTO restaurant_food (restaurant_id, food_id)
+                INSERT INTO reservation_food (reservation_id, food_id)
                 VALUES (?, ?)
                 """;
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
-
-            ps.setLong(1, restaurantId);
+        	DbManager.openDatabase();
+            ps.setLong(1, reservationId);
             ps.setLong(2, foodId);
             return ps.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } finally {DbManager.closeDatabase();}
         return false;
     }
 }
