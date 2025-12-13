@@ -9,7 +9,7 @@
 
     <top>
         <HBox style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
-            <Label text="WEB Name"
+            <Label text="Dine N Dash"
                    style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
         </HBox>
     </top>

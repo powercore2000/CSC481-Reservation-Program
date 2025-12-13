@@ -7,7 +7,7 @@
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
-            <Label style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" text="WEB Name" />
+            <Label style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" text="Dine N Dash" />
         </HBox>
     </top>
 

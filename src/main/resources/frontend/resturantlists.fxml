@@ -14,7 +14,7 @@
             <!-- TOP RED BAR -->
             <HBox spacing="10" alignment="CENTER_LEFT"
                   style="-fx-background-color: #c0392b; -fx-padding: 10 20;">
-                <Label text="WEB Name"
+                <Label text="Dine N Dash"
                        style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
 
                 <Region HBox.hgrow="ALWAYS" />
