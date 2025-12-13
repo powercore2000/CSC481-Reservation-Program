@@ -52,6 +52,10 @@
                         style="-fx-background-color: #27ae60; -fx-text-fill: white;
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
             </HBox>
+            <Label fx:id="addedLabel"
+			       text="Added to cart!"
+			       visible="false"
+			       style="-fx-text-fill: #27ae60; -fx-font-weight: bold;"/>
         </VBox>
     </center>
 

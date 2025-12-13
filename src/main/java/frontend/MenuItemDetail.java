@@ -6,6 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+import javafx.scene.control.Button;
+
 
 
 import java.io.IOException;
@@ -18,6 +22,9 @@ public class MenuItemDetail {
     @FXML private Label categoryLabel;
     @FXML private Label priceLabel;
     @FXML private Label descriptionLabel;
+    @FXML private Label addedLabel;
+    @FXML private Button addToCartButton;
+
 
 
     @FXML
@@ -85,7 +92,17 @@ public class MenuItemDetail {
         CartItem item = new CartItem(name, category, price);
         AppState.addToCart(item);
 
+        String oldText = addToCartButton.getText();
+        addToCartButton.setText("Added!");
+        addToCartButton.setDisable(true);
 
+        PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+        pause.setOnFinished(e -> {
+            addedLabel.setVisible(false);
+            addToCartButton.setText(oldText);
+            addToCartButton.setDisable(false);
+        });
+        pause.play();
         System.out.println("Added to cart: " + name);
     }
 
