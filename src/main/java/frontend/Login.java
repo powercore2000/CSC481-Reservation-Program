@@ -24,9 +24,9 @@ public class Login
     @FXML
     private Label errorLabel;
 
-    
+    /*
     @FXML
-    private void onLoginClick(ActionEvent event) throws IOException
+    private void onLoginClickDEBUG(ActionEvent event) throws IOException
     {
         String email = "TestyU";
         String password = "TestyP";
@@ -47,8 +47,10 @@ public class Login
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         SceneNavigator.switchScene(stage, "SelectResturantType.fxml", "Smart N Dine");
     }
+    */
+    
     @FXML
-    private void onLoginClickGOOD(ActionEvent event) throws IOException
+    private void onLoginClick(ActionEvent event) throws IOException
     {
         String email = usernameField.getText();
         String password = passwordField.getText();
