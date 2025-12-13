@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
+import database.dto.FoodDTO;
 import database.dto.ReservationDTO;            // from your DTO file
 import database.queries.DbManager;
 import database.queries.RestaurantQueries;
@@ -97,22 +98,18 @@ public class ReservationMapper {
         newDTO.setRestaurantLocation(attatchedRestaurant.getAddress());
         newDTO.setRestaurantName(attatchedRestaurant.getName());
 
+
         // --- NEW: Map ID fields so the DTO tracks the database keys ---
-        newDTO.setId(model.getLong("id"));
         newDTO.setUserId(model.getLong("user_id"));
         newDTO.setRestaurantId(model.getLong("restaurant_id"));
 
+        
         // --- NEW: Fetch and map food items for the cache ---
-        java.util.List<java.util.Map<String, Object>> foodRows =
-                database.queries.ReservationQueries.foodForReservation(model.getLong("id"));
+        java.util.List<FoodDTO> foodRows =
+                database.queries.FoodQueries.getFoodForReservation(model.getConfirmationCode());
 
-        java.util.Map<Long, Integer> foodMap = new java.util.HashMap<>();
-        for (java.util.Map<String, Object> row : foodRows) {
-            Long foodId = (Long) row.get("id");
-            Integer qty = (Integer) row.get("quantity");
-            foodMap.put(foodId, qty);
-        }
-        newDTO.setFoodSelections(foodMap);
+        
+        newDTO.setFoodSelections(foodRows);
 
         return newDTO;
     }

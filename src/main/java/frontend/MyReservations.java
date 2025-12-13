@@ -18,7 +18,7 @@ public class MyReservations
     @FXML
     public void initialize()
     {
-    	
+    	System.out.println("Printing all reservations");
     	allReservations = ReservationController.currentUserReservations();
     	
     	for(ReservationDTO res : allReservations) {

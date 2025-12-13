@@ -69,26 +69,26 @@ public class FoodQueries {
     }
 
     
-    public static List<FoodModel> foodForReservation(long reservationId)
+    public static List<FoodModel> getFoodModelsForReservation(String confirmationCode)
     {
-        String sql = """
-            SELECT f.id,
-                   f.name,
-                   f.description,
-                   f.price_cents,
-                   f.category,
-                   rf.quantity
-            FROM reservation_food rf
-            JOIN food f ON f.id = rf.food_id
-            WHERE rf.reservation_id = ?
-        """;
+    	String sql = """
+    			SELECT f.id,
+    				f.name,
+    				f.description,
+    				f.price_cents,
+    				f.category
+    			FROM reservation_food rf
+    			JOIN food f ON f.id = rf.food_id
+    			JOIN reservations r ON r.id = rf.reservation_id
+    			WHERE r.confirmation_code = ?;
+            """;
 
         List<FoodModel> out = new ArrayList<>();
         try (Connection c = DbManager.getConnection();
              PreparedStatement ps = c.prepareStatement(sql))
         {
         	DbManager.openDatabase();
-            ps.setLong(1, reservationId);
+            ps.setString(1, confirmationCode);
             try (ResultSet rs = ps.executeQuery())
             {
                 while (rs.next())
@@ -102,6 +102,47 @@ public class FoodQueries {
         } finally {DbManager.closeDatabase();}
         return out;
     }
+    
+    public static List<FoodDTO> getFoodForReservation(String confirmationCode)
+    {
+        String sql = """
+			SELECT f.id,
+				f.name,
+				f.description,
+				f.price_cents,
+				f.category
+			FROM reservation_food rf
+			JOIN food f ON f.id = rf.food_id
+			JOIN reservations r ON r.id = rf.reservation_id
+			WHERE r.confirmation_code = ?;
+        """;
+
+        List<FoodDTO> out = new ArrayList<>();
+        try (Connection c = DbManager.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql))
+        {
+
+            ps.setString(1, confirmationCode);
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
+                	FoodDTO row = new FoodDTO(
+                			rs.getLong("id"),
+                			rs.getString("name"),
+                			rs.getString("description"),
+                			rs.getInt("price_cents"),
+                			rs.getString("category")
+                			);
+                    out.add(row);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+    
     /* ---------- FIND FOOD BY ID ---------- */
 
     public static  Optional<FoodDTO> findById(long id) {

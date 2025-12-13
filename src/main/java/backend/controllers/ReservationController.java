@@ -7,6 +7,7 @@ import database.queries.RestaurantQueries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,7 +114,7 @@ public class ReservationController {
     @PostMapping("/getFoodTargetReservations")
     public static ArrayList<FoodDTO> getAllFoodFromTargetReservation(@RequestBody ReservationDTO targetRes) {
     	
-    	List<FoodModel> list = FoodQueries.foodForReservation(targetRes.getId());
+    	List<FoodModel> list = FoodQueries.getFoodModelsForReservation(targetRes.getConfirmationCode());
     	
     	ArrayList<FoodDTO> allFood = new ArrayList<FoodDTO>();
         
@@ -140,18 +141,26 @@ public class ReservationController {
         }
     }
      
-	public static Boolean CreateReservation(ReservationDTO reservation) {
+	private static Boolean CreateReservation(ReservationDTO reservation) {
 	    if(!UserController.isUserLoggedIn()) {
 	    	System.out.println("Cant add reservation user not loggedin! Logging in default user:");
-	    	UserController.loginUser(new UserDTO("Debug Userman", "bobBot69@hotbotmail.com", "310 111 1234", "debugBotPAs$12"));
-	    	//return false;
+	    	//UserController.loginUser(new UserDTO("Debug Userman", "bobBot69@hotbotmail.com", "310 111 1234", "debugBotPAs$12"));
+	    	return false;
 	    }
-	    
+	    System.out.println("Current user: " + UserController.getCurrentUser().getEmail());
 		reservation.setEmail(UserController.getCurrentUser().getEmail()); 
 		System.out.println("Created reservation: " + reservation);  
-		boolean success = ReservationQueries.createReservationWithFood(reservation, reservation.getFoodSelections());
-        database.queries.ReservationQueries.listAll();		 	
-        return true;
+		Optional<ReservationDTO> newRes = ReservationQueries.createReservation(reservation);
+		
+		if(!newRes.isEmpty()) {
+			System.out.println("Updating cache: "+ newRes.get().getEmail());
+			setCachedReservation(newRes.get());
+			database.queries.ReservationQueries.listAll();	
+		}
+        	
+        
+        
+        return !newRes.isEmpty();
 		
 	}
 	

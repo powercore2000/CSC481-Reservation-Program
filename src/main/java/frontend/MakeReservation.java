@@ -41,15 +41,15 @@ public class MakeReservation
     private void onCreateReservationClick() throws IOException
     {
     	ReservationDTO reservation = new ReservationDTO(
-    			nameField.getText(), 
-    			emailField.getText(), 
+    			"DO NOT FILL",
+    			"DO NOT FILL", // dont replace these placeholder values, they will be set in the backend
     			partyField.getValue(), 
     			datePicker.getValue(), 
     			timeField.getText(), 
     			"PENDING"
     			);
-    	Boolean makeReservation = backend.controllers.ReservationController.CreateReservation(reservation);
-    	
+    	Boolean makeReservation = backend.controllers.ReservationController.createReservation(reservation).getBody();
+    	System.out.println("Resrvation made: " + makeReservation);
     	if(!makeReservation) {
     		System.out.println("Error in making a reservation!");
     		return;

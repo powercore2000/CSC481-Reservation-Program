@@ -18,7 +18,7 @@ public class UserDTO {
      * @param first and last name of user
      * @param email of user
      * @param phoneNumber of user
-     * @param plainText string password of user
+     * @param plainText string password of user*/
     public UserDTO(String name, String email, String phoneNumber, String passwordString) {
     	
     	this.name = name;
