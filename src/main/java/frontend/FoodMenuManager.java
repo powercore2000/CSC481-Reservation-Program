@@ -16,6 +16,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.io.InputStream;
+
 
 
 public class FoodMenuManager {
@@ -86,7 +90,7 @@ public class FoodMenuManager {
                         "-fx-background-color: #d0d7e2; " +
                         "-fx-border-color: #bbbbbb;"
         );
-
+        setFoodImage(imageButton, food);
 
         // Name label
         Label nameLabel = new Label(food != null ? food.getName() : "Placeholder Food Name");
@@ -150,5 +154,48 @@ public class FoodMenuManager {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         SceneNavigator.switchScene(stage, "menu-item-detail.fxml", "Item Details");
     }
+    
+    private void setFoodImage(Button imageButton, FoodDTO food) {
+        String path = getImagePathForFood(food); // decide which png to use
+        setButtonGraphic(imageButton, path);
+    }
+
+    private void setButtonGraphic(Button btn, String resourcePath) {
+        InputStream is = getClass().getResourceAsStream(resourcePath);
+        if (is == null) {
+            System.out.println("Missing image: " + resourcePath);
+            btn.setText("No image");
+            return;
+        }
+
+        ImageView iv = new ImageView(new Image(is));
+        iv.setFitWidth(100);
+        iv.setFitHeight(100);
+        iv.setPreserveRatio(true);
+        iv.setSmooth(true);
+
+        btn.setText(null);      // removes "Image"
+        btn.setGraphic(iv);     // shows image
+    }
+
+    private String getImagePathForFood(FoodDTO food) {
+        if (food == null || food.getName() == null) return "/images/all.png";
+
+        // normalize the name to match your filenames
+        String key = food.getName().trim().replaceAll("\\s+", "");
+
+        // examples based on your filenames
+        switch (key) {
+            case "AvocadoToast": return "/images/AvocadoToast.png";
+            case "BerryPancakes": return "/images/BerryPancakes.png";
+            case "ChocolateLavaCake": return "/images/ChocolateLavaCake.png";
+            case "ClassicBurger": return "/images/ClassicBurger.png";
+            case "GrilledChicken": return "/images/GrilledChicken.png";
+            case "SpicyNachos": return "/images/SpicyNachos.png";
+            case "StreetTacos": return "/images/StreetTacos.png";
+            default: return "/images/all.png"; // fallback image
+        }
+    }
+
 }
 

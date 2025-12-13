@@ -59,8 +59,8 @@ public class ReservationInfo {
     private void onViewMenuClick() throws IOException {
         // go to menu view for the restaurant
     	AppState.setBuyMode(true);
-    	backend.controllers.RestaurantController.setCurrentRestaurantByReservation(initalRes);
-        SceneNavigator.switchScene(getStage(), "menu-view.fxml", "Menu");
+    	backend.controllers.RestaurantController.setSelectedRestaurantID(initalRes.getRestaurantId());
+    	SceneNavigator.switchScene(getStage(), "menu-view.fxml", "Menu");
     }
 
     // optional: if you want to fill labels programmatically
