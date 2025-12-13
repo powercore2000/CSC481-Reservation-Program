@@ -94,6 +94,12 @@ public class SelectResturantType
     }
 
     @FXML
+    private void onAllClick() throws IOException {
+        RestaurantController.setCurrentTagFilter(null); // show all
+        goToRestaurantList();
+    }
+
+    @FXML
     private void onBuffetClick() throws IOException {
         RestaurantController.setCurrentTagFilter("Buffet");
         goToRestaurantList();

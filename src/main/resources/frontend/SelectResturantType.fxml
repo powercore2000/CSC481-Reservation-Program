@@ -2,6 +2,9 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
@@ -47,43 +50,91 @@
 
             <!-- Food type image buttons -->
             <HBox spacing="25" alignment="CENTER">
-
+				<!-- All -->
+                <VBox spacing="5" alignment="CENTER">
+    				<Button onAction="#onAllClick"
+					        text=""
+            			style="-fx-pref-width: 90; -fx-pref-height: 90;
+                	   	-fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" >
+    				<graphic>
+				            <ImageView fitWidth="70" fitHeight="70" preserveRatio="true">
+				                <image>
+				                    <Image url="@/images/all.png"/>
+				                </image>
+				            </ImageView>
+				        </graphic>
+				    </Button>
+				    <Label text="All" />
+				</VBox>
+				
                 <!-- Buffet -->
                 <VBox spacing="5" alignment="CENTER">
-                    <Button text="Image"
-                            onAction="#onBuffetClick"
+                    <Button onAction="#onBuffetClick"
+					        text=""
+					        contentDisplay="GRAPHIC_ONLY"
                             style="-fx-pref-width: 90; -fx-pref-height: 90;
-                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" />
-                    <Label text="Buffet" />
-                </VBox>
+                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" >
+                    <graphic>
+				            <ImageView fitWidth="70" fitHeight="70" preserveRatio="true">
+				                <image>
+				                    <Image url="@/images/Buffet.png"/>
+				                </image>
+				            </ImageView>
+				        </graphic>
+				    </Button>
+				    <Label text="Buffet" />
+				</VBox>
 
                 <!-- Cafe -->
                 <VBox spacing="5" alignment="CENTER">
-                    <Button text="Image"
-                            onAction="#onCafeClick"
+                    <Button onAction="#onCafeClick"
+					        text=""
                             style="-fx-pref-width: 90; -fx-pref-height: 90;
-                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" />
-                    <Label text="Cafe" />
-                </VBox>
+                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" >
+                    <graphic>
+				            <ImageView fitWidth="70" fitHeight="70" preserveRatio="true">
+				                <image>
+				                    <Image url="@/images/Cafe.png"/>
+				                </image>
+				            </ImageView>
+				        </graphic>
+				    </Button>
+				    <Label text="Cafe" />
+				</VBox>
 
                 <!-- Fine Dining -->
                 <VBox spacing="5" alignment="CENTER">
-                    <Button text="Image"
-                            onAction="#onFineDiningClick"
+                    <Button onAction="#onFineDiningClick"
+					        text=""
                             style="-fx-pref-width: 90; -fx-pref-height: 90;
-                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" />
-                    <Label text="Fine Dining" />
-                </VBox>
+                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" >
+                    <graphic>
+				            <ImageView fitWidth="70" fitHeight="70" preserveRatio="true">
+				                <image>
+				                    <Image url="@/images/FineDining.png"/>
+				                </image>
+				            </ImageView>
+				        </graphic>
+				    </Button>
+				    <Label text="Fine Dining" />
+				</VBox>
 
                 <!-- Bistro -->
                 <VBox spacing="5" alignment="CENTER">
-                    <Button text="Image"
-                            onAction="#onBistroClick"
+                    <Button onAction="#onBistroClick"
+					        text=""
                             style="-fx-pref-width: 90; -fx-pref-height: 90;
-                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" />
-                    <Label text="Bistro" />
-                </VBox>
-
+                                   -fx-background-color: #d0d7e2; -fx-border-color: #bbbbbb;" >
+                    <graphic>
+				            <ImageView fitWidth="70" fitHeight="70" preserveRatio="true">
+				                <image>
+				                    <Image url="@/images/Bistro.png"/>
+				                </image>
+				            </ImageView>
+				        </graphic>
+				    </Button>
+				    <Label text="Bistro" />
+				</VBox>
             </HBox>
         </VBox>
     </center>
