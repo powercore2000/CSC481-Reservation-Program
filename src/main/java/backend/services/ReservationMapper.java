@@ -52,11 +52,12 @@ public class ReservationMapper {
             model.set("reservation_at",ts);
             model.set("party_size", resDTO.getPartySize());
             model.set("status", resDTO.getStatus());
-            if( isStringNullOrEmpty( model.getConfirmationCode())) {
+            
+            if( isStringNullOrEmpty(resDTO.getConfirmationCode())) {
                 model.set("confirmation_code", UUID.randomUUID().toString().subSequence(0, 10));
             }
             else {
-                model.set("confirmation_code", model.getConfirmationCode());
+                model.set("confirmation_code", resDTO.getConfirmationCode());
             }
 
             // Optional: if you want special_requests mapped later

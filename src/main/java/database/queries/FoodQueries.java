@@ -53,19 +53,8 @@ public class FoodQueries {
     }
     
     public static List<FoodModel> findAllReservationFood(ReservationDTO res) {
-        String sql = "SELECT * FROM Reservation_Food WHERE reservation_id = ?";
-        List<FoodModel> out = new ArrayList<>();
-        try (Connection c = DbManager.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                out.add(mapFoodModel(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return out;
+    	
+        return getFoodModelsForReservation(res.getConfirmationCode());
     }
 
     
@@ -220,7 +209,45 @@ public class FoodQueries {
 
     /* ---------- ATTACH FOOD TO RESTAURANT MENU ---------- */
 
-    public static boolean attachToReservation(long reservationId, long foodId) {
+    public static boolean attachToReservation(String confirmationCode, long foodId) {
+    	
+    	long reservationId = -1;
+
+    	String findResSQL = """
+    	    SELECT r.id
+    	    FROM reservations r
+    	    WHERE r.confirmation_code = ?
+    	    """;
+
+    	try (Connection c = DbManager.getConnection();
+    	     PreparedStatement ps = c.prepareStatement(findResSQL)) {
+
+    	    DbManager.openDatabase();
+
+    	    ps.setString(1, confirmationCode);  // <-- bind parameter
+
+    	    try (ResultSet rs = ps.executeQuery()) {
+    	        if (rs.next()) {
+    	            reservationId = rs.getLong("id"); // or rs.getLong(1)
+    	        }
+    	    }
+
+    	} catch (SQLException e) {
+    	    e.printStackTrace();
+    	} finally {
+    	    DbManager.closeDatabase();
+    	}
+        
+        
+        
+        if(reservationId <= -1) {
+        	System.out.println("No reservation found by confirmation code " + confirmationCode);
+        	return false;
+        }
+        	
+        
+        
+        
         String sql = """
                 INSERT INTO reservation_food (reservation_id, food_id)
                 VALUES (?, ?)

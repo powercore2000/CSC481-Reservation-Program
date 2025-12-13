@@ -24,8 +24,31 @@ public class Login
     @FXML
     private Label errorLabel;
 
+    
     @FXML
     private void onLoginClick(ActionEvent event) throws IOException
+    {
+        String email = "TestyU";
+        String password = "TestyP";
+
+        
+        UserDTO loginUser = new UserDTO(email,password);
+        Boolean signInState = backend.controllers.UserController.loginUser(loginUser);
+        
+        if(!signInState) {
+        	errorLabel.setText("No user found with that username and password.");
+        	return;
+        }
+        // this helps pretend login success
+        AppState.setSignedIn(true);
+        //   to remember username, add a field in AppState and set it here
+
+        // go back to home (or search) after login
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneNavigator.switchScene(stage, "SelectResturantType.fxml", "Smart N Dine");
+    }
+    @FXML
+    private void onLoginClickGOOD(ActionEvent event) throws IOException
     {
         String email = usernameField.getText();
         String password = passwordField.getText();

@@ -1,5 +1,6 @@
 package frontend;
 
+import database.dto.FoodDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -25,10 +26,10 @@ public class Cart {
         cartListView.getItems().clear();
 
         double total = 0.0;
-        for (CartItem item : AppState.getCartItems()) {
-            String line = item.getFoodName() + " (" + item.getCategory() + ") - $" + item.getPrice();
+        for (FoodDTO item : AppState.getCartItems()) {
+            String line = item.getName() + " (" + item.getCategory() + ") - $" + item.getPriceCents()/100.0;
             cartListView.getItems().add(line);
-            total += item.getPrice();
+            total += item.getPriceCents()/100.0;
         }
 
         totalLabel.setText(String.format("Total: $%.2f", total));

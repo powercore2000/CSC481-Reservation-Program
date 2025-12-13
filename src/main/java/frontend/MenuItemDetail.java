@@ -16,6 +16,8 @@ import database.dto.FoodDTO;
 
 import java.io.IOException;
 
+import database.dto.FoodDTO;
+
 
 public class MenuItemDetail {
 
@@ -28,31 +30,17 @@ public class MenuItemDetail {
     @FXML private Button addToCartButton;
 
 
-
+    FoodDTO food;
     @FXML
     public void initialize() {
-        FoodDTO f = backend.controllers.RestaurantController.getSelectedFood();
 
-        if (f == null) {
-            foodNameLabel.setText("Menu Item");
-            categoryLabel.setText("Category: N/A");
-            priceLabel.setText("Price: $0.00");
-            descriptionLabel.setText("No description available.");
-            return;
-        }
+        food = AppState.getSelectedFoodItem();
 
-        foodNameLabel.setText(f.getName());
+        foodNameLabel.setText(food.getName());
+        categoryLabel.setText(food.getCategory());
+        priceLabel.setText("Price: $" + food.getPriceCents());
+        descriptionLabel.setText(food.getDescription());
 
-        String cat = (f.getCategory() == null || f.getCategory().isBlank()) ? "N/A" : f.getCategory();
-        categoryLabel.setText("Category: " + cat);
-
-        double price = f.getPriceCents() / 100.0;
-        priceLabel.setText(String.format("Price: $%.2f", price));
-
-        String desc = (f.getDescription() == null || f.getDescription().isBlank())
-                ? "No description available."
-                : f.getDescription();
-        descriptionLabel.setText(desc);
     }
 
 
@@ -67,20 +55,20 @@ public class MenuItemDetail {
     @FXML
     private void onAddToCartClick() {
         // Simple parse of price text: "Price: $12.99"
-        String name = foodNameLabel.getText();
-        String category = categoryLabel.getText().replace("Category: ", "").trim();
-        String priceText = priceLabel.getText().replace("Price:", "").replace("$", "").trim();
+        String name = food.getName();
+        String category = food.getCategory();
+        int price = food.getPriceCents();
 
 
-        double price = 0.0;
+        double newPrice = 0.0;
         try {
-            price = Double.parseDouble(priceText);
+        	newPrice = (double)price / 100;
         } catch (NumberFormatException ignored) {
         }
 
 
-        CartItem item = new CartItem(name, category, price);
-        AppState.addToCart(item);
+        AppState.addToCart(food);
+        
 
         String oldText = addToCartButton.getText();
         addToCartButton.setText("Added!");
@@ -101,4 +89,3 @@ public class MenuItemDetail {
         return (Stage) ((Node) event.getSource()).getScene().getWindow();
     }
 }
-

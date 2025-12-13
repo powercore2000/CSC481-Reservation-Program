@@ -71,8 +71,7 @@ public class ReservationController {
     @PostMapping("/addFoodCurrentReservation")
     public static ResponseEntity<Boolean> addFoodToCurrentReservation(@RequestBody FoodDTO food) {
     	
-    	ReservationModel currentResModel = ReservationMapper.toModel(cachedReservation);
-    	Boolean success = FoodQueries.attachToReservation(currentResModel.getLongId(), food.getId());
+    	Boolean success = FoodQueries.attachToReservation(cachedReservation.getConfirmationCode(), food.getId());
         
         if(success)
         	return ResponseEntity.ok(true);
@@ -84,8 +83,7 @@ public class ReservationController {
     @PostMapping("/addFoodTargetReservation")
     public static ResponseEntity<Boolean> addFoodToTargetReservation(@RequestBody AddFoodToReservationRequest foodReq) {
     	
-    	ReservationModel targetResModel = ReservationMapper.toModel(foodReq.getReservation());
-    	Boolean success = FoodQueries.attachToReservation(targetResModel.getUserId(), foodReq.getFood().getId());
+    	Boolean success = FoodQueries.attachToReservation(foodReq.getReservation().getConfirmationCode(), foodReq.getFood().getId());
         
         if(success)
         	return ResponseEntity.ok(true);
@@ -106,7 +104,7 @@ public class ReservationController {
         	allFood.add(FoodMapper.toDTO(food));
      	   
         }
-        
+        System.out.println("Food count for " + cachedReservation.getEmail() + " res: " + allFood.size());
         return allFood;
              
     }
