@@ -28,7 +28,8 @@ public class RestaurantController {
 	private static long selectedRestaurantId = 1;
 	
 	public static long getSelectedRestaurantID() { return selectedRestaurantId;}
-	
+
+
 	public static void setSelectedRestaurantID(long id) {selectedRestaurantId = id;}
 	
 	private static FoodDTO selectedFood;
@@ -87,6 +88,19 @@ public class RestaurantController {
        return allRestaurants;
     }
     
+    /**
+	 * REST endpoint to select the current restaurant by its ID.
+	 * This mirrors the existing selectRestaurant(RestaurantDTO) behavior
+	 * but is easier to call from thin HTTP clients.
+	 */
+	@GetMapping("/selectById/{id}")
+	public static ResponseEntity<Boolean> selectRestaurantById(@PathVariable("id") long id) {
+        System.out.println("[RestaurantController] Selected restaurant by id = " + id);
+        setSelectedRestaurantID(id);
+		return ResponseEntity.ok(true);
+	}
+
+    @GetMapping("/getCurrentRestaurant")
     public static RestaurantDTO getCurrentRestaurant(){
     	
     	Optional<RestaurantModel> response = RestaurantQueries.findRestaurantById(selectedRestaurantId);
@@ -121,7 +135,8 @@ public class RestaurantController {
             return ResponseEntity.ok(true);
 
     }
-    
+
+    @GetMapping("/allRestaurantFood")
     public static List<FoodDTO> allRestaurantFood(){
     	
     	List<FoodModel> foodModels = RestaurantQueries.FoodForRestaurant(selectedRestaurantId);
@@ -135,5 +150,5 @@ public class RestaurantController {
         return displayFood;
     }
     
-	
-}
+
+ }

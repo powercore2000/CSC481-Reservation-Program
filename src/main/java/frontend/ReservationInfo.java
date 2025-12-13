@@ -1,5 +1,7 @@
 package frontend;
 
+import frontend.clients.ReservationApiClient;
+import frontend.clients.RestaurantApiClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -25,8 +27,8 @@ public class ReservationInfo {
     @FXML
     public void initialize() {
     	
-    	initalRes = backend.controllers.ReservationController.getCachedReservation();
-        
+    	initalRes = ReservationApiClient.getCachedReservation();
+
     	setReservationInfo(
     			initalRes.getName(),
     			initalRes.getEmail(),
@@ -59,8 +61,10 @@ public class ReservationInfo {
     private void onViewMenuClick() throws IOException {
         // go to menu view for the restaurant
     	AppState.setBuyMode(true);
-    	backend.controllers.RestaurantController.setSelectedRestaurantID(initalRes.getRestaurantId());
-    	SceneNavigator.switchScene(getStage(), "menu-view.fxml", "Menu");
+    	if (initalRes != null) {
+        	RestaurantApiClient.selectRestaurantById(initalRes.getRestaurantId());
+        }
+     	SceneNavigator.switchScene(getStage(), "menu-view.fxml", "Menu");
     }
 
     // optional: if you want to fill labels programmatically

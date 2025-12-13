@@ -1,5 +1,6 @@
 package frontend;
 
+import frontend.clients.ReservationApiClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -7,7 +8,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import backend.controllers.ReservationController;
 import database.dto.ReservationDTO;
 
 public class MyReservations
@@ -19,8 +19,8 @@ public class MyReservations
     public void initialize()
     {
     	System.out.println("Printing all reservations");
-    	allReservations = ReservationController.currentUserReservations();
-    	
+    	allReservations = new ArrayList<>(ReservationApiClient.getCurrentUserReservations());
+
     	for(ReservationDTO res : allReservations) {
     		
     		reservationList.getItems().add(res.toString());
@@ -49,8 +49,11 @@ public class MyReservations
 
         for(ReservationDTO res : allReservations) {
     		
-    		if(selected.equals(res.toString()))
-    			backend.controllers.ReservationController.setCachedReservation(res);
+    		if(selected.equals(res.toString())){
+                System.out.println("Found item " + res.toString());
+                ReservationApiClient.setCachedReservation(res);
+            }
+
     	}
     	
         

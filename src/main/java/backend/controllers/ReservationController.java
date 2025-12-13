@@ -26,8 +26,12 @@ import backend.services.RestaurantMapper;
 public class ReservationController {
 	
 	private static ReservationDTO cachedReservation;
+
+    @GetMapping("/getCache")
 	public static ReservationDTO getCachedReservation(){return cachedReservation;}
-	public static void setCachedReservation(ReservationDTO dto) {cachedReservation = dto;}
+
+    @PostMapping("/setCache")
+    public static void setCachedReservation(@RequestBody ReservationDTO dto) {cachedReservation = dto;}
 	
 	
 	

@@ -1,5 +1,6 @@
 package frontend;
 
+import frontend.clients.RestaurantApiClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -32,14 +33,14 @@ public class ResturantLists
     public void initialize()
     {
         // 1. check tag filter
-        String tag = backend.controllers.RestaurantController.getCurrentTagFilter();
+        String tag = RestaurantApiClient.getCurrentTagFilter();
 
         if (tag != null && !tag.isEmpty()) {
             System.out.println("ResturantLists: Loading restaurants for tag = " + tag);
-            restaurants = backend.controllers.RestaurantController.getRestaurantsByTag(tag);
+            restaurants = RestaurantApiClient.fetchRestaurantsByTag(tag);
         } else {
             System.out.println("ResturantLists: Loading ALL restaurants");
-            restaurants = backend.controllers.RestaurantController.getAllRestaurants();
+            restaurants = RestaurantApiClient.fetchAllRestaurants();
         }
 
         // 2. restore sign-in UI state
@@ -99,15 +100,6 @@ public class ResturantLists
         }
     }
 
-    private List<RestaurantDTO> restaurantList = List.of(
-            new RestaurantDTO("Andies", "123 Oak St, Carson, CA", "10AM - 12AM", "CA"),
-            new RestaurantDTO("Jay's Sushi Palace", "901 Sushi Rd, Carson CA", "10AM - 11PM", "CA"),
-            new RestaurantDTO("Mama Rosa's Italian Kitchen", "22 Roma Blvd, Carson CA", "11AM - 10PM", "CA"),
-            new RestaurantDTO("Golden Dragon BBQ", "17 Fire Grill, Carson CA", "9AM - 12AM", "CA"),
-            new RestaurantDTO("The Garden Vegan Bistro", "5 Green Leaf, Carson CA", "9AM - 9PM", "CA")
-    );
-
-
     // ========== NAVIGATION HELPERS ==========
 
     private Stage getStage() {
@@ -141,10 +133,10 @@ public class ResturantLists
     private void goToRestaurant(int index) {
         try {
             RestaurantDTO r = restaurants.get(index);
-            AppState.setSelectedRestaurant(index + 1);   // 1-based id if you need it
+            AppState.setSelectedRestaurant(r.getId() != null ? r.getId().intValue() : index + 1);
             AppState.setSelectedRestaurantName(r.getName());
-            backend.controllers.RestaurantController.selectRestaurant(r);
-            
+            RestaurantApiClient.selectRestaurant(r);
+
             SceneNavigator.switchScene(
                     getStage(),
                     "restaurant-view.fxml",   // relative to frontend package

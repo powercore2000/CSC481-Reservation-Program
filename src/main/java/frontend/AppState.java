@@ -1,10 +1,9 @@
 package frontend;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import database.dto.FoodDTO;
+import frontend.clients.ReservationApiClient;
 
 public class AppState {
 
@@ -68,13 +67,17 @@ public class AppState {
     //private static final List<FoodDTO> cartItems = new ArrayList<>();
 
     public static void addToCart(FoodDTO item) {
-        if (item != null) {
-        	backend.controllers.ReservationController.addFoodToCurrentReservation(item);
+        if (item == null) {
+            return;
+        }
+
+        if (!ReservationApiClient.addFoodToCurrentReservation(item)) {
+            System.err.println("Failed to add item to cart: " + item.getName());
         }
     }
 
     public static List<FoodDTO> getCartItems() {
-        return backend.controllers.ReservationController.getAllFoodFromCurrentReservation();
+        return ReservationApiClient.getAllFoodFromCurrentReservation();
     }
 
     public static void clearCart() {
@@ -82,6 +85,12 @@ public class AppState {
     }
 
     public static boolean hasCartItems() {
-        return backend.controllers.ReservationController.getAllFoodFromCurrentReservation().size() > 0;
+
+        if(ReservationApiClient.getCachedReservation() != null) {
+            return !ReservationApiClient.getAllFoodFromCurrentReservation().isEmpty();
+        }
+            else {
+                return false;
+            }
     }
 }

@@ -1,5 +1,6 @@
 package frontend;
 
+import frontend.clients.UserApiClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -33,7 +34,7 @@ public class Login
 
         
         UserDTO loginUser = new UserDTO(email,password);
-        Boolean signInState = backend.controllers.UserController.loginUser(loginUser);
+
         
         if(!signInState) {
         	errorLabel.setText("No user found with that username and password.");
@@ -63,8 +64,8 @@ public class Login
         }
         
         UserDTO loginUser = new UserDTO(email,password);
-        Boolean signInState = backend.controllers.UserController.loginUser(loginUser);
-        
+        Boolean signInState = UserApiClient.login(loginUser);
+
         if(!signInState) {
         	errorLabel.setText("No user found with that username and password.");
         	return;

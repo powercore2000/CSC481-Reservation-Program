@@ -1,5 +1,8 @@
 package database.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class RestaurantDTO {
 
     private Long id;
@@ -16,8 +19,13 @@ public class RestaurantDTO {
         this.city = city;
         this.state = state;
     }
-    
-    public RestaurantDTO(String name,String address, String city, String state) {
+
+    @JsonCreator
+    public RestaurantDTO(
+            @JsonProperty("name")  String name,
+            @JsonProperty("address")String address,
+            @JsonProperty("city")  String city,
+            @JsonProperty("state") String state) {
         this.name = name;
         this.address = address;
         this.city = city;

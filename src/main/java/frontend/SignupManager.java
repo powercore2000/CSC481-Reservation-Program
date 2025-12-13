@@ -1,5 +1,6 @@
 package frontend;
 
+import frontend.clients.UserApiClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -53,8 +54,8 @@ public class SignupManager
         }
 
         UserDTO signUpUser = new UserDTO(fullName,email,phone,pw);
-        Boolean signInState = backend.controllers.UserController.createUser(signUpUser);
-        
+        Boolean signInState = UserApiClient.signUp(signUpUser);
+
         if(!signInState) {
         	errorLabel.setText("User Signup Failed!");
         	return;

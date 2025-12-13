@@ -1,6 +1,7 @@
 package frontend;
 
 
+import frontend.clients.RestaurantApiClient;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 
@@ -40,9 +41,18 @@ public class FoodMenuManager {
     @FXML
     public void initialize() {
 
+        if (RestaurantApiClient.getCurrentRestaurant() == null && AppState.getSelectedRestaurant() > 0) {
+            // Attempt to align client with AppState selection if possible
+            RestaurantApiClient.selectRestaurant(RestaurantApiClient.fetchAllRestaurants().stream()
+                    .filter(r -> r.getId() == AppState.getSelectedRestaurant())
+                    .findFirst()
+                    .orElse(null));
+        }
 
-        List<FoodDTO> foodList = backend.controllers.RestaurantController.allRestaurantFood();
-        menuTitleLabel.setText(backend.controllers.RestaurantController.getCurrentRestaurant().getName());
+        List<FoodDTO> foodList = RestaurantApiClient.fetchCurrentRestaurantFood();
+        if (menuTitleLabel != null && RestaurantApiClient.getCurrentRestaurant() != null) {
+            menuTitleLabel.setText(RestaurantApiClient.getCurrentRestaurant().getName());
+        }
 
 
         // Debug print
@@ -136,7 +146,6 @@ public class FoodMenuManager {
     @FXML
     private void onViewMore(FoodDTO f, ActionEvent event) throws Exception {
         AppState.setSelectedFoodItem(f);
-        backend.controllers.RestaurantController.setSelectedFoodID(f);
         goToDetail(event);
     }
 
@@ -198,4 +207,3 @@ public class FoodMenuManager {
     }
 
 }
-
