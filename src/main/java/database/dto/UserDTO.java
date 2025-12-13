@@ -19,6 +19,16 @@ public class UserDTO {
      * @param email of user
      * @param phoneNumber of user
      * @param plainText string password of user
+     *\
+     
+     /**
+     * For creating a UserDTO on the client used to login 
+     *
+     * @param email of user
+     * @param plainText string password of user
+     * @return UserDTO new DTO model instance
+     */
+     
     public UserDTO(String name, String email, String phoneNumber, String passwordString) {
     	
     	this.name = name;
@@ -26,6 +36,7 @@ public class UserDTO {
     	this.phoneNumber = phoneNumber;
     	this.passwordString = passwordString;
     }
+    
     @JsonCreator
     public UserDTO(
     	 @JsonProperty("userId") long id, 
@@ -41,13 +52,6 @@ public class UserDTO {
     	this.passwordString = passwordString;
     }
     
-    /**
-     * For creating a UserDTO on the client used to login 
-     *
-     * @param email of user
-     * @param plainText string password of user
-     * @return UserDTO new DTO model instance
-     */
     public UserDTO(String email, String passwordString) {
     	
     	this.email = email;

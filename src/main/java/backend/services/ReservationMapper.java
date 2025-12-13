@@ -16,6 +16,7 @@ import backend.controllers.RestaurantController;
 import backend.models.ReservationModel;        // from your ActiveJDBC model
 import backend.models.RestaurantModel;
 import backend.models.UserModel;
+import java.util.Locale;
 
 public class ReservationMapper {
 
@@ -31,17 +32,16 @@ public class ReservationMapper {
     	DbManager.openDatabase();
         ReservationModel model = new ReservationModel();
 
-        DateTimeFormatter fmt = new DateTimeFormatterBuilder()
-                .parseCaseInsensitive()
-                .appendPattern("H:mm")
-                .optionalStart()
-                .appendPattern(" a")
-                .optionalEnd()
-                .toFormatter();
         LocalDate date = resDTO.getDate();
-        LocalTime time = LocalTime.parse(resDTO.getTime(), fmt);
-        LocalDateTime dateTime = LocalDateTime.of(date, time);
-        Timestamp ts = Timestamp.valueOf(dateTime);
+
+	     // parse "1:00 PM"
+	     DateTimeFormatter uiTimeFmt = DateTimeFormatter.ofPattern("h:mm a", Locale.US);
+	     LocalTime time = LocalTime.parse(resDTO.getTime().trim().toUpperCase(), uiTimeFmt);
+	
+	     LocalDateTime dateTime = LocalDateTime.of(date, time);
+	     Timestamp ts = Timestamp.valueOf(dateTime);
+
+        
 
         try {
             UserModel attatchedUser = UserQueries.findByEmail(resDTO.getEmail()).get();

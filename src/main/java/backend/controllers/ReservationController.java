@@ -131,28 +131,57 @@ public class ReservationController {
     @PostMapping("/create")
     public static ResponseEntity<Boolean> createReservation(@RequestBody ReservationDTO reservationDto) {
 
-        Boolean result = CreateReservation(reservationDto);
+        // optional: force reservation email to logged-in user's email
+        reservationDto.setEmail(UserController.getCurrentUser().getEmail());
 
-        if (result) {
-            return ResponseEntity.ok(true);
-        } else {
+        // cache it so ReservationInfo screen can show it
+        setCachedReservation(reservationDto);
+
+        System.out.println("Created reservation: " + reservationDto);
+
+        boolean success = ReservationQueries.createReservationWithFood(
+            reservationDto,
+            reservationDto.getFoodSelections()
+        );
+
+        if (!success) {
+            System.out.println("DB insert failed");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
         }
+
+        ReservationQueries.listAll();
+        return ResponseEntity.ok(true);
     }
+
      
-	public static Boolean CreateReservation(ReservationDTO reservation) {
-	    if(!UserController.isUserLoggedIn()) {
-	    	System.out.println("Cant add reservation user not loggedin! Logging in default user:");
-	    	UserController.loginUser(new UserDTO("Debug Userman", "bobBot69@hotbotmail.com", "310 111 1234", "debugBotPAs$12"));
-	    	//return false;
-	    }
-	    
-		reservation.setEmail(UserController.getCurrentUser().getEmail()); 
-		System.out.println("Created reservation: " + reservation);  
-		boolean success = ReservationQueries.createReservationWithFood(reservation, reservation.getFoodSelections());
-        database.queries.ReservationQueries.listAll();		 	
+    public static Boolean CreateReservation(ReservationDTO reservation) {
+
+        if (!UserController.isUserLoggedIn()) {
+            System.out.println("Cant add reservation user not loggedin! Logging in default user:");
+            UserController.loginUser(new UserDTO("Debug Userman", "bobBot69@hotbotmail.com", "310 111 1234", "debugBotPAs$12"));
+        }
+
+        reservation.setEmail(UserController.getCurrentUser().getEmail());
+
+        // make sure restaurant id is on the DTO
+        long restId = RestaurantController.getSelectedRestaurantID();
+        reservation.setRestaurantId(restId);
+
+        boolean success = ReservationQueries.createReservationWithFood(reservation, reservation.getFoodSelections());
+        if (!success) return false;
+
+        // fill display fields for the info screen
+        RestaurantModel r = RestaurantQueries.findRestaurantById(restId).orElse(null);
+        if (r != null) {
+            reservation.setRestaurantName(r.getName());
+            reservation.setRestaurantLocation(r.getAddress());
+        }
+
+        // cache AFTER it’s filled
+        setCachedReservation(reservation);
+
         return true;
-		
-	}
+    }
+
 	
 }

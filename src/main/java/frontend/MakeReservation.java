@@ -48,6 +48,8 @@ public class MakeReservation
     			timeField.getText(), 
     			"PENDING"
     			);
+    	backend.controllers.ReservationController.setCachedReservation(reservation);
+    	
     	Boolean makeReservation = backend.controllers.ReservationController.CreateReservation(reservation);
     	
     	if(!makeReservation) {

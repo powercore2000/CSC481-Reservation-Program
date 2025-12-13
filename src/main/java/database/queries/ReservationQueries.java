@@ -111,36 +111,33 @@ public class ReservationQueries {
     /* ---------- CREATE A RESERVATION ---------- */
 
     public static Optional<ReservationDTO> createReservation(ReservationDTO res) {
-    	try {
+        try {
+            ReservationModel resMod = ReservationMapper.toModel(res);
 
-    		
-    		ReservationModel resMod = ReservationMapper.toModel(res);
-    		ReservationDTO filledDTO = ReservationMapper.toDTO(resMod);
-    		
-    		DbManager.openDatabase();
-    		if(resMod == null) {
-    			System.out.println("Not adding reservation to db");
-    			return Optional.empty();
-    		}
-    		if(!resMod.saveIt()) {
-    			throw new RuntimeException("Could not save reservation: " + resMod.errors());
-    		}
-    		// Create succeeded
-    		else {
-    			System.out.println("Created reservation: " + filledDTO);
-    			return Optional.of(filledDTO);
-    		}
-    		
-    	}
-	     catch (Exception e) {
-	        e.printStackTrace();
-	        return Optional.empty();
-	    }
-    	finally {
-    		DbManager.closeDatabase();
-    	}
+            DbManager.openDatabase();
 
+            if (resMod == null) {
+                System.out.println("Not adding reservation to db");
+                return Optional.empty();
+            }
+
+            if (!resMod.saveIt()) {
+                throw new RuntimeException("Could not save reservation: " + resMod.errors());
+            }
+
+            ReservationDTO filledDTO = ReservationMapper.toDTO(resMod);
+
+            System.out.println("Created reservation: " + filledDTO);
+            return Optional.of(filledDTO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        } finally {
+            DbManager.closeDatabase();
+        }
     }
+
 
     /* ---------- MASTER METHOD: CREATE RESERVATION + FOOD ---------- */
 
